@@ -1,0 +1,9 @@
+0 chairs
+1 humans
+2 cat
+3 dog
+4 laptop
+5 espadrille
+6 hoodie
+7 chemise
+8 table
