@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite_v2/tflite_v2.dart';
@@ -73,6 +74,15 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter TFlite'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("login", (route) => false);
+              },
+              icon: const Icon(Icons.exit_to_app_rounded))
+        ],
       ),
       body: Center(
         child: Column(

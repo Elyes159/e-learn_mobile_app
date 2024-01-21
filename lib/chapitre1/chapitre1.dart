@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pfe_1/constant/question.dart';
+import 'package:pfe_1/services/firebase_services.dart';
 
 class Chapitre1 extends StatefulWidget {
   @override
@@ -10,6 +12,9 @@ class _Chapitre1State extends State<Chapitre1> {
   double overallProgress =
       0.0; // Progression totale à travers toutes les questions
   int currentQuestionIndex = 0;
+  int xpLevel = 1; // Niveau d'XP initial
+  double xpProgress = 0.0; // Progression de l'XP dans le niveau actuel
+
   List<Question> questions = [
     Question(
       "Quelle est la capitale de la France ?",
@@ -30,6 +35,10 @@ class _Chapitre1State extends State<Chapitre1> {
     ),
     // Ajoutez d'autres questions ici
   ];
+  int xp = 0;
+
+  FirebaseService firebaseService =
+      FirebaseService(); // Instance de FirebaseService
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +77,20 @@ class _Chapitre1State extends State<Chapitre1> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                // Vérifier si toutes les réponses correctes sont sélectionnées
+                bool allCorrectSelected = List.generate(
+                  questions[currentQuestionIndex].selectedOptions.length,
+                  (index) =>
+                      questions[currentQuestionIndex].selectedOptions[index] ==
+                      questions[currentQuestionIndex].correctOptions[index],
+                ).reduce((value, element) => value && element);
+
+                if (allCorrectSelected) {
+                  // Réponse correcte, mettez à jour la barre de progression et d'XP
+                  updateProgressAndXP(1 / 2);
+                  xp = xp + 10;
+                }
+
                 // Passer à la question suivante
                 moveToNextQuestion();
               },
@@ -89,13 +112,23 @@ class _Chapitre1State extends State<Chapitre1> {
                 Color.fromARGB(255, 1, 214, 48),
               ),
             ),
+            SizedBox(height: 10),
+            Text("XP Level: $xpLevel xp : $xp"),
+            LinearProgressIndicator(
+              minHeight: 10,
+              value: xpProgress,
+              backgroundColor: Colors.grey,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.blue,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  void updateProgress(double valueToAdd) {
+  void updateProgressAndXP(double valueToAdd) {
     setState(() {
       // Mettez à jour la valeur de progression
       progressValue += valueToAdd;
@@ -103,6 +136,14 @@ class _Chapitre1State extends State<Chapitre1> {
       // Limitez la valeur de progression entre 0 et 1
       if (progressValue > 1.0) {
         progressValue = 1.0;
+      }
+
+      // Mettez à jour la barre d'XP
+      xpProgress += valueToAdd;
+      if (xpProgress >= 1.0) {
+        // L'utilisateur a atteint la barre d'XP complète dans le niveau actuel
+        xpProgress = 0.0;
+        xpLevel++;
       }
     });
   }
@@ -131,29 +172,6 @@ class _Chapitre1State extends State<Chapitre1> {
       // Mettre à jour la liste des réponses sélectionnées
       questions[currentQuestionIndex].selectedOptions[selectedOptionIndex] =
           value ?? false;
-
-      // Vérifier si toutes les réponses correctes sont sélectionnées
-      bool allCorrectSelected = List.generate(
-        questions[currentQuestionIndex].selectedOptions.length,
-        (index) =>
-            questions[currentQuestionIndex].selectedOptions[index] ==
-            questions[currentQuestionIndex].correctOptions[index],
-      ).reduce((value, element) => value && element);
-      if (allCorrectSelected) {
-        // Réponse correcte, mettez à jour la barre de progression de la question actuelle
-        updateProgress(0.1);
-      }
     });
   }
 }
-
-class Question {
-  final String questionText;
-  final List<String> options;
-  final List<bool> selectedOptions;
-  final List<bool> correctOptions;
-
-  Question(this.questionText, this.options, this.selectedOptions,
-      this.correctOptions);
-}
-      // Si toutes les réponses

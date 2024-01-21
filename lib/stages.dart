@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfe_1/constant/chapitre_button.dart';
 
@@ -8,15 +9,24 @@ class StagesPage extends StatefulWidget {
 
 class _StagesPageState extends State<StagesPage> {
   PageController _pageController = PageController(initialPage: 0);
-  double progressValue1 = 100;
-  double progressValue2 = 100;
-  double progressValue3 = 100;
-  double progressValue4 = 100;
+  double progressValue1 = 0;
+  double progressValue2 = 0;
+  double progressValue3 = 0;
+  double progressValue4 = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Stages'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("login", (route) => false);
+              },
+              icon: const Icon(Icons.exit_to_app_rounded))
+        ],
       ),
       body: PageView(
         controller: _pageController,
