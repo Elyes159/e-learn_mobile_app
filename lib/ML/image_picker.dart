@@ -14,6 +14,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
   File? file;
+  // ignore: unused_field
   var _recognitions;
   var v = "";
   // var dataList = [];
