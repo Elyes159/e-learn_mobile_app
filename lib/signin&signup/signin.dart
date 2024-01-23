@@ -6,6 +6,7 @@ import 'package:pfe_1/constant/custombutton.dart';
 import 'package:pfe_1/constant/customlogo.dart';
 import 'package:pfe_1/constant/textformfield.dart';
 import 'package:pfe_1/ML/image_picker.dart';
+import 'package:pfe_1/stages.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _LoginState extends State<Login> {
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
-    // Create a new credential
+    // Create a new credesaveUserState();ntial
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
@@ -33,7 +34,7 @@ class _LoginState extends State<Login> {
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (BuildContext context) => ImagePickerDemo()),
+      MaterialPageRoute(builder: (BuildContext context) => StagesPage()),
       (route) => false,
     );
   }

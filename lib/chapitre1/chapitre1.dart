@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pfe_1/constant/question.dart';
 import 'package:pfe_1/services/firebase_services.dart';
@@ -42,6 +44,8 @@ class _Chapitre1State extends State<Chapitre1> {
 
   @override
   Widget build(BuildContext context) {
+    final User? user1 = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -77,7 +81,6 @@ class _Chapitre1State extends State<Chapitre1> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Vérifier si toutes les réponses correctes sont sélectionnées
                 bool allCorrectSelected = List.generate(
                   questions[currentQuestionIndex].selectedOptions.length,
                   (index) =>
@@ -86,12 +89,10 @@ class _Chapitre1State extends State<Chapitre1> {
                 ).reduce((value, element) => value && element);
 
                 if (allCorrectSelected) {
-                  // Réponse correcte, mettez à jour la barre de progression et d'XP
                   updateProgressAndXP(1 / 2);
                   xp = xp + 10;
                 }
 
-                // Passer à la question suivante
                 moveToNextQuestion();
               },
               style: ElevatedButton.styleFrom(
@@ -103,25 +104,67 @@ class _Chapitre1State extends State<Chapitre1> {
               child: Text('Continuer'),
             ),
             SizedBox(height: 20),
-            LinearProgressIndicator(
-              minHeight: 20,
-              borderRadius: BorderRadius.circular(5),
-              value: overallProgress,
-              backgroundColor: Colors.white,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Color.fromARGB(255, 1, 214, 48),
-              ),
+            FutureBuilder<DocumentSnapshot>(
+              future: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(user1?.uid)
+                  .get(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                if (snapshot.hasError) {
+                  return Text("Erreur: ${snapshot.error}");
+                }
+
+                if (!snapshot.hasData || !snapshot.data!.exists) {
+                  return Text("Aucune donnée utilisateur trouvée");
+                }
+
+                double progressValueFromFirestore =
+                    (snapshot.data!['progressValue'] ?? 0).toDouble();
+
+                int xpFromFirestore = snapshot.data!['xp'] ?? 0;
+                double xpProgressFromFirestore =
+                    (snapshot.data!['xpProgress'] ?? 0).toDouble();
+
+                int xpLevelFromFirestore = snapshot.data!['xpLevel'] ?? 1;
+
+                // Mettre à jour l'état sans utiliser setState
+                progressValue = progressValueFromFirestore;
+                xp = xpFromFirestore;
+                xpProgress = xpProgressFromFirestore;
+                xpLevel = xpLevelFromFirestore;
+
+                return Column(
+                  children: [
+                    LinearProgressIndicator(
+                      minHeight: 20,
+                      borderRadius: BorderRadius.circular(5),
+                      value: progressValue,
+                      backgroundColor: Colors.white,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Color.fromARGB(255, 1, 214, 48),
+                      ),
+                    ),
+                    LinearProgressIndicator(
+                      minHeight: 10,
+                      value: xpProgress,
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.blue,
+                      ),
+                    ),
+                    Text("XP Level: $xpLevel xp : $xp"),
+                  ],
+                );
+              },
             ),
+
             SizedBox(height: 10),
-            Text("XP Level: $xpLevel xp : $xp"),
-            LinearProgressIndicator(
-              minHeight: 10,
-              value: xpProgress,
-              backgroundColor: Colors.grey,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.blue,
-              ),
-            ),
+            // Le FutureBuilder est désormais en dehors du bloc build
           ],
         ),
       ),
@@ -130,21 +173,27 @@ class _Chapitre1State extends State<Chapitre1> {
 
   void updateProgressAndXP(double valueToAdd) {
     setState(() {
-      // Mettez à jour la valeur de progression
       progressValue += valueToAdd;
 
-      // Limitez la valeur de progression entre 0 et 1
       if (progressValue > 1.0) {
         progressValue = 1.0;
       }
 
-      // Mettez à jour la barre d'XP
       xpProgress += valueToAdd;
+
       if (xpProgress >= 1.0) {
-        // L'utilisateur a atteint la barre d'XP complète dans le niveau actuel
         xpProgress = 0.0;
         xpLevel++;
       }
+      final User? user1 = FirebaseAuth.instance.currentUser;
+
+      // Update user data in Firestore
+      FirebaseFirestore.instance.collection('users').doc(user1?.uid).update({
+        'progressValue': progressValue,
+        'xp': xp,
+        'xpProgress': xpProgress,
+        'xpLevel': xpLevel,
+      });
     });
   }
 

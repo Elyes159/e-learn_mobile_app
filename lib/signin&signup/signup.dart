@@ -151,6 +151,10 @@ class _SignupState extends State<Signup> {
                             .set({
                           'username': username.text,
                           'email': email.text,
+                          'progressValue': 0.0,
+                          'xp': 0,
+                          'xpProgress': 0.0,
+                          'xpLevel': 1,
                           // Ajoutez d'autres champs que vous souhaitez enregistrer
                         });
 
