@@ -4,9 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pfe_1/constant/custombutton.dart';
 import 'package:pfe_1/constant/customlogo.dart';
+import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/constant/textformfield.dart';
 import 'package:pfe_1/ML/image_picker.dart';
-import 'package:pfe_1/stages.dart';
+import 'package:pfe_1/stages/stages.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -49,11 +51,17 @@ class _LoginState extends State<Login> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(Icons.back_hand),
+                ),
                 SizedBox(height: 50),
                 Customlogo(),
                 SizedBox(height: 20),
                 Text(
-                  "Login",
+                  translation(context).loginn,
                   style: GoogleFonts.poppins(
                       fontSize: 30, fontWeight: FontWeight.bold),
                 ),

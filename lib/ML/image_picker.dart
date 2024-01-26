@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pfe_1/constant/language_const.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 
 class ImagePickerDemo extends StatefulWidget {
@@ -97,7 +98,10 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
                 fit: BoxFit.cover,
               )
             else
-              Text('No image selected'),
+              Text('No'),
+            Text(
+              translation(context).imagee,
+            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,
@@ -110,6 +114,12 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
                 Navigator.pushNamed(context, "stages");
               },
               child: Text("cliquer ici pour aller au stage "),
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "chatt");
+              },
+              child: Text("cliquer ici pour aller au chatt"),
             )
           ],
         ),
