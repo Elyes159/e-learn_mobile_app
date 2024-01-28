@@ -8,6 +8,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:pfe_1/constant/custombutton.dart';
 import 'package:pfe_1/constant/customlogo.dart';
 import 'package:pfe_1/constant/textformfield.dart';
+import 'package:pfe_1/constant/language_const.dart';
+import 'package:pfe_1/constant/languages.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});

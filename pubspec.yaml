@@ -45,7 +45,7 @@ dependencies:
   cloud_firestore: ^4.14.0
   shared_preferences: ^2.2.2
   http: ^0.13.3
-  translator: ^0.1.6
+  translator: ^0.1.7
   flutter_localization: ^0.2.0
   intl: ^0.18.1
 

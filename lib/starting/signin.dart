@@ -8,7 +8,7 @@ import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/constant/textformfield.dart';
 import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/stages/stages.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pfe_1/starting/choice_lan.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -166,14 +166,15 @@ class _LoginState extends State<Login> {
                                 transitionDuration: Duration.zero,
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) =>
-                                        ImagePickerDemo()));
+                                        ChoiceL()));
                           } else {
+                            // ignore: use_build_context_synchronously
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: const Text("Email not verified"),
-                                  content: Text(
+                                  content: const Text(
                                       "Please verify your email to login."),
                                   actions: [
                                     TextButton(
@@ -181,7 +182,7 @@ class _LoginState extends State<Login> {
                                         Navigator.of(context)
                                             .pop(); // Ferme la boîte de dialogue
                                       },
-                                      child: Text("OK"),
+                                      child: const Text("OK"),
                                     ),
                                   ],
                                 );

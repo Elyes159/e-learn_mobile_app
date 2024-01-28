@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget _getStartScreen() {
     if (FirebaseAuth.instance.currentUser == null) {
-      return ChoiceL();
+      return Login();
     } else {
       return ImagePickerDemo();
     }

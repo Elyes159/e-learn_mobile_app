@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pfe_1/constant/language_const.dart';
+import 'package:translator/translator.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -11,6 +13,24 @@ class _ChatScreenState extends State<ChatScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _messageController = TextEditingController();
+  final translator = GoogleTranslator();
+
+  Future<String> translate(
+      String sourceText, String fromLanguage, String toLanguage) async {
+    var translation = await translator.translate(sourceText,
+        from: fromLanguage, to: toLanguage);
+    return translation.text;
+  }
+
+  Future<String?> _getUserSelectedLanguage(String userId) async {
+    var userSnapshot = await _firestore.collection('users').doc(userId).get();
+    return userSnapshot.data()?['selectedLanguage'];
+  }
+
+  Future<String?> _getUserUsername(String userId) async {
+    var userSnapshot = await _firestore.collection('users').doc(userId).get();
+    return userSnapshot.data()?['username'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,22 +59,46 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }
                 var messages = snapshot.data?.docs.reversed;
-                List<Widget> messageWidgets = [];
-                for (var message in messages!) {
-                  var messageText = message['text'];
-                  var messageSender = message['sender'];
-
-                  var messageWidget = MessageWidget(
-                    messageSender ??
-                        "", // Utilisez une chaîne vide si messageSender est null
-                    messageText ??
-                        "", // Utilisez une chaîne vide si messageText est null
-                  );
-                  messageWidgets.add(messageWidget);
-                }
-                return ListView(
+                return ListView.builder(
                   reverse: true,
-                  children: messageWidgets,
+                  itemCount: messages!.length,
+                  itemBuilder: (context, index) {
+                    final User? user1 = FirebaseAuth.instance.currentUser;
+                    var messageText = messages.elementAt(index)['text'];
+                    var messageSender = messages.elementAt(index)['sender'];
+                    var lansender = messages.elementAt(index)['language'];
+
+                    return FutureBuilder<String?>(
+                      future: _getUserSelectedLanguage(user1!.uid),
+                      builder: (context, languageSnapshot) {
+                        if (!languageSnapshot.hasData) {
+                          return CircularProgressIndicator();
+                        }
+                        String? lanDestinaire = languageSnapshot.data;
+
+                        if (lanDestinaire != null) {
+                          return FutureBuilder<String>(
+                            future: translate(
+                                messageText, lansender, lanDestinaire),
+                            builder: (context, translationSnapshot) {
+                              if (!translationSnapshot.hasData) {
+                                return CircularProgressIndicator();
+                              }
+                              String translatedMessage =
+                                  translationSnapshot.data!;
+
+                              return MessageWidget(
+                                messageSender ?? "",
+                                translatedMessage,
+                              );
+                            },
+                          );
+                        } else {
+                          return SizedBox(); // Retourne un widget vide si la langue de destination n'est pas disponible.
+                        }
+                      },
+                    );
+                  },
                 );
               },
             ),
@@ -75,11 +119,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   icon: Icon(Icons.send),
                   onPressed: () async {
                     final User? user1 = FirebaseAuth.instance.currentUser;
+                    String? username = await _getUserUsername(user1!.uid);
                     if (user1 != null) {
                       await _firestore.collection('messages').add({
                         'text': _messageController.text,
-                        'sender': user1.email,
+                        'sender': username,
                         'timestamp': FieldValue.serverTimestamp(),
+                        'language': await _getUserSelectedLanguage(user1.uid),
+                        'email': user1.email,
                       });
                       _messageController.clear();
                     }
