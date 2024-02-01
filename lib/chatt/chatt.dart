@@ -152,6 +152,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   onPressed: () async {
                     final User? user1 = FirebaseAuth.instance.currentUser;
                     String? username = await _getUserUsername(user1!.uid);
+                    // ignore: unnecessary_null_comparison
                     if (user1 != null) {
                       await _firestore.collection('messages').add({
                         'text': _messageController.text,
