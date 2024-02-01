@@ -1,21 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:pfe_1/constant/custombutton.dart';
 import 'package:pfe_1/constant/customlogo.dart';
 import 'package:pfe_1/constant/textformfield.dart';
-import 'package:pfe_1/constant/language_const.dart';
-import 'package:pfe_1/constant/languages.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SignupState createState() => _SignupState();
 }
 
@@ -23,42 +16,6 @@ class _SignupState extends State<Signup> {
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController username = TextEditingController();
-  File? _imageFile;
-
-  Future<String?> uploadImage() async {
-    try {
-      if (_imageFile != null) {
-        firebase_storage.Reference ref = firebase_storage
-            .FirebaseStorage.instance
-            .ref()
-            .child('profile_images')
-            .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
-
-        await ref.putFile(_imageFile!);
-
-        String imageUrl = await ref.getDownloadURL();
-        return imageUrl;
-      }
-      return null;
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-      return null;
-    }
-  }
-
-  Future<void> _chooseImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedImage =
-        await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedImage != null) {
-      setState(() {
-        _imageFile = File(pickedImage.path);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,25 +73,6 @@ class _SignupState extends State<Signup> {
                   mycontroller: password,
                 ),
                 SizedBox(height: 10),
-                InkWell(
-                  onTap: _chooseImage,
-                  child: Center(
-                    child: _imageFile == null
-                        ? const Text(
-                            'Select Profile Image',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          )
-                        : Image.file(
-                            _imageFile!,
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                ),
                 SizedBox(
                   width: double.infinity,
                   height: 45,

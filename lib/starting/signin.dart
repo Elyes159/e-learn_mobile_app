@@ -6,7 +6,6 @@ import 'package:pfe_1/constant/custombutton.dart';
 import 'package:pfe_1/constant/customlogo.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/constant/textformfield.dart';
-import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/stages/stages.dart';
 import 'package:pfe_1/starting/choice_lan.dart';
 
@@ -51,12 +50,6 @@ class _LoginState extends State<Login> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Icon(Icons.back_hand),
-                ),
                 SizedBox(height: 50),
                 Customlogo(),
                 SizedBox(height: 20),

@@ -1,4 +1,5 @@
 {
-    "loginn" : "Signin",
-    "imagee" :"photo"
+    "@@locale": "fr",
+    "loginn" : "connexion",
+    "imagee" :"Image"
 }

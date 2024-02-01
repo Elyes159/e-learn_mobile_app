@@ -6,7 +6,6 @@ import 'package:pfe_1/chapitre1/chapitre1.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/services/firebase_options.dart';
-import 'package:pfe_1/starting/choice_lan.dart';
 import 'package:pfe_1/starting/signin.dart';
 import 'package:pfe_1/starting/signup.dart';
 import 'package:pfe_1/stages/stages.dart';
@@ -49,7 +48,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+        Locale('fr'),
+        Locale('hi'), // Ajoutez la nouvelle langue (hindi)
+        // autres langues supportées
+      ],
       locale: _locale,
       home: _getStartScreen(),
       routes: {

@@ -1,4 +1,5 @@
 {
-    "loginn" : "Login",
+    "@@locale" : "en",
+     "loginn" : "Login",
     "imagee" :"picture"
 }

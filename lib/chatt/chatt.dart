@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pfe_1/constant/language_const.dart';
+import 'package:http/http.dart' as http;
+import 'package:pfe_1/constant/messageC.dart';
+import 'dart:convert';
 import 'package:translator/translator.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -20,6 +22,36 @@ class _ChatScreenState extends State<ChatScreen> {
     var translation = await translator.translate(sourceText,
         from: fromLanguage, to: toLanguage);
     return translation.text;
+  }
+
+  Future<String?> correctSpelling(String text) async {
+    final String apiUrl =
+        'https://languagetool.org/api/v2/check?language=fr&text=$text';
+
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final matches = jsonResponse['matches'];
+
+      String correctedText = text;
+
+      for (var match in matches) {
+        final offset = match['offset'];
+        final length = match['length'];
+        final replacement = match['replacements'][0];
+
+        correctedText = correctedText.replaceRange(
+          offset,
+          offset + length,
+          replacement,
+        );
+      }
+
+      return correctedText;
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 
   Future<String?> _getUserSelectedLanguage(String userId) async {
@@ -135,32 +167,6 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class MessageWidget extends StatelessWidget {
-  final String sender;
-  final String text;
-
-  MessageWidget(this.sender, this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            sender,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(text),
         ],
       ),
     );

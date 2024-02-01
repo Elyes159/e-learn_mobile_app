@@ -5,7 +5,6 @@ import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/constant/languages.dart';
 import 'package:pfe_1/main.dart';
-import 'package:pfe_1/starting/signin.dart';
 
 class ChoiceL extends StatefulWidget {
   @override
@@ -35,13 +34,23 @@ class _ChoiceLState extends State<ChoiceL> {
                     .update({
                   'selectedLanguage': language.languageCode,
                 });
+                Locale _locale = await setLocale(language.languageCode);
+
                 Navigator.of(context).push(PageRouteBuilder(
                     transitionDuration: Duration.zero,
                     pageBuilder: (context, animation, secondaryAnimation) =>
                         ImagePickerDemo()));
                 print('Langue sélectionnée : ${language.languageCode}');
-                Locale _locale = await setLocale(language.languageCode);
-                MyApp.setLocale(context, _locale);
+                if (selectedLanguage?.languageCode == "ar") {
+                  MyApp.setLocale(context, const Locale('ar'));
+                } else if (selectedLanguage?.languageCode == 'fr') {
+                  MyApp.setLocale(context, const Locale('fr'));
+                } else if (selectedLanguage?.languageCode == 'en') {
+                  MyApp.setLocale(context, const Locale('en'));
+                } else if (selectedLanguage?.languageCode == 'hi') {
+                  MyApp.setLocale(context, const Locale('hi'));
+                }
+                ;
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
