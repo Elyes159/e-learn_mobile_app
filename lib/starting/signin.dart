@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pfe_1/constant/custombutton.dart';
 import 'package:pfe_1/constant/customlogo.dart';
-import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/constant/textformfield.dart';
 import 'package:pfe_1/stages/stages.dart';
 import 'package:pfe_1/starting/choice_lan.dart';
+import 'package:pfe_1/starting/welcome_signup.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -31,7 +31,6 @@ class _LoginState extends State<Login> {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
     Navigator.of(context).pushAndRemoveUntil(
@@ -53,39 +52,40 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 50),
                 Customlogo(),
                 SizedBox(height: 20),
-                Text(
-                  translation(context).loginn,
-                  style: GoogleFonts.poppins(
-                      fontSize: 30, fontWeight: FontWeight.bold),
-                ),
+                // Text(
+                //   translation(context).loginn,
+                //   style: GoogleFonts.poppins(
+                //       fontSize: 30, fontWeight: FontWeight.bold),
+                // ),
                 SizedBox(height: 10),
-                Text(
-                  "Login to continue using the app",
-                  style: TextStyle(color: Colors.grey),
-                ),
+                // Text(
+                //   "Login to continue using the app",
+                //   style: TextStyle(color: Colors.grey),
+                // ),
                 SizedBox(height: 20),
                 Text(
-                  "Email",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  "Input Your Email",
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500, fontSize: 18),
                 ),
                 SizedBox(height: 10),
                 CustomTextForm(
-                  hinttext: "Enter Your Email",
+                  hinttext: "",
                   mycontroller: email,
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Password",
+                  "Input Your Password",
                   style: GoogleFonts.poppins(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 5,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 SizedBox(height: 10),
                 CustomTextForm(
-                  hinttext: "Enter Your password",
+                  hinttext: "",
                   mycontroller: password,
+                  isPassword: true,
                 ),
                 InkWell(
                   onTap: () async {
@@ -138,7 +138,8 @@ class _LoginState extends State<Login> {
                     child: Text(
                       "Forgot password?",
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14, color: Colors.grey[900]),
+                      style: GoogleFonts.poppins(
+                          fontSize: 14, color: Colors.grey[900]),
                     ),
                   ),
                 ),
@@ -146,7 +147,7 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     height: 45,
                     child: CustomButton(
-                      title: "login",
+                      title: "Login",
                       onPressed: () async {
                         try {
                           final credential = await FirebaseAuth.instance
@@ -191,66 +192,51 @@ class _LoginState extends State<Login> {
                         }
                       },
                     )),
-                //SizedBox(height: 10),
-                Center(
-                  child: Text(
-                    "Or login with",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-                //SizedBox(height: 0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: MaterialButton(
-                        onPressed: () {},
-                        child: Image.asset("images/facebook.png"),
-                      ),
-                    ),
                     SizedBox(width: 10),
                     SizedBox(
                       height: 80,
-                      width: 80,
+                      width: 200,
                       child: MaterialButton(
                         onPressed: () {
                           signInWithGoogle();
                         },
-                        child: Image.asset("images/google.png"),
+                        child: Text(
+                          "Login With Google",
+                          textAlign: TextAlign.right,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14, color: Colors.grey[900]),
+                        ),
                       ),
                     ),
                     SizedBox(width: 20),
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: MaterialButton(
-                        onPressed: () {},
-                        child: Image.asset("images/apple.png"),
-                      ),
-                    ),
                   ],
                 ),
                 //SizedBox(height: 10),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pushReplacementNamed("signup");
+                    Navigator.of(context).push(PageRouteBuilder(
+                        transitionDuration: Duration.zero,
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Signup1()));
                   },
                   child: Center(
                     child: RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
-                              text: "Do you have an account? ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
+                              text: "Doesn't have account? ",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey)),
                           TextSpan(
-                            text: "Register",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green),
+                            text: " Register",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF7885ff),
+                            ),
                           ),
                         ],
                       ),

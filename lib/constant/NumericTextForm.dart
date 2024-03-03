@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class CustomTextForm extends StatelessWidget {
+class NumericTextForm extends StatelessWidget {
   final String hinttext;
   final TextEditingController mycontroller;
-  final bool isPassword;
 
-  const CustomTextForm({
+  const NumericTextForm({
     Key? key,
     required this.hinttext,
     required this.mycontroller,
-    this.isPassword = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: isPassword,
       controller: mycontroller,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+        // Vous pouvez ajouter d'autres formateurs si nécessaire
+      ],
       decoration: InputDecoration(
         hintText: hinttext,
         hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
-        contentPadding: EdgeInsets.symmetric(
-            vertical: 15,
-            horizontal: 20), // Ajustez la valeur de vertical selon vos besoins
+        contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(

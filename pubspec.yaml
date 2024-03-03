@@ -49,6 +49,7 @@ dependencies:
   flutter_localization: ^0.2.0
   intl: ^0.18.1
   spell_check_on_client: ^0.0.8
+  font_awesome_flutter: ^10.7.0
 
 
 dev_dependencies:

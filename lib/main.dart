@@ -5,11 +5,13 @@ import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/chapitre1/chapitre1.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/language_const.dart';
+import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';
 import 'package:pfe_1/starting/signin.dart';
 import 'package:pfe_1/starting/signup.dart';
 import 'package:pfe_1/stages/stages.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pfe_1/starting/welcome_signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,6 +65,7 @@ class _MyAppState extends State<MyApp> {
         "signup": (context) => const Signup(),
         "login": (context) => Login(),
         "chatt": (context) => ChatScreen(),
+        "signup1": (context) => Signup1()
       },
     );
   }
@@ -71,7 +74,7 @@ class _MyAppState extends State<MyApp> {
     if (FirebaseAuth.instance.currentUser == null) {
       return Login();
     } else {
-      return ImagePickerDemo();
+      return HomeScreen();
     }
   }
 }

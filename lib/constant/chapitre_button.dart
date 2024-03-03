@@ -20,7 +20,7 @@ class ChapterButton extends StatelessWidget {
           onPressed();
         },
         style: ElevatedButton.styleFrom(
-          primary: buttonColor, // Changer la couleur du bouton ici
+          backgroundColor: buttonColor, // Changer la couleur du bouton ici
           padding: EdgeInsets.all(16.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),

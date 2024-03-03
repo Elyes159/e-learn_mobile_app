@@ -34,16 +34,16 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     );
   }
 
-  Future<void> _pickImage() async {
+  Future<void> _takePhoto() async {
     try {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? image = await _picker.pickImage(source: ImageSource.camera);
       setState(() {
         _image = image;
         file = File(image!.path);
       });
       detectimage(file!);
     } catch (e) {
-      print('Error picking image: $e');
+      print('Error taking photo: $e');
     }
   }
 
@@ -104,7 +104,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _pickImage,
+              onPressed: _takePhoto,
               child: Text('Pick Image from Gallery'),
             ),
             SizedBox(height: 20),
