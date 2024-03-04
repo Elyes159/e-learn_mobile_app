@@ -21,6 +21,33 @@ class _HomeScreenState extends State<HomeScreen> {
     getCurrentUser();
   }
 
+  Future<DocumentSnapshot<Map<String, dynamic>>> getCourseDataByIndex(
+      int index) async {
+    try {
+      // Fetch course data for a specific course from Firestore
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('user_levels')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('courses')
+              .get();
+
+      if (querySnapshot.docs.length > index) {
+        // Check if the index is within the bounds of the available courses
+        DocumentSnapshot<Map<String, dynamic>> courseDocument =
+            querySnapshot.docs[index];
+        return courseDocument;
+      } else {
+        // Return an empty document if the index is out of bounds
+        return FirebaseFirestore.instance.doc('user_levels/empty_doc').get();
+      }
+    } catch (error) {
+      print('Error fetching course data: $error');
+      // Handle errors according to your needs
+      throw error;
+    }
+  }
+
   Future<bool> doesUserHaveCourses(String userId) async {
     try {
       final coursesDocSnapshot = await FirebaseFirestore.instance
@@ -155,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return {
           'name': doc['name'] as String,
           'userLevel': doc['userLevel'] as int,
-          // Add other fields as needed
+          'progressValue': doc['progressValue'] as int,
         };
       }).toList();
 
@@ -185,47 +212,50 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildContainerWithoutCourses() {
     return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.transparent,
-          border: Border.all(
-            color: Colors.grey, // Couleur de la bordure
-            width: 2.0, // Épaisseur de la bordure
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.transparent,
+            border: Border.all(
+              color: Colors.grey, // Couleur de la bordure
+              width: 2.0, // Épaisseur de la bordure
+            ),
           ),
-        ),
-        width: 175,
-        height: 93,
-        child: InkWell(
-          onTap: () {
-            // Show the dropdown menu when the user taps on the container
-            _showCoursesDropdownMenu();
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text(
-                  "Add a course",
-                  style: GoogleFonts.poppins(),
+          width: 175,
+          height: 93,
+          child: InkWell(
+            onTap: () {
+              // Show the dropdown menu when the user taps on the container
+              _showCoursesDropdownMenu();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Text(
+                    "Add a course",
+                    style: GoogleFonts.poppins(),
+                  ),
                 ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(right: 14.0),
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: Colors.grey, width: 0.5)),
-                    child: Icon(
-                      Icons.add,
-                      color: Color(0xFF3DB2FF),
-                      size: 40,
-                    ),
-                  )),
-            ],
+                Padding(
+                    padding: const EdgeInsets.only(right: 14.0),
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Colors.grey, width: 0.5)),
+                      child: Icon(
+                        Icons.add,
+                        color: Color(0xFF3DB2FF),
+                        size: 40,
+                      ),
+                    )),
+              ],
+            ),
           ),
         ),
       ),
@@ -422,20 +452,140 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, left: 8),
+              padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 40),
               child: Container(
                 height: 270,
                 color: Colors.white,
-                child: ListView(
-                  children: [
-                    Container(
-                      height: 84,
-                      width: 349,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(8)),
-                    )
-                  ],
+                child: FutureBuilder<int>(
+                  future: getNumberOfCourses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      int numberOfCourses = snapshot.data ?? 0;
+
+                      return ListView.builder(
+                        // Change scroll direction to vertical
+                        scrollDirection: Axis.vertical,
+                        itemCount: numberOfCourses,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Container(
+                              height: 84,
+                              width: 349,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: FutureBuilder<
+                                  DocumentSnapshot<Map<String, dynamic>>>(
+                                future: getCourseDataByIndex(index),
+                                builder: (context, courseSnapshot) {
+                                  if (courseSnapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  } else if (courseSnapshot.hasError) {
+                                    return Text(
+                                        'Error: ${courseSnapshot.error}');
+                                  } else if (!courseSnapshot.hasData ||
+                                      courseSnapshot.data!.data() == null) {
+                                    return Center(
+                                        child: Text('No data available.'));
+                                  } else {
+                                    Map<String, dynamic> courseData =
+                                        courseSnapshot.data!.data()!;
+                                    String courseName =
+                                        courseData['name'] ?? '';
+                                    int progressValue =
+                                        courseData['progressValue'] ?? 0;
+                                    String image = courseData['imageUrl'];
+
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 20),
+                                          child: Container(
+                                            width: 50,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape
+                                                  .circle, // Pour rendre l'image circulaire
+                                            ),
+                                            child: ClipOval(
+                                              child: Image.asset(
+                                                image,
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 20.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(height: 8),
+                                              Text(
+                                                courseName,
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(height: 8),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(100)),
+                                                    width: 200,
+                                                    child:
+                                                        LinearProgressIndicator(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      color: Color(0xFF2FDB81),
+                                                      backgroundColor:
+                                                          Color(0xFFFFF5EE),
+                                                      value:
+                                                          progressValue / 100,
+                                                      minHeight: 8,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "$progressValue%",
+                                                    style:
+                                                        GoogleFonts.poppins(),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
                 ),
               ),
             )

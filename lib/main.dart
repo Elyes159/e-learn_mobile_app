@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pfe_1/ML/image_picker.dart';
-import 'package:pfe_1/chapitre1/chapitre1.dart';
+import 'package:pfe_1/french_course/one.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/home/home.dart';
