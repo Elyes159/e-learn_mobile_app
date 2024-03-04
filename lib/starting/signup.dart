@@ -211,6 +211,8 @@ class _SignupState extends State<Signup> {
         email: email.text,
         password: password.text,
       );
+
+      // Ajoutez l'utilisateur à la collection 'users' avec des informations supplémentaires
       await FirebaseFirestore.instance
           .collection('users')
           .doc(credential.user!.uid)
@@ -223,7 +225,23 @@ class _SignupState extends State<Signup> {
         'xpProgress': 0.0,
         'xpLevel': 1,
       });
+
+      // Créez la collection 'courses' pour l'utilisateur et ajoutez les cours avec les niveaux par défaut
+      await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(credential.user!.uid)
+          .collection('courses')
+          .add({
+        'name': 'Anglais',
+        'code': 'en',
+        'imageUrl': 'assets/english_flag.png',
+        'userLevel': 1, // Niveau par défaut
+      });
+
+      // Naviguez vers la page de connexion après l'inscription
       Navigator.of(context).pushReplacementNamed("login");
+
+      // Envoyez un e-mail de vérification à l'utilisateur
       FirebaseAuth.instance.currentUser!.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
