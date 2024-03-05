@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pfe_1/constant/courses.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +18,22 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getCurrentUser();
+  }
+
+  void navigateToLearn() {
+    // Logique de navigation pour l'onglet "Learn"
+  }
+
+  void navigateToObjectTranslation() {
+    // Logique de navigation pour l'onglet "Object-Translation"
+  }
+
+  void navigateToAchievement() {
+    // Logique de navigation pour l'onglet "Achievement"
+  }
+
+  void navigateToProfile() {
+    // Logique de navigation pour l'onglet "Profile"
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getCourseDataByIndex(
@@ -612,6 +627,22 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {
               _currentIndex = index;
             });
+            switch (index) {
+              case 0:
+                navigateToLearn();
+                break;
+              case 1:
+                navigateToObjectTranslation();
+                break;
+              case 2:
+                navigateToAchievement();
+                break;
+              case 3:
+                navigateToProfile();
+                break;
+              default:
+                break;
+            }
           },
           items: [
             BottomNavigationBarItem(
