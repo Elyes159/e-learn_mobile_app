@@ -6,6 +6,7 @@ import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/english_course/english_main.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
+import 'package:pfe_1/french_course/frensh_unities.dart';
 import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';
 import 'package:pfe_1/starting/signin.dart';
@@ -63,6 +64,7 @@ class _MyAppState extends State<MyApp> {
       home: _getStartScreen(),
       routes: {
         'stages': (context) => StagesPage(),
+        'frenshunities': (context) => FrenshUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),
         'frenchCourse': (context) => FrenchCourse(),

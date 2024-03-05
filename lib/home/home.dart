@@ -348,7 +348,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       'imageUrl': selectedCourse!.imageUrl,
                       'userLevel': 0,
                       'progressValue': 0,
+                      'progressIntro': 0,
+                      'progressGrammar': 0,
+                      'progressVocabulary': 0,
                     });
+
                     print('Selected course added to Firestore');
                   } else {
                     print('Selected course already exists in Firestore');

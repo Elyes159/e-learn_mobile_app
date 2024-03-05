@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class FrenshUnities extends StatefulWidget {
+  @override
+  _FrenshUnitiesState createState() => _FrenshUnitiesState();
+}
+
+class _FrenshUnitiesState extends State<FrenshUnities> {
+  bool isExpanded = false;
+  bool isExpanded1 = false;
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+            child: Text(
+          "Cours",
+          style: GoogleFonts.poppins(),
+        )),
+      ),
+      body: ListView(
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isExpanded = !isExpanded;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+              child: AnimatedContainer(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xFF3DB2FF),
+                ),
+                duration: Duration(milliseconds: 0),
+                height: isExpanded ? 400 : 70,
+                width: screenWidth,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, top: 8),
+                          child: Image.asset(
+                            "assets/agitant-la-main.png",
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 140),
+                          child: Text(
+                            "Bonjour",
+                            style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                          size: 40,
+                        )
+                      ],
+                    ),
+                    if (isExpanded)
+                      Center(
+                        child: Text(
+                          "Content goes here",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isExpanded1 = !isExpanded1;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15),
+              child: AnimatedContainer(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xFF3DB2FF),
+                ),
+                duration: Duration(milliseconds: 300),
+                height: isExpanded1 ? 200 : 70,
+                width: screenWidth,
+                child: Column(
+                  children: [
+                    Text(
+                      "Bonjour",
+                      style: GoogleFonts.poppins(
+                          color: Colors.white, fontSize: 20),
+                    ),
+                    if (isExpanded1)
+                      Center(
+                        child: Text(
+                          "Content goes here",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
