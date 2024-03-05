@@ -238,6 +238,7 @@ class _SignupState extends State<Signup> {
         'userLevel': 1, // Niveau par défaut
       });
 
+      ;
       // Naviguez vers la page de connexion après l'inscription
       Navigator.of(context).pushReplacementNamed("login");
 

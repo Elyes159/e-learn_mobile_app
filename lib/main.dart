@@ -50,6 +50,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: const [
         Locale('en'),
@@ -62,6 +63,7 @@ class _MyAppState extends State<MyApp> {
       home: _getStartScreen(),
       routes: {
         'stages': (context) => StagesPage(),
+        'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),
         'frenchCourse': (context) => FrenchCourse(),
         'englishCourse': (context) => EnglishCourse(),
