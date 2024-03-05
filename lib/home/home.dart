@@ -21,19 +21,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void navigateToLearn() {
-    // Logique de navigation pour l'onglet "Learn"
+    Navigator.of(context).pushReplacementNamed("arabicCourse");
   }
 
   void navigateToObjectTranslation() {
-    // Logique de navigation pour l'onglet "Object-Translation"
+    Navigator.of(context).pushReplacementNamed("arabicCourse");
   }
 
   void navigateToAchievement() {
-    // Logique de navigation pour l'onglet "Achievement"
+    Navigator.of(context).pushReplacementNamed("arabicCourse");
   }
 
   void navigateToProfile() {
-    // Logique de navigation pour l'onglet "Profile"
+    Navigator.of(context).pushReplacementNamed("arabicCourse");
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getCourseDataByIndex(
