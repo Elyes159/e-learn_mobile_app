@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pfe_1/french_course/one.dart';
+import 'package:pfe_1/arabic_course/arabic_main.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/language_const.dart';
+import 'package:pfe_1/english_course/english_main.dart';
+import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';
 import 'package:pfe_1/starting/signin.dart';
@@ -60,7 +62,9 @@ class _MyAppState extends State<MyApp> {
       home: _getStartScreen(),
       routes: {
         'stages': (context) => StagesPage(),
-        'chapitre1': (context) => Chapitre1(),
+        'arabicCourse': (context) => ArabicCourse(),
+        'frenchCourse': (context) => FrenchCourse(),
+        'englishCourse': (context) => EnglishCourse(),
         "signup": (context) => const Signup(),
         "login": (context) => Login(),
         "chatt": (context) => ChatScreen(),

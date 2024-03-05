@@ -100,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           List<Widget> greenContainers = courseDataList.map((courseData) {
             String courseName = courseData['name'];
             int userLevel = courseData['userLevel'];
+            String courseCode = courseData['code'];
 
             return Padding(
               padding: const EdgeInsets.only(right: 8.0, left: 8),
@@ -137,7 +138,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(height: 8),
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
-                      child: Image.asset("assets/Icon.png"),
+                      child: InkWell(
+                        onTap: () {
+                          if (courseCode == "ar") {
+                            Navigator.of(context)
+                                .pushReplacementNamed("arabicCourse");
+                          } else if (courseCode == "fr") {
+                            Navigator.of(context)
+                                .pushReplacementNamed("frenchCourse");
+                          } else if (courseCode == "en") {
+                            Navigator.of(context)
+                                .pushReplacementNamed("englishCourse");
+                          }
+                        },
+                        child: Image.asset("assets/Icon.png"),
+                      ),
                     ),
                   ],
                 ),
@@ -183,6 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'name': doc['name'] as String,
           'userLevel': doc['userLevel'] as int,
           'progressValue': doc['progressValue'] as int,
+          'code': doc['code'] as String,
         };
       }).toList();
 
@@ -375,8 +391,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user1 = FirebaseAuth.instance.currentUser;
-
     return Scaffold(
         body: Column(
           children: [
@@ -385,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(10),
                 color: Color(0xFF3DB2FF),
               ),
-              height: 240, // Ajustez la hauteur comme nécessaire
+              height: 250, // Ajustez la hauteur comme nécessaire
               // Couleur bleue
               child: Row(
                 children: [
@@ -452,9 +466,9 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 40),
+              padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 0),
               child: Container(
-                height: 270,
+                height: 300,
                 color: Colors.white,
                 child: FutureBuilder<int>(
                   future: getNumberOfCourses(),
@@ -472,7 +486,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: numberOfCourses,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                            padding: const EdgeInsets.only(bottom: 8),
                             child: Container(
                               height: 84,
                               width: 349,
