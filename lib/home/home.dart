@@ -212,7 +212,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return {
           'name': doc['name'] as String,
           'userLevel': doc['userLevel'] as int,
-          'progressValue': doc['progressValue'] as int,
           'code': doc['code'] as String,
         };
       }).toList();
