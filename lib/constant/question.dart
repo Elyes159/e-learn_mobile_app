@@ -1,3 +1,10 @@
+class Option1 {
+  final String text;
+  final String imagePath;
+
+  Option1(this.text, this.imagePath);
+}
+
 class Question {
   final String questionText;
   final List<Option1> options;
@@ -6,11 +13,4 @@ class Question {
 
   Question(this.questionText, this.options, this.selectedOptions,
       this.correctOptions);
-}
-
-class Option1 {
-  final String text;
-  final String imagePath;
-
-  Option1(this.text, this.imagePath);
 }

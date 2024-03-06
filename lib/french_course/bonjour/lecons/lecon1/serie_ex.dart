@@ -2,22 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-class Option1 {
-  final String text;
-  final String imagePath;
-
-  Option1(this.text, this.imagePath);
-}
-
-class Question {
-  final String questionText;
-  final List<Option1> options;
-  final List<bool> selectedOptions;
-  final List<bool> correctOptions;
-
-  Question(this.questionText, this.options, this.selectedOptions,
-      this.correctOptions);
-}
+import '../../../../constant/question.dart';
 
 class ExLeconOne extends StatefulWidget {
   @override
@@ -36,9 +21,10 @@ class _ExLeconOneState extends State<ExLeconOne> {
         Option1('Option 1', 'assets/UserCircle.png'),
         Option1('Option 2', 'assets/UserCircle.png'),
         Option1('Option 3', 'assets/UserCircle.png'),
+        Option1('Option 3', 'assets/UserCircle.png'),
       ],
-      [false, false, false],
-      [true, false, false],
+      [false, false, false, false],
+      [true, false, false, false],
     ),
     Question(
       'Question 2',
@@ -46,7 +32,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
         Option1('Option 1', 'assets/UserCircle.png'),
         Option1('Option 2', 'assets/UserCircle.png'),
         Option1('Option 3', 'assets/UserCircle.png'),
-        Option1('Option 4', 'assets/UserCircle.png'),
+        Option1('Option 3', 'assets/UserCircle.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
@@ -87,6 +73,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
                   _progress = (_currentPage + 1) / questions.length;
                 });
               },
+              physics: NeverScrollableScrollPhysics(),
               children: List.generate(
                 questions.length,
                 (index) => ExercisePage(
@@ -139,11 +126,15 @@ class _ExercisePageState extends State<ExercisePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(widget.question.questionText, style: TextStyle(fontSize: 20)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(
-              widget.question.options.length,
-              (index) => GestureDetector(
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+              ),
+              itemCount: widget.question.options.length,
+              itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
                   setState(() {
                     widget.question.selectedOptions[index] =
@@ -152,36 +143,39 @@ class _ExercisePageState extends State<ExercisePage> {
 
                   speak(widget.question.options[index].text);
                 },
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 5),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                      color: widget.question.selectedOptions[index]
+                          ? Colors.blue
+                          : Colors.white,
                     ),
-                    borderRadius: BorderRadius.circular(8),
-                    color: widget.question.selectedOptions[index]
-                        ? Colors.blue
-                        : Colors.white,
-                  ),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        widget.question.options[index].imagePath,
-                        width: 50,
-                        height: 50,
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        widget.question.options[index].text,
-                        style: TextStyle(
-                          color: widget.question.selectedOptions[index]
-                              ? Colors.white
-                              : Colors.black,
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          widget.question.options[index].imagePath,
+                          width: 50,
+                          height: 50,
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 5),
+                        Text(
+                          widget.question.options[index].text,
+                          style: TextStyle(
+                            color: widget.question.selectedOptions[index]
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
