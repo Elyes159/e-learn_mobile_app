@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pfe_1/constant/lecon.dart';
 
 class FrenshUnities extends StatefulWidget {
   @override
@@ -70,10 +71,30 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
                       ],
                     ),
                     if (isExpanded)
-                      Center(
-                        child: Text(
-                          "Content goes here",
-                          style: TextStyle(color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 20, left: 20, bottom: 20, top: 5),
+                        child: Column(
+                          children: [
+                            Lecon(
+                                imagePath: "assets/tableau-a-feuilles.png",
+                                leconTitle: "Lecon 1"),
+                            Lecon(
+                                imagePath: "assets/tableau-a-feuilles.png",
+                                leconTitle: "Lecon 2"),
+                            Lecon(
+                                imagePath: "assets/tableau-a-feuilles.png",
+                                leconTitle: "Lecon 3"),
+                            Lecon(
+                                imagePath: "assets/tableau-a-feuilles.png",
+                                leconTitle: "Lecon 4"),
+                            Lecon(
+                                imagePath: "assets/tableau-a-feuilles.png",
+                                leconTitle: "Lecon 5"),
+                            Lecon(
+                                imagePath: "assets/tableau-a-feuilles.png",
+                                leconTitle: "Lecon 6"),
+                          ],
                         ),
                       ),
                   ],
@@ -105,12 +126,19 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
                           color: Colors.white, fontSize: 20),
                     ),
                     if (isExpanded1)
-                      Center(
-                        child: Text(
-                          "Content goes here",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                      Column(
+                        children: [
+                          Container(
+                            height: 50,
+                            width: screenWidth,
+                            child: Row(
+                              children: [
+                                Image.asset("assets/tableau-a-feuilles.png")
+                              ],
+                            ),
+                          )
+                        ],
+                      )
                   ],
                 ),
               ),
