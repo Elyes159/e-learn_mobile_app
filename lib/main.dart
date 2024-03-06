@@ -7,6 +7,7 @@ import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/english_course/english_main.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
+import 'package:pfe_1/french_course/bonjour/lecons/lecon1/serie_ex.dart';
 import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';
 import 'package:pfe_1/starting/signin.dart';
@@ -64,6 +65,7 @@ class _MyAppState extends State<MyApp> {
       home: _getStartScreen(),
       routes: {
         'stages': (context) => StagesPage(),
+        'lecon1': (context) => ExLeconOne(),
         'frenshunities': (context) => FrenshUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),

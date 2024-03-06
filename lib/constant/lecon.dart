@@ -11,26 +11,34 @@ class Lecon extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return Container(
-      height: 50,
-      width: screenWidth,
-      child: Row(
-        children: [
-          Image.asset(
-            imagePath,
-            height: 40,
-            width: 40,
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                leconTitle,
-                style: GoogleFonts.poppins(color: Colors.white, fontSize: 18),
-              ),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pushReplacementNamed("lecon1");
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            border:
+                Border.symmetric(horizontal: BorderSide(color: Colors.white))),
+        height: 50,
+        width: screenWidth,
+        child: Row(
+          children: [
+            Image.asset(
+              imagePath,
+              height: 40,
+              width: 40,
             ),
-          )
-        ],
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  leconTitle,
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
