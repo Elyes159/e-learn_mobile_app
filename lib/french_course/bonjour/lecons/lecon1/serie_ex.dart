@@ -41,16 +41,27 @@ class _ExLeconOneState extends State<ExLeconOne> {
   ];
 
   void _nextPage() {
-    setState(() {
-      if (_currentPage < questions.length - 1) {
-        _currentPage++;
-        _progress = (_currentPage + 1) / questions.length;
-        _pageController.nextPage(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease,
-        );
-      }
-    });
+    bool isCorrect = ListEquality().equals(
+      questions[_currentPage].selectedOptions,
+      questions[_currentPage].correctOptions,
+    );
+
+    if (isCorrect) {
+      _progress = (_currentPage + 1) / (questions.length);
+    }
+
+    if (isCorrect || !isCorrect) {
+      setState(() {
+        if (_currentPage < questions.length - 1) {
+          _currentPage++;
+
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        }
+      });
+    }
   }
 
   @override
@@ -70,7 +81,13 @@ class _ExLeconOneState extends State<ExLeconOne> {
               onPageChanged: (index) {
                 setState(() {
                   _currentPage = index;
-                  _progress = (_currentPage + 1) / questions.length;
+                  // Ne mettez à jour la barre de progression que si la réponse est correcte
+                  _progress = ListEquality().equals(
+                    questions[_currentPage].selectedOptions,
+                    questions[_currentPage].correctOptions,
+                  )
+                      ? (_currentPage + 1) / questions.length
+                      : _progress;
                 });
               },
               physics: NeverScrollableScrollPhysics(),
@@ -188,7 +205,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 widget.question.correctOptions,
               );
 
-              if (isCorrect) {
+              if (isCorrect || !isCorrect) {
                 widget.onCorrectAnswer();
               } else {
                 // Handle incorrect answer logic if needed
