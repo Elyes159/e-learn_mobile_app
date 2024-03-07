@@ -1,4 +1,4 @@
-# pfe_1
+# E-learn mobile application
 
 E-Learn with Flutter and Firebase: Your Gateway to Smart Learning!
 
