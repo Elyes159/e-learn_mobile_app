@@ -53,6 +53,22 @@ class _ExLeconOneState extends State<ExLeconOne> {
       ],
       [false, false, false, false],
       [true, false, false, false],
+    ),
+    TranslationQuestion(
+      originalText: 'hello',
+      correctTranslation: 'salut',
+      userTranslationn: '',
+    ),
+    Question(
+      'Question 2',
+      [
+        Option1('Option 1', 'assets/UserCircle.png'),
+        Option1('Option 2', 'assets/UserCircle.png'),
+        Option1('Option 3', 'assets/UserCircle.png'),
+        Option1('Option 4', 'assets/UserCircle.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
     ), // Add more questions as needed
   ];
 
