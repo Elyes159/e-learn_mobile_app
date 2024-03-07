@@ -15,7 +15,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
   int _currentPage = 0;
   double _progress = 0.0;
 
-  List<Question> questions = [
+  List<dynamic> questions = [
     Question(
       'Question 1',
       [
@@ -38,14 +38,49 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [false, false, false, false],
       [true, false, false, false],
     ),
-    // Add more questions as needed
+    TranslationQuestion(
+      originalText: 'Bonjour',
+      correctTranslation: 'good Morning',
+      userTranslationn: '',
+    ),
+    Question(
+      'Question 2',
+      [
+        Option1('Option 1', 'assets/UserCircle.png'),
+        Option1('Option 2', 'assets/UserCircle.png'),
+        Option1('Option 3', 'assets/UserCircle.png'),
+        Option1('Option 4', 'assets/UserCircle.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ), // Add more questions as needed
   ];
 
-  void _nextPage() {
+  void _nextPageForQuestion() {
     bool isCorrect = ListEquality().equals(
-      questions[_currentPage].selectedOptions,
-      questions[_currentPage].correctOptions,
+      (questions[_currentPage] as Question).selectedOptions,
+      (questions[_currentPage] as Question).correctOptions,
     );
+
+    if (isCorrect || !isCorrect) {
+      setState(() {
+        if (_currentPage < questions.length - 1) {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        }
+      });
+    }
+  }
+
+  void _nextPageForTranslationQuestion(String userTranslation) {
+    String correctTranslation =
+        (questions[_currentPage] as TranslationQuestion).correctTranslation;
+    bool isCorrect =
+        userTranslation.toLowerCase() == correctTranslation.toLowerCase();
 
     if (isCorrect || !isCorrect) {
       setState(() {
@@ -167,28 +202,44 @@ class _ExLeconOneState extends State<ExLeconOne> {
               ],
             ),
             Expanded(
-              child: PageView(
+              child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (index) {
                   setState(() {
                     _currentPage = index;
                     // Ne mettez à jour la barre de progression que si la réponse est correcte
-                    _progress = ListEquality().equals(
-                      questions[_currentPage].selectedOptions,
-                      questions[_currentPage].correctOptions,
-                    )
-                        ? (_currentPage + 1) / questions.length
-                        : _progress;
+                    if (questions[_currentPage] is Question) {
+                      _progress = ListEquality().equals(
+                        (questions[_currentPage] as Question).selectedOptions,
+                        (questions[_currentPage] as Question).correctOptions,
+                      )
+                          ? (_currentPage + 1) / questions.length
+                          : _progress;
+                    }
                   });
                 },
                 physics: NeverScrollableScrollPhysics(),
-                children: List.generate(
-                  questions.length,
-                  (index) => ExercisePage(
-                    question: questions[index],
-                    onCorrectAnswer: _nextPage,
-                  ),
-                ),
+                itemCount: questions.length,
+                itemBuilder: (context, index) {
+                  if (questions[index] is Question) {
+                    return ExercisePage(
+                      question: questions[index],
+                      onCorrectAnswer: _nextPageForQuestion,
+                    );
+                  } else if (questions[index] is TranslationQuestion) {
+                    TextEditingController translationController =
+                        TextEditingController(); // Créez un nouveau contrôleur pour chaque instance de TranslationExercisePage
+                    return TranslationExercisePage.create(
+                      question: questions[index] as TranslationQuestion,
+                      translationController: translationController,
+                      onCorrectAnswer: () => _nextPageForTranslationQuestion(
+                          translationController.text.trim()),
+                    );
+                  } else {
+                    // Gérer le cas où le type de question n'est ni Question ni TranslationQuestion
+                    return Container(); // ou tout autre widget par défaut
+                  }
+                },
               ),
             ),
           ],
@@ -303,6 +354,83 @@ class _ExercisePageState extends State<ExercisePage> {
               }
             },
             child: Text('Répondre correctement'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TranslationExercisePage extends StatefulWidget {
+  final TranslationQuestion question;
+  final TextEditingController translationController;
+  final VoidCallback onCorrectAnswer;
+
+  TranslationExercisePage({
+    required this.question,
+    required this.translationController,
+    required this.onCorrectAnswer,
+  });
+
+  @override
+  _TranslationExercisePageState createState() =>
+      _TranslationExercisePageState();
+
+  // Ajoutez cette fonction de fabrique
+  static TranslationExercisePage create({
+    required TranslationQuestion question,
+    required TextEditingController translationController,
+    required VoidCallback onCorrectAnswer,
+  }) {
+    return TranslationExercisePage(
+      question: question,
+      translationController: translationController,
+      onCorrectAnswer: onCorrectAnswer,
+    );
+  }
+}
+
+class _TranslationExercisePageState extends State<TranslationExercisePage> {
+  // Retirez cette ligne
+  // TextEditingController _translationController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    String correctTranslation = widget.question.correctTranslation;
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            widget.question.originalText,
+            style: TextStyle(fontSize: 18),
+          ),
+          SizedBox(height: 20),
+          TextField(
+            controller: widget.translationController, // Modifiez cette ligne
+            decoration: InputDecoration(
+              hintText: 'Traduisez ici...',
+            ),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              String userTranslation = widget.translationController.text
+                  .trim(); // Modifiez cette ligne
+              bool isCorrect = userTranslation.toLowerCase() ==
+                  correctTranslation.toLowerCase();
+
+              // Mettre à jour l'instance de TranslationQuestion avec la userTranslation
+              widget.question.userTranslationn = userTranslation;
+
+              if (isCorrect) {
+                widget.onCorrectAnswer();
+              } else {
+                // Gérer la logique pour une réponse incorrecte si nécessaire
+              }
+            },
+            child: Text('Vérifier la traduction'),
           ),
         ],
       ),

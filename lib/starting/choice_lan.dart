@@ -17,6 +17,30 @@ class _ChoiceLState extends State<ChoiceL> {
   Language? selectedLanguage;
 
   @override
+  void initState() {
+    super.initState();
+    checkLanguageSelection();
+  }
+
+  Future<void> checkLanguageSelection() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String? _uid = user!.uid;
+
+    DocumentSnapshot doc =
+        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+
+    if (doc.exists && doc['selectedLanguage'] != null) {
+      // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
+      String selectedLanguageCode = doc['selectedLanguage'];
+      Locale _locale = await setLocale(selectedLanguageCode);
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -54,11 +78,9 @@ class _ChoiceLState extends State<ChoiceL> {
                   });
                   Locale _locale = await setLocale(language.languageCode);
 
-                  Navigator.of(context).push(PageRouteBuilder(
-                    transitionDuration: Duration.zero,
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        HomeScreen(),
-                  ));
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
 
                   print('Langue sélectionnée : ${language.languageCode}');
                   if (selectedLanguage?.languageCode == "ar") {

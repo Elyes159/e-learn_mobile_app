@@ -14,3 +14,14 @@ class Question {
   Question(this.questionText, this.options, this.selectedOptions,
       this.correctOptions);
 }
+
+class TranslationQuestion {
+  final String originalText;
+  final String correctTranslation;
+  String userTranslationn;
+
+  TranslationQuestion(
+      {required this.originalText,
+      required this.correctTranslation,
+      required this.userTranslationn});
+}
