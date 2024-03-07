@@ -100,7 +100,7 @@ class _FrenchCourseState extends State<FrenchCourse> {
                     }
 
                     if (courseFrData != null) {
-                      int progressIntro = courseFrData['progressIntro'] ?? 0.0;
+                      int progressIntro = courseFrData['progressIntro'] ?? 0;
 
                       return InkWell(
                         onTap: () {

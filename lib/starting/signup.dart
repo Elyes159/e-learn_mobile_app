@@ -235,7 +235,10 @@ class _SignupState extends State<Signup> {
         'name': 'Anglais',
         'code': 'en',
         'imageUrl': 'assets/english_flag.png',
-        'userLevel': 1, // Niveau par défaut
+        'userLevel': 1,
+        'progressGrammar': 0,
+        'progressIntro': 0,
+        'progressVocabulary': 0,
       });
 
       ;
