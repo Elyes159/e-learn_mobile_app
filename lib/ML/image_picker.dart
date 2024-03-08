@@ -1,10 +1,96 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfe_1/constant/LanguageProvider.dart';
+import 'package:provider/provider.dart';
+import 'package:translator/translator.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:tflite_v2/tflite_v2.dart';
+
+class LanguageSelectionDialog extends StatefulWidget {
+  final Function(String) onLanguageSelected;
+
+  const LanguageSelectionDialog({required this.onLanguageSelected});
+
+  @override
+  _LanguageSelectionDialogState createState() =>
+      _LanguageSelectionDialogState();
+}
+
+class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
+  String selectedLanguage = 'fr'; // Default language
+
+  @override
+  Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
+    return AlertDialog(
+      title: Text('Choose Language'),
+      content: Column(
+        children: [
+          Text('Select the language for label translation:'),
+          DropdownButton<String>(
+            value: selectedLanguage,
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedLanguage = newValue!;
+              });
+            },
+            items: <String>['en', 'fr', 'es', 'de', 'it', 'pt', 'ru']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () async {
+            languageProvider.setLanguage(selectedLanguage);
+            await updateSelectedLanguageInFirebase(selectedLanguage);
+            Navigator.of(context).pop();
+          },
+          child: Text('OK'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> updateSelectedLanguageInFirebase(String language) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userDocRef =
+          FirebaseFirestore.instance.collection("model").doc(user.uid);
+      final modelLanguageRef = userDocRef.collection('model_language');
+
+      // Check if a document exists
+      final snapshot = await modelLanguageRef.get();
+      if (snapshot.docs.isNotEmpty) {
+        // Update the existing document
+        await modelLanguageRef.doc(snapshot.docs.first.id).update({
+          "modelLanguage": language,
+        });
+      } else {
+        // Create a new document
+        await modelLanguageRef.add({
+          "modelLanguage": language,
+        });
+      }
+    }
+  }
+}
 
 class ImagePickerDemo extends StatefulWidget {
   @override
@@ -13,18 +99,60 @@ class ImagePickerDemo extends StatefulWidget {
 
 class _ImagePickerDemoState extends State<ImagePickerDemo> {
   final ImagePicker _picker = ImagePicker();
+  final translator = GoogleTranslator();
+  String selectedLanguage = 'fr'; // Default language
+
   XFile? _image;
   File? file;
-  // ignore: unused_field
   var _recognitions;
   var v = "";
-  // var dataList = [];
+
   @override
   void initState() {
     super.initState();
-    loadmodel().then((value) {
-      setState(() {});
+    // Utilize WidgetsBinding.instance?.addPostFrameCallback to ensure it runs after the build
+    Future.delayed(Duration.zero, () {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        showLanguageDialog();
+      });
     });
+  }
+
+  Future<void> showLanguageDialog() async {
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return LanguageSelectionDialog(
+          onLanguageSelected: (selectedLanguage) {
+            setState(() {
+              this.selectedLanguage = selectedLanguage;
+            });
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> translateLabels(List<String> labels, String toLanguage) async {
+    // La langue source est détectée automatiquement
+    String fromLanguage = 'auto';
+
+    List<String> translatedLabels = [];
+    for (String label in labels) {
+      String translatedLabel = await translate(label, fromLanguage, toLanguage);
+      translatedLabels.add(translatedLabel);
+    }
+
+    setState(() {
+      v = translatedLabels.join(", ");
+    });
+  }
+
+  Future<String> translate(
+      String sourceText, String fromLanguage, String toLanguage) async {
+    var translation = await translator.translate(sourceText,
+        from: fromLanguage, to: toLanguage);
+    return translation.text;
   }
 
   loadmodel() async {
@@ -47,8 +175,42 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     }
   }
 
+  Future<List<Map<String, dynamic>>> getModelLanguage() async {
+    try {
+      // Fetch course data from Firestore
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('model')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('model_language')
+              .get();
+
+      // Process the query snapshot and convert it to a list of maps
+      List<Map<String, dynamic>> courseDataList = querySnapshot.docs
+          .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+        return {
+          'modelLanguage': doc['modelLanguage'] as String,
+        };
+      }).toList();
+
+      return courseDataList;
+    } catch (error) {
+      print('Error fetching course data: $error');
+      // You might want to handle errors more gracefully based on your use case
+      throw error;
+    }
+  }
+
   Future detectimage(File image) async {
     int startTime = new DateTime.now().millisecondsSinceEpoch;
+
+    // Fetch the model language from Firestore
+    List<Map<String, dynamic>> modelLanguage = await getModelLanguage();
+
+    // Default to 'en' if modelLanguage is null
+    String selectedLanguage = modelLanguage.isNotEmpty
+        ? modelLanguage[0]['modelLanguage'] as String
+        : 'en';
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 6,
@@ -62,10 +224,8 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
       labels.add(recognition["label"]);
     }
 
-    setState(() {
-      _recognitions = recognitions;
-      v = labels.join(", "); // Concatenate labels with a comma separator
-    });
+    // Translate labels using the fetched model language
+    await translateLabels(labels, selectedLanguage);
 
     int endTime = new DateTime.now().millisecondsSinceEpoch;
     print("Inference took ${endTime - startTime}ms");
@@ -78,12 +238,13 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
         title: Text('Flutter TFlite'),
         actions: [
           IconButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil("login", (route) => false);
-              },
-              icon: const Icon(Icons.exit_to_app_rounded))
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil("login", (route) => false);
+            },
+            icon: const Icon(Icons.exit_to_app_rounded),
+          )
         ],
       ),
       body: Center(

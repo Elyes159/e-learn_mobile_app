@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -72,43 +74,103 @@ class _ExLeconOneState extends State<ExLeconOne> {
     ), // Add more questions as needed
   ];
 
-  void _nextPageForQuestion() {
+  void _nextPageForQuestion() async {
     bool isCorrect = ListEquality().equals(
       (questions[_currentPage] as Question).selectedOptions,
       (questions[_currentPage] as Question).correctOptions,
     );
 
     if (isCorrect || !isCorrect) {
-      setState(() {
-        if (_currentPage < questions.length - 1) {
+      if (_currentPage < questions.length - 1) {
+        setState(() {
           _currentPage++;
           _progress = (_currentPage + 1) / questions.length;
           _pageController.nextPage(
             duration: Duration(milliseconds: 500),
             curve: Curves.ease,
           );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+
+            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon1Bonjour': true,
+            });
+
+            print('Champ lecon1Bonjour ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon1Bonjour est déjà vrai!');
         }
-      });
+      }
     }
   }
 
-  void _nextPageForTranslationQuestion(String userTranslation) {
+  void _nextPageForTranslationQuestion(String userTranslation) async {
     String correctTranslation =
         (questions[_currentPage] as TranslationQuestion).correctTranslation;
     bool isCorrect =
         userTranslation.toLowerCase() == correctTranslation.toLowerCase();
 
     if (isCorrect || !isCorrect) {
-      setState(() {
-        if (_currentPage < questions.length - 1) {
+      if (_currentPage < questions.length - 1) {
+        setState(() {
           _currentPage++;
           _progress = (_currentPage + 1) / questions.length;
           _pageController.nextPage(
             duration: Duration(milliseconds: 500),
             curve: Curves.ease,
           );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+
+            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon1Bonjour': true,
+            });
+
+            print('Champ lecon1Bonjour ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon1Bonjour est déjà vrai!');
         }
-      });
+      }
     }
   }
 

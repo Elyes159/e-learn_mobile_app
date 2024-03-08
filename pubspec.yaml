@@ -52,6 +52,8 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   duolingo4d: ^1.3.0
   flutter_tts: ^3.8.5
+  easy_localization: ^3.0.5
+  provider: ^6.1.2
 
 
 dev_dependencies:

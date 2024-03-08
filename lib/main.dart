@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/arabic_course/arabic_main.dart';
 import 'package:pfe_1/chatt/chatt.dart';
+import 'package:pfe_1/constant/LanguageProvider.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/english_course/english_main.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
@@ -16,13 +17,21 @@ import 'package:pfe_1/starting/signup.dart';
 import 'package:pfe_1/stages/stages.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pfe_1/starting/welcome_signup.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LanguageProvider(),
+      child: MaterialApp(
+        home: MyApp(), // Replace with the actual widget you want to start with
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -84,7 +93,7 @@ class _MyAppState extends State<MyApp> {
     if (FirebaseAuth.instance.currentUser == null) {
       return Login();
     } else {
-      return HomeScreen();
+      return ImagePickerDemo();
     }
   }
 }

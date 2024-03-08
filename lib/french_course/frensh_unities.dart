@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/constant/lecon.dart';
@@ -10,6 +12,35 @@ class FrenshUnities extends StatefulWidget {
 class _FrenshUnitiesState extends State<FrenshUnities> {
   bool isExpanded = false;
   bool isExpanded1 = false;
+
+  Future<bool> checkLecon1BonjourExistence() async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        // Le document existe avec le code 'fr'
+        // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+        // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon1Bonjour') ?? false;
+
+        return lecon1BonjourExists;
+      } else {
+        // Le document avec le code 'fr' n'existe pas
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +107,20 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
                             right: 20, left: 20, bottom: 20, top: 5),
                         child: Column(
                           children: [
-                            Lecon(
-                                imagePath: "assets/tableau-a-feuilles.png",
-                                leconTitle: "Lecon 1"),
+                            Row(
+                              children: [
+                                if (checkLecon1BonjourExistence() == true) ...[
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 50.0),
+                                    child: Image.asset("assets/cocher.png"),
+                                  ),
+                                ],
+                                Lecon(
+                                  imagePath: "assets/tableau-a-feuilles.png",
+                                  leconTitle: "Lecon 1",
+                                ),
+                              ],
+                            ),
                             Lecon(
                                 imagePath: "assets/tableau-a-feuilles.png",
                                 leconTitle: "Lecon 2"),

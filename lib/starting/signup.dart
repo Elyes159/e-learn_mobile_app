@@ -218,6 +218,7 @@ class _SignupState extends State<Signup> {
           .doc(credential.user!.uid)
           .set({
         'username': username.text,
+        'selectedLanguage': "en",
         'email': email.text,
         'age': age.text,
         'progressValue': 0.0,
@@ -240,8 +241,11 @@ class _SignupState extends State<Signup> {
         'progressIntro': 0,
         'progressVocabulary': 0,
       });
-
-      ;
+      await FirebaseFirestore.instance
+          .collection("model")
+          .doc(credential.user!.uid)
+          .collection('model_language')
+          .add({"modelLanguage": 'en'});
       // Naviguez vers la page de connexion après l'inscription
       Navigator.of(context).pushReplacementNamed("login");
 
