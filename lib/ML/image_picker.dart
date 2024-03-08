@@ -114,6 +114,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     Future.delayed(Duration.zero, () {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         showLanguageDialog();
+        loadModel();
       });
     });
   }
@@ -155,7 +156,8 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     return translation.text;
   }
 
-  loadmodel() async {
+  Future<void> loadModel() async {
+    // Charger le modèle une seule fois lors de l'initialisation
     await Tflite.loadModel(
       model: "assets/model_unquant.tflite",
       labels: "assets/labels.txt",
@@ -175,9 +177,9 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getModelLanguage() async {
+  Future<String?> getModelLanguage() async {
     try {
-      // Fetch course data from Firestore
+      // Fetch model language from Firestore
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
               .collection('model')
@@ -185,32 +187,39 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
               .collection('model_language')
               .get();
 
-      // Process the query snapshot and convert it to a list of maps
-      List<Map<String, dynamic>> courseDataList = querySnapshot.docs
-          .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
-        return {
-          'modelLanguage': doc['modelLanguage'] as String,
-        };
-      }).toList();
-
-      return courseDataList;
+      // Check if a document exists
+      if (querySnapshot.docs.isNotEmpty) {
+        // Return the model language directly
+        return querySnapshot.docs.first['modelLanguage'] as String?;
+      } else {
+        // No document found
+        return null;
+      }
     } catch (error) {
-      print('Error fetching course data: $error');
-      // You might want to handle errors more gracefully based on your use case
-      throw error;
+      print('Error fetching model language: $error');
+      return null;
     }
   }
 
+  //String selectedLanguage = 'en'; // Default language
+  bool _isInterpreterBusy = false;
   Future detectimage(File image) async {
     int startTime = new DateTime.now().millisecondsSinceEpoch;
+    while (_isInterpreterBusy) {
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+
+    // Définir l'état de l'interpréteur sur occupé
+    setState(() {
+      _isInterpreterBusy = true;
+    });
 
     // Fetch the model language from Firestore
-    List<Map<String, dynamic>> modelLanguage = await getModelLanguage();
+    String? modelLanguage = await getModelLanguage();
 
     // Default to 'en' if modelLanguage is null
-    String selectedLanguage = modelLanguage.isNotEmpty
-        ? modelLanguage[0]['modelLanguage'] as String
-        : 'en';
+    selectedLanguage = modelLanguage ?? 'en';
+
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 6,
