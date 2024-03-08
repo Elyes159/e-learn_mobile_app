@@ -136,7 +136,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
 
   Future<void> translateLabels(List<String> labels, String toLanguage) async {
     // La langue source est détectée automatiquement
-    String fromLanguage = 'auto';
+    String fromLanguage = 'en';
 
     List<String> translatedLabels = [];
     for (String label in labels) {
@@ -218,7 +218,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     String? modelLanguage = await getModelLanguage();
 
     // Default to 'en' if modelLanguage is null
-    selectedLanguage = modelLanguage ?? 'en';
+    selectedLanguage = modelLanguage!;
 
     var recognitions = await Tflite.runModelOnImage(
       path: image.path,

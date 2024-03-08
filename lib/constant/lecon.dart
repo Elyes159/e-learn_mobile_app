@@ -16,27 +16,23 @@ class Lecon extends StatelessWidget {
         Navigator.of(context).pushReplacementNamed("lecon1");
       },
       child: Container(
-        decoration: BoxDecoration(
-            border:
-                Border.symmetric(horizontal: BorderSide(color: Colors.white))),
-        height: 50,
+        height: 60,
         width: screenWidth,
         child: Row(
           children: [
-            Image.asset(
-              imagePath,
-              height: 40,
-              width: 40,
-            ),
             Container(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  leconTitle,
-                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 18),
-                ),
+              width: 40,
+              height: 40,
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
               ),
-            )
+            ),
+            SizedBox(width: 8), // Ajoutez cet espacement
+            Text(
+              leconTitle,
+              style: GoogleFonts.poppins(color: Colors.white, fontSize: 18),
+            ),
           ],
         ),
       ),

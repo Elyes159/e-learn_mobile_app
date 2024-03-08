@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/constant/lecon.dart';
 
-class FrenshUnities extends StatefulWidget {
+class FrenchUnities extends StatefulWidget {
   @override
-  _FrenshUnitiesState createState() => _FrenshUnitiesState();
+  _FrenchUnitiesState createState() => _FrenchUnitiesState();
 }
 
-class _FrenshUnitiesState extends State<FrenshUnities> {
+class _FrenchUnitiesState extends State<FrenchUnities> {
   bool isExpanded = false;
   bool isExpanded1 = false;
 
@@ -23,16 +23,11 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
           .get();
 
       if (courseSnapshot.docs.isNotEmpty) {
-        // Le document existe avec le code 'fr'
-        // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-        // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
-
         bool lecon1BonjourExists =
             courseSnapshot.docs[0].get('lecon1Bonjour') ?? false;
 
         return lecon1BonjourExists;
       } else {
-        // Le document avec le code 'fr' n'existe pas
         return false;
       }
     } catch (error) {
@@ -48,10 +43,11 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-            child: Text(
-          "Cours",
-          style: GoogleFonts.poppins(),
-        )),
+          child: Text(
+            "Cours",
+            style: GoogleFonts.poppins(),
+          ),
+        ),
       ),
       body: ListView(
         children: [
@@ -66,10 +62,10 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
               child: AnimatedContainer(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color(0xFF3DB2FF),
+                  color: const Color(0xFF3DB2FF),
                 ),
-                duration: Duration(milliseconds: 0),
-                height: isExpanded ? 400 : 70,
+                duration: const Duration(milliseconds: 0),
+                height: isExpanded ? 550 : 70,
                 width: screenWidth,
                 child: Column(
                   children: [
@@ -89,9 +85,10 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
                           child: Text(
                             "Bonjour",
                             style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         Icon(
@@ -104,38 +101,67 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
                     if (isExpanded)
                       Padding(
                         padding: const EdgeInsets.only(
-                            right: 20, left: 20, bottom: 20, top: 5),
+                          right: 20,
+                          left: 20,
+                          bottom: 20,
+                          top: 5,
+                        ),
                         child: Column(
                           children: [
                             Row(
                               children: [
-                                if (checkLecon1BonjourExistence() == true) ...[
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 50.0),
-                                    child: Image.asset("assets/cocher.png"),
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 1",
                                   ),
-                                ],
-                                Lecon(
-                                  imagePath: "assets/tableau-a-feuilles.png",
-                                  leconTitle: "Lecon 1",
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon1BonjourExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
                                 ),
                               ],
                             ),
                             Lecon(
-                                imagePath: "assets/tableau-a-feuilles.png",
-                                leconTitle: "Lecon 2"),
+                              imagePath: "assets/tableau-a-feuilles.png",
+                              leconTitle: "Lecon 2",
+                            ),
                             Lecon(
-                                imagePath: "assets/tableau-a-feuilles.png",
-                                leconTitle: "Lecon 3"),
+                              imagePath: "assets/tableau-a-feuilles.png",
+                              leconTitle: "Lecon 3",
+                            ),
                             Lecon(
-                                imagePath: "assets/tableau-a-feuilles.png",
-                                leconTitle: "Lecon 4"),
+                              imagePath: "assets/tableau-a-feuilles.png",
+                              leconTitle: "Lecon 4",
+                            ),
                             Lecon(
-                                imagePath: "assets/tableau-a-feuilles.png",
-                                leconTitle: "Lecon 5"),
+                              imagePath: "assets/tableau-a-feuilles.png",
+                              leconTitle: "Lecon 5",
+                            ),
                             Lecon(
-                                imagePath: "assets/tableau-a-feuilles.png",
-                                leconTitle: "Lecon 6"),
+                              imagePath: "assets/tableau-a-feuilles.png",
+                              leconTitle: "Lecon 6",
+                            ),
                           ],
                         ),
                       ),
@@ -155,9 +181,9 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
               child: AnimatedContainer(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color(0xFF3DB2FF),
+                  color: const Color(0xFF3DB2FF),
                 ),
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 height: isExpanded1 ? 200 : 70,
                 width: screenWidth,
                 child: Column(
@@ -165,7 +191,9 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
                     Text(
                       "Bonjour",
                       style: GoogleFonts.poppins(
-                          color: Colors.white, fontSize: 20),
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
                     if (isExpanded1)
                       Column(
@@ -175,7 +203,7 @@ class _FrenshUnitiesState extends State<FrenshUnities> {
                             width: screenWidth,
                             child: Row(
                               children: [
-                                Image.asset("assets/tableau-a-feuilles.png")
+                                Image.asset("assets/tableau-a-feuilles.png"),
                               ],
                             ),
                           )

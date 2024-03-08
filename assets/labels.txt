@@ -3,7 +3,7 @@
 2 cat
 3 dog
 4 laptop
-5 espadrille
+5 shoes
 6 hoodie
-7 chemise
+7 shirt
 8 table
