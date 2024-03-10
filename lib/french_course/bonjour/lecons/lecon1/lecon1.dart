@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,15 +20,15 @@ class _ExLeconOneState extends State<ExLeconOne> {
 
   List<dynamic> questions = [
     Question(
-      'Question 1',
+      'la femme',
       [
-        Option1('Option 1', 'assets/UserCircle.png'),
-        Option1('Option 2', 'assets/UserCircle.png'),
-        Option1('Option 3', 'assets/UserCircle.png'),
-        Option1('Option 4', 'assets/UserCircle.png'),
+        Option1('the cat', 'assets/chat.png'),
+        Option1('the girl', 'assets/fille.png'),
+        Option1('the woman', 'assets/mere.png'),
+        Option1('one', 'assets/main.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
+      [false, false, true, false],
     ),
     Question(
       'Question 2',
@@ -363,9 +364,50 @@ class _ExercisePageState extends State<ExercisePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                "Select the correct image",
+                style: GoogleFonts.poppins(
+                    fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  speak(widget.question.questionText);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Image.asset(
+                    "assets/orateur.png",
+                    width: 50,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    "${widget.question.questionText}",
+                    style: GoogleFonts.poppins(
+                        fontSize: 20.0, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Expanded(
             child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
@@ -378,13 +420,15 @@ class _ExercisePageState extends State<ExercisePage> {
                         !widget.question.selectedOptions[index];
                   });
 
-                  speak(widget.question.options[index].text);
+                  // speak(widget.question.options[index].text);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Container(
+                    height: 200,
+                    width: 150,
                     padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.symmetric(vertical: 5),
+                    margin: EdgeInsets.symmetric(vertical: 0),
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black,
@@ -392,20 +436,22 @@ class _ExercisePageState extends State<ExercisePage> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                       color: widget.question.selectedOptions[index]
-                          ? Colors.blue
+                          ? Color(0xFF3DB2FF)
                           : Colors.white,
                     ),
                     child: Column(
                       children: [
                         Image.asset(
                           widget.question.options[index].imagePath,
-                          width: 50,
-                          height: 50,
+                          width: 150,
+                          height: 100,
                         ),
                         SizedBox(height: 5),
                         Text(
                           widget.question.options[index].text,
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
                             color: widget.question.selectedOptions[index]
                                 ? Colors.white
                                 : Colors.black,
@@ -418,20 +464,38 @@ class _ExercisePageState extends State<ExercisePage> {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              bool isCorrect = ListEquality().equals(
-                widget.question.selectedOptions,
-                widget.question.correctOptions,
-              );
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 50),
+            child: ElevatedButton(
+              onPressed: () {
+                bool isCorrect = ListEquality().equals(
+                  widget.question.selectedOptions,
+                  widget.question.correctOptions,
+                );
 
-              if (isCorrect || !isCorrect) {
-                widget.onCorrectAnswer();
-              } else {
-                // Handle incorrect answer logic if needed
-              }
-            },
-            child: Text('Répondre correctement'),
+                if (isCorrect || !isCorrect) {
+                  widget.onCorrectAnswer();
+                } else {
+                  // Gérez la logique de réponse incorrecte si nécessaire
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor:
+                    Color(0xFF3DB2FF), // Couleur du texte du bouton
+                padding: EdgeInsets.all(16), // Espace intérieur du bouton
+                minimumSize: Size(MediaQuery.of(context).size.width, 0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      20.0), // Ajustez cette valeur selon vos besoins
+                ), // Largeur du bouton = largeur de l'écran
+              ),
+              child: Text(
+                'CHECK',
+                style: GoogleFonts.poppins(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
         ],
       ),
