@@ -82,6 +82,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
         double screenWidth = MediaQuery.of(context).size.width;
 
         return Container(
+          decoration: BoxDecoration(color: Colors.black),
           width: screenWidth, // Utilisez la largeur de l'écran
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -115,7 +116,12 @@ class _ExLeconOneState extends State<ExLeconOne> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          // ...
+          decoration: BoxDecoration(
+              color: Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 200.0,
+          width: 350,
+          // Adjust the height here
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -136,7 +142,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Answer : ",
+                    "",
                     style: GoogleFonts.poppins(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w500,
@@ -147,10 +153,31 @@ class _ExLeconOneState extends State<ExLeconOne> {
                 SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
-                    // Ajoutez le code que vous souhaitez exécuter lorsque le bouton est pressé
-                    Navigator.pop(context); // Fermez le BottomSheet
+                    // Add the code you want to execute when the button is pressed
+                    Navigator.pop(context); // Close the BottomSheet
                   },
-                  child: Text('Fermer'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: isCorrect ? Color(0xFF99CC29) : Colors.red,
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          100.0), // Adjust the borderRadius value
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0,
+                        horizontal:
+                            120.0), // Adjust padding for height and width
+                    minimumSize: const Size(
+                        200.0, 40.0), // Set minimum size for height and width
+                  ),
+                  child: const Text(
+                    'Try again',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
             ),
