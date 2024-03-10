@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
@@ -74,14 +75,101 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [true, false, false, false],
     ), // Add more questions as needed
   ];
+  void _showBottomSheetTranslation(String message) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        double screenWidth = MediaQuery.of(context).size.width;
 
-  void _nextPageForQuestion() async {
+        return Container(
+          width: screenWidth, // Utilisez la largeur de l'écran
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Text(
+                  message,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Ajoutez le code que vous souhaitez exécuter lorsque le bouton est pressé
+                    Navigator.pop(context); // Fermez le BottomSheet
+                  },
+                  child: Text('Fermer'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showBottomSheet(bool isCorrect, Question question) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          // ...
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect
+                        ? "That's right"
+                        : "Ups.. That's not quite right \n",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Answer : ",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Ajoutez le code que vous souhaitez exécuter lorsque le bouton est pressé
+                    Navigator.pop(context); // Fermez le BottomSheet
+                  },
+                  child: Text('Fermer'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<bool> _nextPageForQuestion() async {
     bool isCorrect = ListEquality().equals(
       (questions[_currentPage] as Question).selectedOptions,
       (questions[_currentPage] as Question).correctOptions,
     );
 
-    if (isCorrect || !isCorrect) {
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheet(isCorrect, questions[_currentPage]);
+
       if (_currentPage < questions.length - 1) {
         setState(() {
           _currentPage++;
@@ -122,16 +210,24 @@ class _ExLeconOneState extends State<ExLeconOne> {
           print('Le champ lecon1Bonjour est déjà vrai!');
         }
       }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheet(isCorrect, questions[_currentPage]);
     }
+
+    return isCorrect;
   }
 
-  void _nextPageForTranslationQuestion(String userTranslation) async {
+  Future<bool> _nextPageForTranslationQuestion(String userTranslation) async {
     String correctTranslation =
         (questions[_currentPage] as TranslationQuestion).correctTranslation;
     bool isCorrect =
         userTranslation.toLowerCase() == correctTranslation.toLowerCase();
 
-    if (isCorrect || !isCorrect) {
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetTranslation("Next question");
+
       if (_currentPage < questions.length - 1) {
         setState(() {
           _currentPage++;
@@ -172,7 +268,12 @@ class _ExLeconOneState extends State<ExLeconOne> {
           print('Le champ lecon1Bonjour est déjà vrai!');
         }
       }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetTranslation("resayer");
     }
+
+    return isCorrect;
   }
 
   @override
@@ -385,21 +486,23 @@ class _ExercisePageState extends State<ExercisePage> {
                   speak(widget.question.questionText);
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Image.asset(
-                    "assets/orateur.png",
-                    width: 50,
+                    "assets/Volume button.png",
+                    width: 100,
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    "${widget.question.questionText}",
-                    style: GoogleFonts.poppins(
-                        fontSize: 20.0, fontWeight: FontWeight.w500),
+              Container(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      "${widget.question.questionText}",
+                      style: GoogleFonts.poppins(
+                          fontSize: 20.0, fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),
