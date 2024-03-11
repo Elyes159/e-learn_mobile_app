@@ -351,62 +351,69 @@ class _ExLeconOneState extends State<ExLeconOne> {
   }
 
   Future<void> _nextPageForScrambledWordsQuestion() async {
-    ScrambledWordsQuestion currentQuestion =
-        questions[_currentPage] as ScrambledWordsQuestion;
+    // Check if the current question is of type ScrambledWordsQuestion
+    if (questions[_currentPage] is ScrambledWordsQuestion) {
+      ScrambledWordsQuestion currentQuestion =
+          questions[_currentPage] as ScrambledWordsQuestion;
 
-    // Vérifiez si les mots sélectionnés sont dans le bon ordre
-    bool isCorrectOrder = ListEquality().equals(
-      currentQuestion.selectedWords,
-      currentQuestion.correctSentence.split(' '),
-    );
+      // Vérifiez si les mots sélectionnés sont dans le bon ordre
+      bool isCorrectOrder = ListEquality().equals(
+        currentQuestion.selectedWords,
+        currentQuestion.correctSentence.split(' '),
+      );
 
-    if (isCorrectOrder) {
-      // Show Bottom Sheet with "Correct" text
-      _showBottomSheetScrambled(isCorrectOrder, currentQuestion);
+      if (isCorrectOrder) {
+        // Show Bottom Sheet with "Correct" text
+        _showBottomSheetScrambled(isCorrectOrder, currentQuestion);
 
-      if (_currentPage < questions.length - 1) {
-        setState(() {
-          _currentPage++;
-          _progress = (_currentPage + 1) / questions.length;
-          _pageController.nextPage(
-            duration: Duration(milliseconds: 500),
-            curve: Curves.ease,
-          );
-        });
-      } else {
-        var courseSnapshot = await FirebaseFirestore.instance
-            .collection('user_levels')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('courses')
-            .where('code', isEqualTo: 'fr')
-            .get();
-
-        if (courseSnapshot.docs.isNotEmpty) {
+        if (_currentPage < questions.length - 1) {
           setState(() {
-            // Le document existe avec le code 'fr'
-            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
-
-            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
-            FirebaseFirestore.instance
-                .collection('user_levels')
-                .doc(FirebaseAuth.instance.currentUser!.uid)
-                .collection('courses')
-                .doc(courseSnapshot.docs[0].id)
-                .update({
-              'lecon1Bonjour': true,
-            });
-
-            print('Champ lecon1Bonjour ajouté avec succès!');
+            _currentPage++;
+            _progress = (_currentPage + 1) / questions.length;
+            _pageController.nextPage(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.ease,
+            );
           });
         } else {
-          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon1Bonjour est déjà vrai!');
+          var courseSnapshot = await FirebaseFirestore.instance
+              .collection('user_levels')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('courses')
+              .where('code', isEqualTo: 'fr')
+              .get();
+
+          if (courseSnapshot.docs.isNotEmpty) {
+            setState(() {
+              // Le document existe avec le code 'fr'
+              // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+              // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+
+              // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+              FirebaseFirestore.instance
+                  .collection('user_levels')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .collection('courses')
+                  .doc(courseSnapshot.docs[0].id)
+                  .update({
+                'lecon1Bonjour': true,
+              });
+
+              print('Champ lecon1Bonjour ajouté avec succès!');
+            });
+          } else {
+            // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+            print('Le champ lecon1Bonjour est déjà vrai!');
+          }
         }
+      } else {
+        // Show Bottom Sheet with "Incorrect" text
+        _showBottomSheetScrambled(isCorrectOrder, currentQuestion);
       }
     } else {
-      // Show Bottom Sheet with "Incorrect" text
-      _showBottomSheetScrambled(isCorrectOrder, currentQuestion);
+      // Handle the case where the current question is not of type ScrambledWordsQuestion
+      // You may want to show an error message or take appropriate action.
+      print('Current question is not of type ScrambledWordsQuestion');
     }
   }
 
