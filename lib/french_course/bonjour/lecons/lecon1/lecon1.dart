@@ -73,6 +73,20 @@ class _ExLeconOneState extends State<ExLeconOne> {
       ],
       [false, false, false, false],
       [true, false, false, false],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Form a sentence with these words',
+    ),
+    Question(
+      'Question 2',
+      [
+        Option1('Option 1', 'assets/UserCircle.png'),
+        Option1('Option 2', 'assets/UserCircle.png'),
+        Option1('Option 3', 'assets/UserCircle.png'),
+        Option1('Option 4', 'assets/UserCircle.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
     ), // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
@@ -246,6 +260,154 @@ class _ExLeconOneState extends State<ExLeconOne> {
         );
       },
     );
+  }
+
+  void _showBottomSheetScrambled(
+      bool isCorrect, ScrambledWordsQuestion question) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 200.0,
+          width: 350,
+          // Adjust the height here
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect
+                        ? "That's right"
+                        : "Ups.. That's not quite right \n",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect ? "Amazing!" : "don't worry",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Add the code you want to execute when the button is pressed
+                    Navigator.pop(context); // Close the BottomSheet
+                    if (isCorrect) {
+                      _nextPageForScrambledWordsQuestion();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: isCorrect ? Color(0xFF99CC29) : Colors.red,
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          100.0), // Adjust the borderRadius value
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                        horizontal:
+                            120.0), // Adjust padding for height and width
+                    minimumSize: const Size(
+                        200.0, 40.0), // Set minimum size for height and width
+                  ),
+                  child: isCorrect
+                      ? const Text(
+                          'Next',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : const Text(
+                          'Try Again',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _nextPageForScrambledWordsQuestion() async {
+    ScrambledWordsQuestion currentQuestion =
+        questions[_currentPage] as ScrambledWordsQuestion;
+
+    // Vérifiez si les mots sélectionnés sont dans le bon ordre
+    bool isCorrectOrder = ListEquality().equals(
+      currentQuestion.selectedWords,
+      currentQuestion.correctSentence.split(' '),
+    );
+
+    if (isCorrectOrder) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetScrambled(isCorrectOrder, currentQuestion);
+
+      if (_currentPage < questions.length - 1) {
+        setState(() {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+
+            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon1Bonjour': true,
+            });
+
+            print('Champ lecon1Bonjour ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon1Bonjour est déjà vrai!');
+        }
+      }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetScrambled(isCorrectOrder, currentQuestion);
+    }
   }
 
   Future<bool> _nextPageForQuestion() async {
@@ -503,8 +665,13 @@ class _ExLeconOneState extends State<ExLeconOne> {
                       onCorrectAnswer: () => _nextPageForTranslationQuestion(
                           translationController.text.trim()),
                     );
+                  } else if (questions[index] is ScrambledWordsQuestion) {
+                    return ScrambledWordsQuestionWidget(
+                      question: questions[index] as ScrambledWordsQuestion,
+                      onCorrectAnswer: _nextPageForScrambledWordsQuestion,
+                    );
                   } else {
-                    // Gérer le cas où le type de question n'est ni Question ni TranslationQuestion
+                    // Gérer le cas où le type de question n'est ni Question ni TranslationQuestion ni ScrambledWordsQuestion
                     return Container(); // ou tout autre widget par défaut
                   }
                 },
@@ -836,6 +1003,92 @@ class _TranslationExercisePageState extends State<TranslationExercisePage> {
             ),
             child: Text('Check'),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class ScrambledWordsQuestionWidget extends StatefulWidget {
+  final ScrambledWordsQuestion question;
+  final VoidCallback onCorrectAnswer;
+
+  ScrambledWordsQuestionWidget({
+    required this.question,
+    required this.onCorrectAnswer,
+  });
+
+  @override
+  _ScrambledWordsQuestionWidgetState createState() =>
+      _ScrambledWordsQuestionWidgetState();
+}
+
+class _ScrambledWordsQuestionWidgetState
+    extends State<ScrambledWordsQuestionWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Formez la phrase :",
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 16.0),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: widget.question.correctSentence
+              .split(' ')
+              .map((word) => GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (widget.question.selectedWords.contains(word)) {
+                          widget.question.selectedWords.remove(word);
+                        } else {
+                          widget.question.selectedWords.add(word);
+                        }
+                      });
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: widget.question.selectedWords.contains(word)
+                            ? Colors.blue
+                            : Colors.white,
+                      ),
+                      child: Text(
+                        word,
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ),
+        SizedBox(height: 16.0),
+        ElevatedButton(
+          onPressed: () {
+            // Vérifiez si les mots sélectionnés sont dans le bon ordre
+            bool isCorrectOrder = ListEquality().equals(
+              widget.question.selectedWords,
+              widget.question.correctSentence.split(' '),
+            );
+
+            // Affichez un message ou effectuez une action en fonction de la réponse
+            if (isCorrectOrder || !isCorrectOrder) {
+              // Affichez un message de réussite ou effectuez une action
+              print("Bravo ! Vous avez formé la phrase correctement.");
+              widget.onCorrectAnswer();
+            } else {
+              // Affichez un message d'échec ou effectuez une action
+              print("Désolé, la phrase est incorrecte. Réessayez !");
+            }
+          },
+          child: Text("Vérifier"),
         ),
       ],
     );

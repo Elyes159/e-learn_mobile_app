@@ -25,3 +25,14 @@ class TranslationQuestion {
       required this.correctTranslation,
       required this.userTranslationn});
 }
+
+class ScrambledWordsQuestion {
+  final String correctSentence;
+  List<String> selectedWords = [];
+  List<String> selectedWordOrder = [];
+
+  ScrambledWordsQuestion({required this.correctSentence}) {
+    // Split the sentence into words when the question is created
+    selectedWordOrder = correctSentence.split(' ');
+  }
+}
