@@ -75,35 +75,88 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [true, false, false, false],
     ), // Add more questions as needed
   ];
-  void _showBottomSheetTranslation(String message) {
+  void _showBottomSheetTranslation(
+      bool isCorrect, TranslationQuestion question) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        double screenWidth = MediaQuery.of(context).size.width;
-
         return Container(
-          decoration: BoxDecoration(color: Colors.black),
-          width: screenWidth, // Utilisez la largeur de l'écran
+          decoration: BoxDecoration(
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 230.0,
+          width: 350,
+          // Adjust the height here
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  message,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
+            child: Center(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      isCorrect
+                          ? "That's right"
+                          : "Ups.. That's not quite right \n",
+                      style: GoogleFonts.poppins(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w500,
+                        color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    // Ajoutez le code que vous souhaitez exécuter lorsque le bouton est pressé
-                    Navigator.pop(context); // Fermez le BottomSheet
-                  },
-                  child: Text('Fermer'),
-                ),
-              ],
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      isCorrect
+                          ? "Amazing!....."
+                          : "Answer : \n ${question.correctTranslation}",
+                      style: GoogleFonts.poppins(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w300,
+                        color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  ElevatedButton(
+                      onPressed: () {
+                        // Add the code you want to execute when the button is pressed
+                        Navigator.pop(context); // Close the BottomSheet
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor:
+                            isCorrect ? Color(0xFF99CC29) : Colors.red,
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              100.0), // Adjust the borderRadius value
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal:
+                                120.0), // Adjust padding for height and width
+                        minimumSize: const Size(200.0,
+                            40.0), // Set minimum size for height and width
+                      ),
+                      child: isCorrect
+                          ? const Text(
+                              'Next',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : const Text(
+                              'Try Again',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                ],
+              ),
             ),
           ),
         );
@@ -117,7 +170,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
       builder: (BuildContext context) {
         return Container(
           decoration: BoxDecoration(
-              color: Color(0xFFFFDDD8),
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
               borderRadius: BorderRadius.circular(20)),
           height: 200.0,
           width: 350,
@@ -142,43 +195,51 @@ class _ExLeconOneState extends State<ExLeconOne> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "",
+                    isCorrect ? "Amazing!" : "don't worry",
                     style: GoogleFonts.poppins(
                       fontSize: 20.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w300,
                       color: isCorrect ? Colors.green : Color(0xFFFF2442),
                     ),
                   ),
                 ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () {
-                    // Add the code you want to execute when the button is pressed
-                    Navigator.pop(context); // Close the BottomSheet
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: isCorrect ? Color(0xFF99CC29) : Colors.red,
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          100.0), // Adjust the borderRadius value
+                    onPressed: () {
+                      // Add the code you want to execute when the button is pressed
+                      Navigator.pop(context); // Close the BottomSheet
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          isCorrect ? Color(0xFF99CC29) : Colors.red,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the borderRadius value
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal:
+                              120.0), // Adjust padding for height and width
+                      minimumSize: const Size(
+                          200.0, 40.0), // Set minimum size for height and width
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0,
-                        horizontal:
-                            120.0), // Adjust padding for height and width
-                    minimumSize: const Size(
-                        200.0, 40.0), // Set minimum size for height and width
-                  ),
-                  child: const Text(
-                    'Try again',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                    child: isCorrect
+                        ? const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : const Text(
+                            'Try Again',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
               ],
             ),
           ),
@@ -253,7 +314,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
 
     if (isCorrect) {
       // Show Bottom Sheet with "Correct" text
-      _showBottomSheetTranslation("Next question");
+      _showBottomSheetTranslation(isCorrect, questions[_currentPage]);
 
       if (_currentPage < questions.length - 1) {
         setState(() {
@@ -297,7 +358,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
       }
     } else {
       // Show Bottom Sheet with "Incorrect" text
-      _showBottomSheetTranslation("resayer");
+      _showBottomSheetTranslation(isCorrect, questions[_currentPage]);
     }
 
     return isCorrect;
@@ -663,6 +724,21 @@ class TranslationExercisePage extends StatefulWidget {
 }
 
 class _TranslationExercisePageState extends State<TranslationExercisePage> {
+  FlutterTts flutterTts = FlutterTts();
+
+  @override
+  void initState() {
+    super.initState();
+    flutterTts.setLanguage("fr-FR");
+  }
+
+  Future<void> speak(String text) async {
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.speak(text);
+  }
   // Retirez cette ligne
   // TextEditingController _translationController = TextEditingController();
 
@@ -670,23 +746,69 @@ class _TranslationExercisePageState extends State<TranslationExercisePage> {
   Widget build(BuildContext context) {
     String correctTranslation = widget.question.correctTranslation;
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            widget.question.originalText,
-            style: TextStyle(fontSize: 18),
-          ),
-          SizedBox(height: 20),
-          TextField(
-            controller: widget.translationController, // Modifiez cette ligne
+    return ListView(
+      children: [
+        SizedBox(
+          height: 50,
+        ),
+        Center(
+            child: Text(
+          "Whay's the meaning of \n       this sentence ?",
+          style: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.w500),
+        )),
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                speak(widget.question.originalText);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Image.asset(
+                  "assets/Volume button.png",
+                  width: 100,
+                ),
+              ),
+            ),
+            Container(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: Text(
+                    "${widget.question.originalText}",
+                    style: GoogleFonts.poppins(
+                        fontSize: 20.0, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            controller: widget.translationController,
+            maxLines: null,
             decoration: InputDecoration(
               hintText: 'Traduisez ici...',
+
+              contentPadding: EdgeInsets.symmetric(
+                  vertical: 50,
+                  horizontal: 10), // Ajustez la hauteur du champ de texte
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                    10), // Ajustez la bordure du champ de texte
+              ),
+              alignLabelWithHint: true,
             ),
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
+        ),
+        SizedBox(height: 200),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
             onPressed: () {
               String userTranslation = widget.translationController.text
                   .trim(); // Modifiez cette ligne
@@ -696,16 +818,26 @@ class _TranslationExercisePageState extends State<TranslationExercisePage> {
               // Mettre à jour l'instance de TranslationQuestion avec la userTranslation
               widget.question.userTranslationn = userTranslation;
 
-              if (isCorrect) {
+              if (isCorrect || !isCorrect) {
                 widget.onCorrectAnswer();
               } else {
                 // Gérer la logique pour une réponse incorrecte si nécessaire
               }
             },
-            child: Text('Vérifier la traduction'),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Color(0xFF3DB2FF), // Couleur du texte du bouton
+              padding: EdgeInsets.all(16), // Espace intérieur du bouton
+              minimumSize: Size(MediaQuery.of(context).size.width, 0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    20.0), // Ajustez cette valeur selon vos besoins
+              ), // Largeur du bouton = largeur de l'écran
+            ),
+            child: Text('Check'),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
