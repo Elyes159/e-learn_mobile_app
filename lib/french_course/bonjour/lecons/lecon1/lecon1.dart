@@ -29,6 +29,18 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [false, false, false, false],
       [false, false, true, false],
     ),
+    SoundQuestion(
+      questionText: 'What is the correctly pronounced word?',
+      options: [
+        Option1('Chat', 'assets/chat.png'),
+        Option1('Chien', 'assets/chat.png'),
+        Option1('Lion', 'assets/chat.png'),
+        Option1('Oiseau', 'assets/chat.png'),
+      ],
+      spokenWord: 'Chien', // Remplacez par le mot correctement prononcé
+      selectedWord:
+          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+    ),
     Question(
       'la fille',
       [
@@ -179,6 +191,91 @@ class _ExLeconOneState extends State<ExLeconOne> {
   }
 
   void _showBottomSheet(bool isCorrect, Question question) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 200.0,
+          width: 350,
+          // Adjust the height here
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect
+                        ? "That's right"
+                        : "Ups.. That's not quite right \n",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect ? "Amazing!" : "don't worry",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                    onPressed: () {
+                      // Add the code you want to execute when the button is pressed
+                      Navigator.pop(context); // Close the BottomSheet
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          isCorrect ? Color(0xFF99CC29) : Colors.red,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the borderRadius value
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal:
+                              120.0), // Adjust padding for height and width
+                      minimumSize: const Size(
+                          200.0, 40.0), // Set minimum size for height and width
+                    ),
+                    child: isCorrect
+                        ? const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : const Text(
+                            'Try Again',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showBottomSheetForSoundQuestion(
+      bool isCorrect, SoundQuestion question) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -414,6 +511,42 @@ class _ExLeconOneState extends State<ExLeconOne> {
       // Handle the case where the current question is not of type ScrambledWordsQuestion
       // You may want to show an error message or take appropriate action.
       print('Current question is not of type ScrambledWordsQuestion');
+    }
+  }
+
+  Future<bool> _nextPageForSoundQuestion() async {
+    if (questions[_currentPage] is SoundQuestion) {
+      String spokenWord = (questions[_currentPage] as SoundQuestion).spokenWord;
+      String selectedWord =
+          (questions[_currentPage] as SoundQuestion).selectedWord;
+
+      bool isCorrect = spokenWord == selectedWord;
+
+      if (isCorrect) {
+        // Show Bottom Sheet with "Correct" text
+        _showBottomSheetForSoundQuestion(isCorrect, questions[_currentPage]);
+
+        if (_currentPage < questions.length - 1) {
+          setState(() {
+            _currentPage++;
+            _progress = (_currentPage + 1) / questions.length;
+            _pageController.nextPage(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.ease,
+            );
+          });
+        } else {
+          // Votre logique pour la dernière question
+        }
+      } else {
+        // Show Bottom Sheet with "Incorrect" text
+        _showBottomSheetForSoundQuestion(isCorrect, questions[_currentPage]);
+      }
+
+      return isCorrect;
+    } else {
+      // Gérer le cas où la question n'est pas de type SoundQuestion
+      return false;
     }
   }
 
@@ -677,8 +810,13 @@ class _ExLeconOneState extends State<ExLeconOne> {
                       question: questions[index] as ScrambledWordsQuestion,
                       onCorrectAnswer: _nextPageForScrambledWordsQuestion,
                     );
+                  } else if (questions[index] is SoundQuestion) {
+                    return QuestionSound(
+                      question: questions[index] as SoundQuestion,
+                      onCorrectAnswer: _nextPageForSoundQuestion,
+                    );
                   } else {
-                    // Gérer le cas où le type de question n'est ni Question ni TranslationQuestion ni ScrambledWordsQuestion
+                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion
                     return Container(); // ou tout autre widget par défaut
                   }
                 },
@@ -1038,11 +1176,22 @@ class _ScrambledWordsQuestionWidgetState
   void initState() {
     super.initState();
     initializeShuffledWords();
+    flutterTts.setLanguage("fr-FR");
   }
 
   void initializeShuffledWords() {
     shuffledWords = List.from(widget.question.correctSentence.split(' '))
       ..shuffle(Random()); // Utilisez la méthode shuffle avec un objet Random
+  }
+
+  FlutterTts flutterTts = FlutterTts();
+
+  Future<void> speak(String text) async {
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.speak(text);
   }
 
   @override
@@ -1133,6 +1282,145 @@ class _ScrambledWordsQuestionWidgetState
           ),
         ),
       ],
+    );
+  }
+}
+
+class QuestionSound extends StatefulWidget {
+  final SoundQuestion question;
+  final VoidCallback onCorrectAnswer;
+
+  QuestionSound({
+    required this.question,
+    required this.onCorrectAnswer,
+  });
+
+  @override
+  _QuestionSoundState createState() => _QuestionSoundState();
+}
+
+class _QuestionSoundState extends State<QuestionSound> {
+  FlutterTts flutterTts = FlutterTts();
+  String selectedOption = '';
+
+  @override
+  void initState() {
+    super.initState();
+    flutterTts.setLanguage("fr-FR");
+  }
+
+  Future<void> speak(String text) async {
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.speak(text);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                widget.question.questionText,
+                style: GoogleFonts.poppins(
+                    fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  speak(widget.question.spokenWord);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Image.asset(
+                    "assets/Volume button.png",
+                    width: 100,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: widget.question.options.length,
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedOption = widget.question.options[index].text;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                    height: 60,
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.symmetric(vertical: 0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                      color:
+                          selectedOption == widget.question.options[index].text
+                              ? Color(0xFF3DB2FF)
+                              : Colors.white,
+                    ),
+                    child: Text(
+                      widget.question.options[index].text,
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 50),
+            child: ElevatedButton(
+              onPressed: () {
+                bool isCorrect = selectedOption == widget.question.spokenWord;
+                setState(() {
+                  widget.question.selectedWord = selectedOption;
+                });
+                if (isCorrect || !isCorrect) {
+                  widget.onCorrectAnswer();
+                } else {
+                  // Gérez la logique de réponse incorrecte si nécessaire
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFF3DB2FF),
+                padding: EdgeInsets.all(16),
+                minimumSize: Size(MediaQuery.of(context).size.width, 0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              child: Text(
+                'CHECK',
+                style: GoogleFonts.poppins(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

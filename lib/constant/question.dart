@@ -39,3 +39,16 @@ class ScrambledWordsQuestion {
     selectedWordOrder = correctSentence.split(' ');
   }
 }
+
+class SoundQuestion {
+  final String questionText;
+  final List<Option1> options;
+  final String spokenWord;
+  String selectedWord;
+
+  SoundQuestion(
+      {required this.questionText,
+      required this.options,
+      required this.spokenWord,
+      required this.selectedWord});
+}
