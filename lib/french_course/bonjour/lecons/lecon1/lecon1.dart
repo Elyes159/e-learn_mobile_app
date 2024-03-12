@@ -18,6 +18,12 @@ class _ExLeconOneState extends State<ExLeconOne> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
+    ScrambledWordsQuestion(
+      correctSentence: 'a woman',
+      questionText: 'une femme',
+      additionalWords: ['horse', 'am', 'and'], // Liste des mots supplémentaires
+    ),
+
     Question(
       'la femme',
       [
@@ -54,13 +60,9 @@ class _ExLeconOneState extends State<ExLeconOne> {
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: 'la femme et la fille',
-      questionText: 'the woman and the girl',
-      additionalWords: [
-        'additional',
-        'words',
-        'here'
-      ], // Liste des mots supplémentaires
+      correctSentence: 'a woman',
+      questionText: 'une femme',
+      additionalWords: ['horse', 'am', 'and'], // Liste des mots supplémentaires
     ),
 
     SoundQuestion(
@@ -75,44 +77,68 @@ class _ExLeconOneState extends State<ExLeconOne> {
       selectedWord:
           '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
-    Question(
-      'Question 2',
-      [
-        Option1('Option 1', 'assets/UserCircle.png'),
-        Option1('Option 2', 'assets/UserCircle.png'),
-        Option1('Option 3', 'assets/UserCircle.png'),
-        Option1('Option 4', 'assets/UserCircle.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
+    ScrambledWordsQuestion(
+      correctSentence: 'a daughter',
+      questionText: 'une fille',
+      additionalWords: [
+        'boy',
+        'and',
+        'am',
+        'I'
+      ], // Liste des mots supplémentaires
     ),
     TranslationQuestion(
-      originalText: 'hello',
-      correctTranslation: 'salut',
+      originalText: "femme",
+      correctTranslation: 'woman',
       userTranslationn: '',
     ),
-    Question(
-      'Question 2',
-      [
-        Option1('Option 1', 'assets/UserCircle.png'),
-        Option1('Option 2', 'assets/UserCircle.png'),
-        Option1('Option 3', 'assets/UserCircle.png'),
-        Option1('Option 4', 'assets/UserCircle.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
+    ScrambledWordsQuestion(
+      correctSentence: 'I am Anna',
+      questionText: 'Je suis Anna',
+      additionalWords: [
+        'daughter',
+        'girl',
+        'woman',
+        'boy'
+      ], // Liste des mots supplémentaires
     ),
 
     Question(
-      'Question 2',
+      'le chat',
       [
-        Option1('Option 1', 'assets/UserCircle.png'),
-        Option1('Option 2', 'assets/UserCircle.png'),
-        Option1('Option 3', 'assets/UserCircle.png'),
-        Option1('Option 4', 'assets/UserCircle.png'),
+        Option1('a boy', 'assets/utilisateur.png'),
+        Option1('the cat', 'assets/chat.png'),
+        Option1('the woman', 'assets/mere.png'),
+        Option1('a girl', 'assets/fille.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
+      [false, true, false, false],
+    ),
+
+    TranslationQuestion(
+      originalText: "Je suis",
+      correctTranslation: 'I am',
+      userTranslationn: '',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'une femme et un homme',
+      questionText: 'a woman and a man',
+      additionalWords: [
+        'manges',
+        'cheval',
+        'fille',
+        'pizza',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Je suis Paul',
+      questionText: 'I am Paul',
+      additionalWords: [
+        'manges',
+        'cheval',
+        'fille',
+        'pizza',
+      ], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
@@ -1229,6 +1255,68 @@ class _ScrambledWordsQuestionWidgetState
           ),
         ),
         SizedBox(height: 16.0),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          child: Container(
+            height: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFF3DB2FF)),
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.white,
+                  offset: Offset(-4.0, -4.0),
+                  blurRadius: 8.0,
+                  spreadRadius: 2.0,
+                ),
+                BoxShadow(
+                  color: Colors.white,
+                  offset: Offset(4.0, 4.0),
+                  blurRadius: 8.0,
+                  spreadRadius: 2.0,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Selected Words:",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 500),
+                    child: Row(
+                      children: widget.question.selectedWords.map((word) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 4.0),
+                          padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Color(0xFF3DB2FF),
+                          ),
+                          child: Text(
+                            word,
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 100,
+        ),
         Wrap(
           spacing: 8.0,
           runSpacing: 8.0,
@@ -1256,12 +1344,15 @@ class _ScrambledWordsQuestionWidgetState
                       child: Text(
                         word,
                         style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ))
               .toList(),
         ),
+        SizedBox(height: 16.0),
         SizedBox(height: 16.0),
         Padding(
           padding: const EdgeInsets.all(8.0),
