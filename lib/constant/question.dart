@@ -28,14 +28,16 @@ class TranslationQuestion {
 
 class ScrambledWordsQuestion {
   final String questionText;
-
   final String correctSentence;
   List<String> selectedWords = [];
   List<String> selectedWordOrder = [];
+  List<String> additionalWords = []; // Ajoutez cette ligne
 
-  ScrambledWordsQuestion(
-      {required this.correctSentence, required this.questionText}) {
-    // Split the sentence into words when the question is created
+  ScrambledWordsQuestion({
+    required this.correctSentence,
+    required this.questionText,
+    required this.additionalWords, // Ajoutez cette ligne
+  }) {
     selectedWordOrder = correctSentence.split(' ');
   }
 }

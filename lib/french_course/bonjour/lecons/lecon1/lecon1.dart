@@ -29,18 +29,6 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [false, false, false, false],
       [false, false, true, false],
     ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('Chat', 'assets/chat.png'),
-        Option1('Chien', 'assets/chat.png'),
-        Option1('Lion', 'assets/chat.png'),
-        Option1('Oiseau', 'assets/chat.png'),
-      ],
-      spokenWord: 'Chien', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
     Question(
       'la fille',
       [
@@ -52,14 +40,40 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [false, false, false, false],
       [true, false, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'une femme',
-      questionText: 'A woman',
+    SoundQuestion(
+      questionText: 'What is the correctly pronounced word?',
+      options: [
+        Option1('zou', 'assets/chat.png'),
+        Option1('jou', 'assets/chat.png'),
+        Option1('je', 'assets/chat.png'),
+        Option1('ce', 'assets/chat.png'),
+      ],
+      spokenWord: 'je', // Remplacez par le mot correctement prononcé
+      selectedWord:
+          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
-    TranslationQuestion(
-      originalText: 'Bonjour',
-      correctTranslation: 'good Morning',
-      userTranslationn: '',
+
+    ScrambledWordsQuestion(
+      correctSentence: 'la femme et la fille',
+      questionText: 'the woman and the girl',
+      additionalWords: [
+        'additional',
+        'words',
+        'here'
+      ], // Liste des mots supplémentaires
+    ),
+
+    SoundQuestion(
+      questionText: 'What is the correctly pronounced word?',
+      options: [
+        Option1('une', 'assets/chat.png'),
+        Option1('un', 'assets/chat.png'),
+        Option1('a', 'assets/chat.png'),
+        Option1('na', 'assets/chat.png'),
+      ],
+      spokenWord: 'une', // Remplacez par le mot correctement prononcé
+      selectedWord:
+          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
     Question(
       'Question 2',
@@ -1180,8 +1194,10 @@ class _ScrambledWordsQuestionWidgetState
   }
 
   void initializeShuffledWords() {
-    shuffledWords = List.from(widget.question.correctSentence.split(' '))
-      ..shuffle(Random()); // Utilisez la méthode shuffle avec un objet Random
+    // Inclure les mots supplémentaires dans la liste shuffledWords
+    shuffledWords = List.from(widget.question.selectedWordOrder)
+      ..addAll(widget.question.additionalWords)
+      ..shuffle(Random());
   }
 
   FlutterTts flutterTts = FlutterTts();
@@ -1207,9 +1223,8 @@ class _ScrambledWordsQuestionWidgetState
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Write this in French : ${widget.question.questionText}",
+              "Write this in French : \n ${widget.question.questionText}",
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              // Ajoutez cette ligne pour aligner à gauche
             ),
           ),
         ),
@@ -1270,13 +1285,12 @@ class _ScrambledWordsQuestionWidgetState
             },
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: Color(0xFF3DB2FF), // Couleur du texte du bouton
-              padding: EdgeInsets.all(16), // Espace intérieur du bouton
+              backgroundColor: Color(0xFF3DB2FF),
+              padding: EdgeInsets.all(16),
               minimumSize: Size(MediaQuery.of(context).size.width, 0),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                    20.0), // Ajustez cette valeur selon vos besoins
-              ), // Largeur du bouton = largeur de l'écran
+                borderRadius: BorderRadius.circular(20.0),
+              ),
             ),
             child: Text("CHECK"),
           ),
@@ -1337,24 +1351,31 @@ class _QuestionSoundState extends State<QuestionSound> {
               ),
             ),
           ),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  speak(widget.question.spokenWord);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Image.asset(
-                    "assets/Volume button.png",
-                    width: 100,
-                  ),
-                ),
+          GestureDetector(
+            onTap: () {
+              speak(widget.question.spokenWord);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 0.0),
+              child: Image.asset(
+                "assets/Volume button.png",
+                width: 100, // Définissez la largeur souhaitée
+                height: 90, // Définissez la hauteur souhaitée
               ),
-            ],
+            ),
+          ),
+          Text(
+            "tap here ",
+            style: GoogleFonts.poppins(
+                color: Colors.red, fontWeight: FontWeight.w600, fontSize: 18),
           ),
           Expanded(
-            child: ListView.builder(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+              ),
               itemCount: widget.question.options.length,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
@@ -1365,7 +1386,7 @@ class _QuestionSoundState extends State<QuestionSound> {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Container(
-                    height: 60,
+                    height: 100, // Ajustez la hauteur selon vos besoins
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.symmetric(vertical: 0),
                     decoration: BoxDecoration(
@@ -1379,18 +1400,29 @@ class _QuestionSoundState extends State<QuestionSound> {
                               ? Color(0xFF3DB2FF)
                               : Colors.white,
                     ),
-                    child: Text(
-                      widget.question.options[index].text,
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.bold),
+                    child: Center(
+                      child: Text(
+                        widget.question.options[index].text,
+                        style: GoogleFonts.poppins(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: selectedOption ==
+                                  widget.question.options[index].text
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
+          SizedBox(
+            height: 0,
+          ),
           Padding(
-            padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 50),
+            padding: const EdgeInsets.only(bottom: 8, right: 8, left: 8),
             child: ElevatedButton(
               onPressed: () {
                 bool isCorrect = selectedOption == widget.question.spokenWord;
