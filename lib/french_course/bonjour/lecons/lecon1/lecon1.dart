@@ -1,12 +1,10 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../constant/question.dart';
 
 class ExLeconOne extends StatefulWidget {
@@ -32,15 +30,19 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [false, false, true, false],
     ),
     Question(
-      'Question 2',
+      'la fille',
       [
-        Option1('Option 1', 'assets/UserCircle.png'),
-        Option1('Option 2', 'assets/UserCircle.png'),
-        Option1('Option 3', 'assets/UserCircle.png'),
-        Option1('Option 4', 'assets/UserCircle.png'),
+        Option1('the girl', 'assets/fille.png'),
+        Option1('the boy', 'assets/utilisateur.png'),
+        Option1('the woman', 'assets/mere.png'),
+        Option1('numbers', 'assets/nombres.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'une femme',
+      questionText: 'A woman',
     ),
     TranslationQuestion(
       originalText: 'Bonjour',
@@ -74,9 +76,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
       [false, false, false, false],
       [true, false, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Form a sentence with these words',
-    ),
+
     Question(
       'Question 2',
       [
@@ -1032,21 +1032,43 @@ class ScrambledWordsQuestionWidget extends StatefulWidget {
 
 class _ScrambledWordsQuestionWidgetState
     extends State<ScrambledWordsQuestionWidget> {
+  late List<String> shuffledWords;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeShuffledWords();
+  }
+
+  void initializeShuffledWords() {
+    shuffledWords = List.from(widget.question.correctSentence.split(' '))
+      ..shuffle(Random()); // Utilisez la méthode shuffle avec un objet Random
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          "Formez la phrase :",
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        SizedBox(
+          height: 0,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Write this in French : ${widget.question.questionText}",
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              // Ajoutez cette ligne pour aligner à gauche
+            ),
+          ),
         ),
         SizedBox(height: 16.0),
         Wrap(
           spacing: 8.0,
           runSpacing: 8.0,
-          children: widget.question.correctSentence
-              .split(' ')
+          children: shuffledWords
               .map((word) => GestureDetector(
                     onTap: () {
                       setState(() {
@@ -1064,7 +1086,7 @@ class _ScrambledWordsQuestionWidgetState
                         border: Border.all(color: Colors.blue),
                         borderRadius: BorderRadius.circular(8.0),
                         color: widget.question.selectedWords.contains(word)
-                            ? Colors.blue
+                            ? Color(0xFF3DB2FF)
                             : Colors.white,
                       ),
                       child: Text(
@@ -1077,25 +1099,38 @@ class _ScrambledWordsQuestionWidgetState
               .toList(),
         ),
         SizedBox(height: 16.0),
-        ElevatedButton(
-          onPressed: () {
-            // Vérifiez si les mots sélectionnés sont dans le bon ordre
-            bool isCorrectOrder = ListEquality().equals(
-              widget.question.selectedWords,
-              widget.question.correctSentence.split(' '),
-            );
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+            onPressed: () {
+              // Vérifiez si les mots sélectionnés sont dans le bon ordre
+              bool isCorrectOrder = ListEquality().equals(
+                widget.question.selectedWords,
+                widget.question.correctSentence.split(' '),
+              );
 
-            // Affichez un message ou effectuez une action en fonction de la réponse
-            if (isCorrectOrder || !isCorrectOrder) {
-              // Affichez un message de réussite ou effectuez une action
-              print("Bravo ! Vous avez formé la phrase correctement.");
-              widget.onCorrectAnswer();
-            } else {
-              // Affichez un message d'échec ou effectuez une action
-              print("Désolé, la phrase est incorrecte. Réessayez !");
-            }
-          },
-          child: Text("Vérifier"),
+              // Affichez un message ou effectuez une action en fonction de la réponse
+              if (isCorrectOrder || !isCorrectOrder) {
+                // Affichez un message de réussite ou effectuez une action
+                print("Bravo ! Vous avez formé la phrase correctement.");
+                widget.onCorrectAnswer();
+              } else {
+                // Affichez un message d'échec ou effectuez une action
+                print("Désolé, la phrase est incorrecte. Réessayez !");
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Color(0xFF3DB2FF), // Couleur du texte du bouton
+              padding: EdgeInsets.all(16), // Espace intérieur du bouton
+              minimumSize: Size(MediaQuery.of(context).size.width, 0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    20.0), // Ajustez cette valeur selon vos besoins
+              ), // Largeur du bouton = largeur de l'écran
+            ),
+            child: Text("CHECK"),
+          ),
         ),
       ],
     );
