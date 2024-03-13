@@ -127,6 +127,32 @@ class _ExLeconOneState extends State<ExLeconOne> {
         'pizza',
       ], // Liste des mots supplémentaires
     ),
+    TranslationQuestion(
+      originalText: "Je",
+      correctTranslation: 'I',
+      userTranslationn: '',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'I am a woman',
+      questionText: 'Je suis une femme',
+      additionalWords: [
+        'boy',
+        'and',
+        'hello',
+        'what'
+      ], // Liste des mots supplémentaires
+    ),
+    Question(
+      'le garçon',
+      [
+        Option1('the girl', 'assets/fille.png'),
+        Option1('numbers', "assets/nombres.png"),
+        Option1('the woman', 'assets/mere.png'),
+        Option1('the boy', 'assets/utilisateur.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
+    ),
     ScrambledWordsQuestion(
       correctSentence: 'Je suis Paul',
       questionText: 'I am Paul',
@@ -1471,6 +1497,7 @@ class _QuestionSoundState extends State<QuestionSound> {
                 onTap: () {
                   setState(() {
                     selectedOption = widget.question.options[index].text;
+                    speak(selectedOption);
                   });
                 },
                 child: Padding(
