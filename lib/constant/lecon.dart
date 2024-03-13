@@ -4,8 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 class Lecon extends StatelessWidget {
   final String imagePath;
   final String leconTitle;
+  final String navigator;
 
-  Lecon({required this.imagePath, required this.leconTitle});
+  Lecon(
+      {required this.imagePath,
+      required this.leconTitle,
+      required this.navigator});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,7 @@ class Lecon extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushReplacementNamed("lecon1");
+        Navigator.of(context).pushReplacementNamed(navigator);
       },
       child: Container(
         height: 60,

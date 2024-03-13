@@ -114,6 +114,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   child: Lecon(
                                     imagePath: "assets/tableau-a-feuilles.png",
                                     leconTitle: "Lecon 1",
+                                    navigator: "lecon1",
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -145,22 +146,27 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                             Lecon(
                               imagePath: "assets/tableau-a-feuilles.png",
                               leconTitle: "Lecon 2",
+                              navigator: "lecon2",
                             ),
                             Lecon(
                               imagePath: "assets/tableau-a-feuilles.png",
                               leconTitle: "Lecon 3",
+                              navigator: "lecon2",
                             ),
                             Lecon(
                               imagePath: "assets/tableau-a-feuilles.png",
                               leconTitle: "Lecon 4",
+                              navigator: "lecon2",
                             ),
                             Lecon(
                               imagePath: "assets/tableau-a-feuilles.png",
                               leconTitle: "Lecon 5",
+                              navigator: "lecon2",
                             ),
                             Lecon(
                               imagePath: "assets/tableau-a-feuilles.png",
                               leconTitle: "Lecon 6",
+                              navigator: "lecon2",
                             ),
                           ],
                         ),
