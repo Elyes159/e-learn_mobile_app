@@ -104,7 +104,6 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
 
   XFile? _image;
   File? file;
-  var _recognitions;
   var v = "";
 
   @override
@@ -112,7 +111,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     super.initState();
     // Utilize WidgetsBinding.instance?.addPostFrameCallback to ensure it runs after the build
     Future.delayed(Duration.zero, () {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         showLanguageDialog();
         loadModel();
       });

@@ -542,6 +542,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
               .collection('courses')
               .where('code', isEqualTo: 'fr')
               .get();
+          Navigator.of(context).pushReplacementNamed("frenshunities");
 
           if (courseSnapshot.docs.isNotEmpty) {
             setState(() {
@@ -599,7 +600,36 @@ class _ExLeconOneState extends State<ExLeconOne> {
             );
           });
         } else {
-          // Votre logique pour la dernière question
+          var courseSnapshot = await FirebaseFirestore.instance
+              .collection('user_levels')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('courses')
+              .where('code', isEqualTo: 'fr')
+              .get();
+          Navigator.of(context).pushReplacementNamed("frenshunities");
+
+          if (courseSnapshot.docs.isNotEmpty) {
+            setState(() {
+              // Le document existe avec le code 'fr'
+              // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+              // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+
+              // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+              FirebaseFirestore.instance
+                  .collection('user_levels')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .collection('courses')
+                  .doc(courseSnapshot.docs[0].id)
+                  .update({
+                'lecon1Bonjour': true,
+              });
+
+              print('Champ lecon1Bonjour ajouté avec succès!');
+            });
+          } else {
+            // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+            print('Le champ lecon1Bonjour est déjà vrai!');
+          }
         }
       } else {
         // Show Bottom Sheet with "Incorrect" text
@@ -639,6 +669,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
             .collection('courses')
             .where('code', isEqualTo: 'fr')
             .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
 
         if (courseSnapshot.docs.isNotEmpty) {
           setState(() {
@@ -697,6 +728,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
             .collection('courses')
             .where('code', isEqualTo: 'fr')
             .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
 
         if (courseSnapshot.docs.isNotEmpty) {
           setState(() {
