@@ -22,23 +22,23 @@ class _ExLeconOneState extends State<ExLeconOne> {
 
   List<dynamic> questions = [
     Question(
-      'la femme',
+      'the woman',
       [
-        Option1('the cat', 'assets/chat.png'),
-        Option1('the girl', 'assets/fille.png'),
-        Option1('the woman', 'assets/mere.png'),
-        Option1('one', 'assets/main.png'),
+        Option1('le chat', 'assets/chat.png'),
+        Option1('la fille', 'assets/fille.png'),
+        Option1('la femme', 'assets/mere.png'),
+        Option1('un', 'assets/main.png'),
       ],
       [false, false, false, false],
       [false, false, true, false],
     ),
     Question(
-      'la fille',
+      'the girl',
       [
-        Option1('the girl', 'assets/fille.png'),
-        Option1('the boy', 'assets/utilisateur.png'),
-        Option1('the woman', 'assets/mere.png'),
-        Option1('numbers', 'assets/nombres.png'),
+        Option1('la fille', 'assets/fille.png'),
+        Option1('le garçon', 'assets/utilisateur.png'),
+        Option1('la femme', 'assets/mere.png'),
+        Option1('nombres', 'assets/nombres.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
@@ -101,12 +101,12 @@ class _ExLeconOneState extends State<ExLeconOne> {
     ),
 
     Question(
-      'le chat',
+      'the cat',
       [
-        Option1('a boy', 'assets/utilisateur.png'),
-        Option1('the cat', 'assets/chat.png'),
-        Option1('the woman', 'assets/mere.png'),
-        Option1('a girl', 'assets/fille.png'),
+        Option1('un garçon', 'assets/utilisateur.png'),
+        Option1('le chat', 'assets/chat.png'),
+        Option1('la femme', 'assets/mere.png'),
+        Option1('une fille', 'assets/fille.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
@@ -977,25 +977,13 @@ class _ExercisePageState extends State<ExercisePage> {
           ),
           Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  speak(widget.question.questionText);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Image.asset(
-                    "assets/Volume button.png",
-                    width: 100,
-                  ),
-                ),
-              ),
               Container(
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
+                    padding: EdgeInsets.only(bottom: 16.0, left: 10),
                     child: Text(
-                      "${widget.question.questionText}",
+                      'Which one of these is "${widget.question.questionText}"?',
                       style: GoogleFonts.poppins(
                           fontSize: 20.0, fontWeight: FontWeight.w500),
                     ),
@@ -1018,6 +1006,7 @@ class _ExercisePageState extends State<ExercisePage> {
                     widget.question.selectedOptions[index] =
                         !widget.question.selectedOptions[index];
                   });
+                  speak(widget.question.options[index].text);
 
                   // speak(widget.question.options[index].text);
                 },

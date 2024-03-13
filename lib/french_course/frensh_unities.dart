@@ -37,6 +37,30 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
     }
   }
 
+  Future<bool> checkLecon2BonjourExistence() async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon2Bonjour') ?? false;
+
+        return lecon1BonjourExists;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -65,7 +89,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                   color: const Color(0xFF3DB2FF),
                 ),
                 duration: const Duration(milliseconds: 0),
-                height: isExpanded ? 550 : 70,
+                height: isExpanded ? 600 : 70,
                 width: screenWidth,
                 child: Column(
                   children: [
@@ -143,10 +167,40 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                 ),
                               ],
                             ),
-                            Lecon(
-                              imagePath: "assets/tableau-a-feuilles.png",
-                              leconTitle: "Lecon 2",
-                              navigator: "lecon2",
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 2",
+                                    navigator: "lecon2",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon2BonjourExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                             Lecon(
                               imagePath: "assets/tableau-a-feuilles.png",
@@ -166,6 +220,16 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                             Lecon(
                               imagePath: "assets/tableau-a-feuilles.png",
                               leconTitle: "Lecon 6",
+                              navigator: "lecon2",
+                            ),
+                            Lecon(
+                              imagePath: "assets/tableau-a-feuilles.png",
+                              leconTitle: "Lecon 7",
+                              navigator: "lecon2",
+                            ),
+                            Lecon(
+                              imagePath: "assets/tableau-a-feuilles.png",
+                              leconTitle: "Lecon 8",
                               navigator: "lecon2",
                             ),
                           ],

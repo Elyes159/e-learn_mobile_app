@@ -8,6 +8,7 @@ import 'package:pfe_1/constant/LanguageProvider.dart';
 import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/english_course/english_main.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon2/lecon2.dart';
+import 'package:pfe_1/french_course/bonjour/lecons/lecon3/lecon3.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
@@ -78,6 +79,7 @@ class _MyAppState extends State<MyApp> {
         'stages': (context) => StagesPage(),
         'lecon1': (context) => ExLeconOne(),
         'lecon2': (context) => ExLecontwo(),
+        'lecon3': (context) => ExLeconthree(),
         'frenshunities': (context) => FrenchUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),
