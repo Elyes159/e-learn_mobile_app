@@ -1,13 +1,16 @@
+// ignore_for_file: library_private_types_in_public_api, prefer_final_fields
+
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../constant/question.dart';
 
 class ExLeconOne extends StatefulWidget {
+  const ExLeconOne({super.key});
+
   @override
   _ExLeconOneState createState() => _ExLeconOneState();
 }
@@ -18,12 +21,6 @@ class _ExLeconOneState extends State<ExLeconOne> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    ScrambledWordsQuestion(
-      correctSentence: 'a woman',
-      questionText: 'une femme',
-      additionalWords: ['horse', 'am', 'and'], // Liste des mots supplémentaires
-    ),
-
     Question(
       'la femme',
       [
@@ -1258,11 +1255,11 @@ class _ScrambledWordsQuestionWidgetState
         Container(
           padding: EdgeInsets.all(8.0),
           child: Container(
-            height: 100,
+            height: 200,
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xFF3DB2FF)),
               borderRadius: BorderRadius.circular(8.0),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.white,
                   offset: Offset(-4.0, -4.0),
@@ -1282,28 +1279,30 @@ class _ScrambledWordsQuestionWidgetState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Selected Words:",
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Container(
-                    constraints: BoxConstraints(maxWidth: 500),
-                    child: Row(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
                       children: widget.question.selectedWords.map((word) {
                         return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 4.0),
-                          padding: EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                          padding: const EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
-                            color: Color(0xFF3DB2FF),
+                            color: const Color(0xFF3DB2FF),
                           ),
                           child: Text(
                             word,
-                            style: TextStyle(fontSize: 16.0),
+                            style: const TextStyle(fontSize: 16.0),
                           ),
                         );
                       }).toList(),
