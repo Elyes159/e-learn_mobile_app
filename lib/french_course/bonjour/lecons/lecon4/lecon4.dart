@@ -21,124 +21,106 @@ class _ExLeconfourState extends State<ExLeconfour> {
 
   List<dynamic> questions = [
     TextQuestion(
-      'the woman',
+      'Je suis Félix. Je suis un chat \nFélix est...',
       [
-        Option1('le chat', 'assets/chat.png'),
-        Option1('la fille', 'assets/fille.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1('un', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'a croissant',
-      questionText: 'un croissant',
-      additionalWords: [
-        'are',
-        "it's",
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'the orange',
-      [
-        Option1("l'orange", 'assets/orange.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("le croissant", 'assets/croissant.png'),
-        Option1("pomme", 'assets/pomme.png'),
+        Option1('un animal', 'assets/chat.png'),
+        Option1('un garçon', 'assets/fille.png'),
+        Option1('un chien', 'assets/mere.png'),
+        Option1('un cheval', 'assets/main.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
     ),
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('a', 'assets/chat.png'),
-        Option1('ante', 'assets/chat.png'),
-        Option1('ant', 'assets/chat.png'),
-        Option1('anna', 'assets/chat.png'),
-      ],
-      spokenWord: 'ant', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
     ScrambledWordsQuestion(
-      correctSentence: 'an orange',
-      questionText: 'une orange',
+      correctSentence: 'I am Marie',
+      questionText: 'Je suis Marie',
       additionalWords: [
-        'are',
-        'eating',
-        'boy',
-        "it"
+        'you',
+        "girl",
+        'horse',
+        'boy'
       ], // Liste des mots supplémentaires
     ),
-    Question(
-      'the pizza',
+    TextQuestion(
+      '_____ garçon',
       [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("l'orange", 'assets/orange.png'),
-        Option1("pomme", 'assets/pomme.png'),
+        Option1('te', 'assets/chat.png'),
+        Option1('une', 'assets/fille.png'),
+        Option1("c'est", 'assets/mere.png'),
+        Option1('un', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
+    ),
+
+    TextQuestion(
+      'je suis un ______',
+      [
+        Option1('home', 'assets/chat.png'),
+        Option1('homme', 'assets/fille.png'),
+        Option1("homm", 'assets/mere.png'),
+        Option1('hoom', 'assets/main.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
-
+    TextQuestion(
+      'je suis une ______',
+      [
+        Option1('femme', 'assets/chat.png'),
+        Option1('garçon', 'assets/fille.png'),
+        Option1("homme", 'assets/mere.png'),
+        Option1('croissant', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
     ScrambledWordsQuestion(
-      correctSentence: "a croissant and an orange",
-      questionText: "un croissant et une orange",
+      correctSentence: "une femme",
+      questionText: "a woman",
       additionalWords: [
-        'pizza',
-        'man',
-        'horse',
-        "it"
+        'mange',
+        'croissant',
+        'homme',
+        "chien"
       ], // Liste des mots supplémentaires
     ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('pissa', 'assets/chat.png'),
-        Option1('croissant', 'assets/chat.png'),
-        Option1('pizza', 'assets/chat.png'),
-        Option1('orange', 'assets/chat.png'),
-      ],
-      spokenWord: 'pizza', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+
+    ScrambledWordsQuestion(
+      correctSentence: "une un",
+      questionText: "____ femme et ____ homme",
+      additionalWords: ['', '', '', ""], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "I am a boy",
+      questionText: "je suis un garçon",
+      additionalWords: [
+        'girl',
+        'woman',
+        'daughter',
+        "you"
+      ], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "It's an orange",
-      questionText: "C'est une orange",
+      correctSentence: "I am a girl",
+      questionText: "Je suis une fille",
       additionalWords: [
         'are',
         'is',
-        'horse',
+        'boy',
         'man'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Marie is eating',
-      questionText: 'Marie mange',
+      correctSentence: 'a daughter',
+      questionText: 'une fille',
       additionalWords: [
-        'croissant',
-        'pizza',
-        'it',
-        'orange'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'You are eating a pizza',
-      questionText: 'Tu mange une pizza',
-      additionalWords: [
-        'girl',
-        "it's",
-        'woman',
-        'is'
+        'I',
+        'and',
+        'woamn',
+        'am'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
@@ -152,14 +134,19 @@ class _ExLeconfourState extends State<ExLeconfour> {
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "Tu manges une pizza",
-      questionText: "You are eating a pizza",
+      correctSentence: "The woman and the man ",
+      questionText: "Une femme et un homme",
       additionalWords: [
-        'homme',
-        'femme',
-        'orange',
-        'suis',
+        'horse',
+        'girl',
+        'boy',
+        'daughter',
       ], // Liste des mots supplémentaires
+    ),
+    TranslationQuestion(
+      originalText: "a daughter",
+      correctTranslation: 'une fille',
+      userTranslationn: '',
     ),
     ScrambledWordsQuestion(
       correctSentence: "A woman is eating an orange",
@@ -171,15 +158,26 @@ class _ExLeconfourState extends State<ExLeconfour> {
         'croissant',
       ], // Liste des mots supplémentaires
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "A girl and a dog",
-      questionText: "Une fille et un chien",
-      additionalWords: [
-        'horse',
-        "it's",
-        'you',
-        'are',
-      ], // Liste des mots supplémentaires
+    TextQuestion(
+      '_____ fille et un garçon',
+      [
+        Option1('une', 'assets/chat.png'),
+        Option1('un', 'assets/fille.png'),
+        Option1("le", 'assets/mere.png'),
+        Option1('ce', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    TranslationQuestion(
+      originalText: "a woman and a man",
+      correctTranslation: 'une femme et un homme',
+      userTranslationn: '',
+    ),
+    TranslationQuestion(
+      originalText: "a boy and a girl",
+      correctTranslation: 'un garçon et une fille',
+      userTranslationn: '',
     ), // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
@@ -1076,7 +1074,7 @@ class _ExLeconfourState extends State<ExLeconfour> {
                     return TextQuestionPage(
                       question: questions[index]
                           as TextQuestion, // Cast to TextQuestion
-                      onCorrectAnswer: _nextPageForQuestion,
+                      onCorrectAnswer: _nextPageForTextQuestion,
                     );
                   } else {
                     // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion, ni TextQuestion

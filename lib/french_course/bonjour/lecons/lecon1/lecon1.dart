@@ -983,7 +983,7 @@ class _ExercisePageState extends State<ExercisePage> {
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 16.0, left: 10),
                     child: Text(
-                      'Which one of these is "${widget.question.questionText}"?',
+                      'Which one of these is \n"${widget.question.questionText}"?',
                       style: GoogleFonts.poppins(
                           fontSize: 20.0, fontWeight: FontWeight.w500),
                     ),
@@ -1141,9 +1141,30 @@ class _TextQuestionPageState extends State<TextQuestionPage> {
               ),
             ),
           ),
+          Row(
+            children: [
+              InkWell(
+                  onTap: () {
+                    String textToSpeak = widget.question.questionText
+                        .replaceAll('_', ''); // Supprimer les tirets bas
+                    speak(textToSpeak);
+                  },
+                  child: Image.asset("assets/Volume button.png")),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    "${widget.question.questionText}",
+                    style: GoogleFonts.poppins(
+                        fontSize: 15.0, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: ListView(
               children: List.generate(
                 widget.question.options.length,
                 (index) => GestureDetector(
@@ -1171,12 +1192,6 @@ class _TextQuestionPageState extends State<TextQuestionPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            widget.question.options[index].imagePath,
-                            width: 150,
-                            height: 100,
-                          ),
-                          SizedBox(height: 5),
                           Text(
                             widget.question.options[index].text,
                             style: GoogleFonts.poppins(
