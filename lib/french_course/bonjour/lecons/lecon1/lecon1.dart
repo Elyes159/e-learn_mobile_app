@@ -1091,6 +1091,149 @@ class _ExercisePageState extends State<ExercisePage> {
   }
 }
 
+class TextQuestionPage extends StatefulWidget {
+  final TextQuestion question;
+  final VoidCallback onCorrectAnswer;
+
+  TextQuestionPage({
+    required this.question,
+    required this.onCorrectAnswer,
+  });
+
+  @override
+  _TextQuestionPageState createState() => _TextQuestionPageState();
+}
+
+class _TextQuestionPageState extends State<TextQuestionPage> {
+  FlutterTts flutterTts = FlutterTts();
+
+  @override
+  void initState() {
+    super.initState();
+    flutterTts.setLanguage("fr-FR");
+  }
+
+  Future<void> speak(String text) async {
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.speak(text);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                "Read and Respond",
+                style: GoogleFonts.poppins(
+                    fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List.generate(
+                widget.question.options.length,
+                (index) => GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      widget.question.selectedOptions[index] =
+                          !widget.question.selectedOptions[index];
+                    });
+                    speak(widget.question.options[index].text);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        color: widget.question.selectedOptions[index]
+                            ? Color(0xFF3DB2FF)
+                            : Colors.white,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            widget.question.options[index].imagePath,
+                            width: 150,
+                            height: 100,
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            widget.question.options[index].text,
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: widget.question.selectedOptions[index]
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 50),
+            child: ElevatedButton(
+              onPressed: () {
+                bool isCorrect = ListEquality().equals(
+                  widget.question.selectedOptions,
+                  widget.question.correctOptions,
+                );
+
+                if (isCorrect || !isCorrect) {
+                  widget.onCorrectAnswer();
+                } else {
+                  // Gérez la logique de réponse incorrecte si nécessaire
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor:
+                    Color(0xFF3DB2FF), // Couleur du texte du bouton
+                padding: EdgeInsets.all(16), // Espace intérieur du bouton
+                minimumSize: Size(MediaQuery.of(context).size.width, 0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      20.0), // Ajustez cette valeur selon vos besoins
+                ), // Largeur du bouton = largeur de l'écran
+              ),
+              child: Text(
+                'CHECK',
+                style: GoogleFonts.poppins(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class TranslationExercisePage extends StatefulWidget {
   final TranslationQuestion question;
   final TextEditingController translationController;

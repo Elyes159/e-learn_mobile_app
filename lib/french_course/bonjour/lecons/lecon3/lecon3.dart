@@ -110,67 +110,74 @@ class _ExLeconthreeState extends State<ExLeconthree> {
           '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('thé', 'assets/chat.png'),
-        Option1('tes', 'assets/chat.png'),
-        Option1('tu es', 'assets/chat.png'),
-        Option1("ces", 'assets/chat.png'),
-      ],
-      spokenWord: "tu es", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-
     ScrambledWordsQuestion(
-      correctSentence: "it's a horse",
-      questionText: "c'est un cheval",
+      correctSentence: "It's an orange",
+      questionText: "C'est une orange",
       additionalWords: [
         'are',
-        'woman',
-        'you',
-        'boy'
+        'is',
+        'horse',
+        'man'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "Are you Alice",
-      questionText: "Tu es Alice ?",
+      correctSentence: 'Marie is eating',
+      questionText: 'Marie mange',
       additionalWords: [
-        'and',
-        'woman',
-        'man',
-        'girl'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'I am a woman',
-      questionText: 'Je suis une femme',
-      additionalWords: [
-        'boy',
-        'and',
-        'hello',
-        'what'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Tu es Paul',
-      questionText: 'Are you Paul?',
-      additionalWords: [
-        'manges',
-        'orange',
-        'garçcon',
-        'fille'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "C' est un cheval",
-      questionText: "It's a horse",
-      additionalWords: [
-        'manges',
-        'cheval',
-        'femme',
+        'croissant',
         'pizza',
+        'it',
+        'orange'
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'You are eating a pizza',
+      questionText: 'Tu mange une pizza',
+      additionalWords: [
+        'girl',
+        "it's",
+        'woman',
+        'is'
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Un chat mange un croissant",
+      questionText: "A cat is eating a croissant",
+      additionalWords: [
+        'homme',
+        'et',
+        'fille',
+        'farçon',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Tu manges une pizza",
+      questionText: "You are eating a pizza",
+      additionalWords: [
+        'homme',
+        'femme',
+        'orange',
+        'suis',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "A woman is eating an orange",
+      questionText: "Une femme mange une orange",
+      additionalWords: [
+        'horse',
+        "it's",
+        'girl',
+        'croissant',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "A girl and a dog",
+      questionText: "Une fille et un chien",
+      additionalWords: [
+        'horse',
+        "it's",
+        'you',
+        'are',
       ], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];

@@ -54,3 +54,13 @@ class SoundQuestion {
       required this.spokenWord,
       required this.selectedWord});
 }
+
+class TextQuestion {
+  final String questionText;
+  final List<Option1> options;
+  final List<bool> selectedOptions;
+  final List<bool> correctOptions;
+
+  TextQuestion(this.questionText, this.options, this.selectedOptions,
+      this.correctOptions);
+}
