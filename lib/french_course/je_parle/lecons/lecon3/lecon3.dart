@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
 class ExParleLeconthree extends StatefulWidget {
@@ -20,165 +20,160 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    Question(
-      'the croissant',
+    TextQuestion(
+      'small',
       [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("l'orange", 'assets/orange.png'),
-        Option1("pomme", 'assets/pomme.png'),
+        Option1('serveur', 'assets/chat.png'),
+        Option1('petit', 'assets/fille.png'),
+        Option1("biére", 'assets/mere.png'),
+        Option1("grand", 'assets/main.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a croissant',
-      questionText: 'un croissant',
-      additionalWords: [
-        'are',
-        "it's",
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
+      [false, true, false, false],
     ),
     Question(
-      'the orange',
+      'university',
       [
-        Option1("l'orange", 'assets/orange.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("le croissant", 'assets/croissant.png'),
+        Option1("l'école", 'assets/ecole.png'),
+        Option1('université', 'assets/universite.png'),
+        Option1("le train", 'assets/train.png'),
         Option1("pomme", 'assets/pomme.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
     ),
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('a', 'assets/chat.png'),
-        Option1('ante', 'assets/chat.png'),
-        Option1('ant', 'assets/chat.png'),
-        Option1('anna', 'assets/chat.png'),
+    Question(
+      'coffee',
+      [
+        Option1("toilette", 'assets/ecole.png'),
+        Option1('café', 'assets/café.png'),
+        Option1("thé", 'assets/thé.png'),
+        Option1("toilette", 'assets/toilette.png'),
       ],
-      spokenWord: 'ant', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+      [false, false, false, false],
+      [false, true, false, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'an orange',
-      questionText: 'une orange',
+      correctSentence: 'I am visiting Brazil',
+      questionText: 'Je visite le Brésil',
       additionalWords: [
-        'are',
-        'eating',
-        'boy',
-        "it"
+        'passport',
+        'suitcase',
+        'you',
+        "Mexico"
+      ], // Liste des mots supplémentaires
+    ),
+    TextQuestion(
+      'closed',
+      [
+        Option1('fermé', 'assets/chat.png'),
+        Option1("aujourd'hui", 'assets/fille.png'),
+        Option1("vélo", 'assets/mere.png'),
+        Option1("voiture", 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: "They travel a lot",
+      questionText: "Ils voyagent beaucoup",
+      additionalWords: [
+        'she',
+        'good evening',
+        'hi',
+        "travels"
       ], // Liste des mots supplémentaires
     ),
     Question(
-      'the pizza',
+      'coffee',
       [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("l'orange", 'assets/orange.png'),
-        Option1("pomme", 'assets/pomme.png'),
+        Option1("vélo", 'assets/velo.png'),
+        Option1('café', 'assets/café.png'),
+        Option1("thé", 'assets/thé.png'),
+        Option1("toilette", 'assets/toilette.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
 
-    ScrambledWordsQuestion(
-      correctSentence: "a croissant and an orange",
-      questionText: "un croissant et une orange",
-      additionalWords: [
-        'pizza',
-        'man',
-        'horse',
-        "it"
-      ], // Liste des mots supplémentaires
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('pissa', 'assets/chat.png'),
-        Option1('croissant', 'assets/chat.png'),
-        Option1('pizza', 'assets/chat.png'),
-        Option1('orange', 'assets/chat.png'),
+    Question(
+      'a castle',
+      [
+        Option1("un château", 'assets/chateau.png'),
+        Option1('une maison', 'assets/maison.png'),
+        Option1("thé", 'assets/thé.png'),
+        Option1("toilette", 'assets/toilette.png'),
       ],
-      spokenWord: 'pizza', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+      [false, false, false, false],
+      [true, false, false, false],
     ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "It's an orange",
-      questionText: "C'est une orange",
-      additionalWords: [
-        'are',
-        'is',
-        'horse',
-        'man'
-      ], // Liste des mots supplémentaires
+    Question(
+      'the house',
+      [
+        Option1("un château", 'assets/chateau.png'),
+        Option1('une maison', 'assets/maison.png'),
+        Option1("thé", 'assets/thé.png'),
+        Option1("toilette", 'assets/toilette.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Marie is eating',
-      questionText: 'Marie mange',
-      additionalWords: [
-        'croissant',
-        'pizza',
-        'it',
-        'orange'
-      ], // Liste des mots supplémentaires
+    TextQuestion(
+      'la maison est _____ .',
+      [
+        Option1('grandes', 'assets/chat.png'),
+        Option1('grande', 'assets/fille.png'),
+        Option1("petit", 'assets/mere.png'),
+        Option1('grands', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'You are eating a pizza',
-      questionText: 'Tu mange une pizza',
-      additionalWords: [
-        'girl',
-        "it's",
-        'woman',
-        'is'
-      ], // Liste des mots supplémentaires
+    TextQuestion(
+      'je _____ le château .',
+      [
+        Option1('prends', 'assets/chat.png'),
+        Option1('parle', 'assets/fille.png'),
+        Option1("m'appelle", 'assets/mere.png'),
+        Option1('visite', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "Un chat mange un croissant",
-      questionText: "A cat is eating a croissant",
-      additionalWords: [
-        'homme',
-        'et',
-        'fille',
-        'farçon',
-      ], // Liste des mots supplémentaires
+    Question(
+      'bottle of water',
+      [
+        Option1("fromage", 'assets/fromage.png'),
+        Option1("bouteille d'eau", 'assets/bouteille-en-plastique.png'),
+        Option1("thé", 'assets/thé.png'),
+        Option1("toilette", 'assets/toilette.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "Tu manges une pizza",
-      questionText: "You are eating a pizza",
-      additionalWords: [
-        'homme',
-        'femme',
-        'orange',
-        'suis',
-      ], // Liste des mots supplémentaires
+    Question(
+      'the plane',
+      [
+        Option1("l'école", 'assets/ecole.png'),
+        Option1('université', 'assets/universite.png'),
+        Option1("le train", 'assets/train.png'),
+        Option1("l'avion", 'assets/avion.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "A woman is eating an orange",
-      questionText: "Une femme mange une orange",
-      additionalWords: [
-        'horse',
-        "it's",
-        'girl',
-        'croissant',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "A girl and a dog",
-      questionText: "Une fille et un chien",
-      additionalWords: [
-        'horse',
-        "it's",
-        'you',
-        'are',
-      ], // Liste des mots supplémentaires
+    Question(
+      'passport',
+      [
+        Option1("vélo", 'assets/velo.png'),
+        Option1('université', 'assets/universite.png'),
+        Option1("passeport", 'assets/passeport.png'),
+        Option1("l'avion", 'assets/avion.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
     ), // Add more questions as needed
   ];
   void _showBottomSheetTranslation(

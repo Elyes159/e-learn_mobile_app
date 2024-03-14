@@ -257,7 +257,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                   color: const Color(0xFF3DB2FF),
                 ),
                 duration: const Duration(milliseconds: 0),
-                height: isExpanded ? 600 : 70,
+                height: isExpanded ? 630 : 70,
                 width: screenWidth,
                 child: Column(
                   children: [
@@ -561,6 +561,43 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                     imagePath: "assets/tableau-a-feuilles.png",
                                     leconTitle: "Lecon 8",
                                     navigator: "lecon8",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon8BonjourExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator(
+                                        color: Colors.white,
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 9",
+                                    navigator: "lecon9",
                                   ),
                                 ),
                                 const SizedBox(width: 10),

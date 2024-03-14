@@ -13,6 +13,7 @@ import 'package:pfe_1/french_course/bonjour/lecons/lecon5/lecon5.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon6/lecon6.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon7/lecon7.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon8/lecon8.dart';
+import 'package:pfe_1/french_course/bonjour/lecons/lecon9/lecon9.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
@@ -97,6 +98,7 @@ class _MyAppState extends State<MyApp> {
         'lecon6': (context) => ExLeconSix(),
         'lecon7': (context) => ExLeconSeven(),
         'lecon8': (context) => ExLeconEight(),
+        'lecon9': (context) => ExLeconNine(),
         'leconParle1': (context) => ExParleLeconOne(),
         'leconParle2': (context) => ExParleLecontwo(),
         'leconParle3': (context) => ExParleLeconthree(),

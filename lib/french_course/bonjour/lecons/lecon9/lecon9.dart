@@ -7,196 +7,176 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExParleLecontwo extends StatefulWidget {
-  const ExParleLecontwo({super.key});
+class ExLeconNine extends StatefulWidget {
+  const ExLeconNine({super.key});
 
   @override
-  _ExParleLecontwoState createState() => _ExParleLecontwoState();
+  _ExLeconNineState createState() => _ExLeconNineState();
 }
 
-class _ExParleLecontwoState extends State<ExParleLecontwo> {
+class _ExLeconNineState extends State<ExLeconNine> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    Question(
-      'the store',
+    TextQuestion(
+      '_____ habitons à paris',
       [
-        Option1('le chocoloat', 'assets/choco.png'),
-        Option1('le livre', 'assets/livre-ouvert.png'),
-        Option1('la magasin', 'assets/magasin.png'),
-        Option1("la cahier", 'assets/carnet.png'),
+        Option1('Nous', 'assets/chat.png'),
+        Option1('vous', 'assets/fille.png'),
+        Option1("ils", 'assets/mere.png'),
+        Option1('il', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    TextQuestion(
+      'Ils ______ ici ',
+      [
+        Option1('habitent', 'assets/chat.png'),
+        Option1('habitons', 'assets/fille.png'),
+        Option1("habit", 'assets/mere.png'),
+        Option1('habite', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+
+    TextQuestion(
+      'Elles ______ les croissants ',
+      [
+        Option1('mangeons', 'assets/chat.png'),
+        Option1('mangent', 'assets/fille.png'),
+        Option1("manges", 'assets/mere.png'),
+        Option1('mange', 'assets/main.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a store',
-      questionText: 'un magasin',
-      additionalWords: [
-        'big',
-        "small",
-        'horse',
-        'dogs'
-      ], // Liste des mots supplémentaires
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('in', 'assets/chat.png'),
-        Option1('an', 'assets/chat.png'),
-        Option1('on', 'assets/chat.png'),
-        Option1('é', 'assets/chat.png'),
-      ],
-      spokenWord: 'in', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('on', 'assets/chat.png'),
-        Option1('a', 'assets/chat.png'),
-        Option1('in', 'assets/chat.png'),
-        Option1("an", 'assets/chat.png'),
+    TextQuestion(
+      'Nous aim___ le chocolat ',
+      [
+        Option1('ent', 'assets/chat.png'),
+        Option1('ez', 'assets/fille.png'),
+        Option1("e", 'assets/mere.png'),
+        Option1('ons', 'assets/main.png'),
       ],
-      spokenWord: "an", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'The park is small',
-      questionText: 'Le parc est petit',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
+      [false, false, false, false],
+      [false, false, false, true],
     ),
     TextQuestion(
-      'small',
+      'Nous ___ lire ',
       [
-        Option1('bouteille', 'assets/chat.png'),
-        Option1('bébé', 'assets/fille.png'),
-        Option1("petit", 'assets/mere.png'),
-        Option1('grand', 'assets/main.png'),
+        Option1('aimons', 'assets/chat.png'),
+        Option1('aime', 'assets/fille.png'),
+        Option1("aimez", 'assets/mere.png'),
+        Option1('aimes', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    TextQuestion(
+      'Elles mang___ une pizza ',
+      [
+        Option1('ez', 'assets/chat.png'),
+        Option1('eons', 'assets/fille.png'),
+        Option1("ent", 'assets/mere.png'),
+        Option1('es', 'assets/main.png'),
       ],
       [false, false, false, false],
       [false, false, true, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The park is big',
-      questionText: 'Le parc est grand',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'The trains are big',
-      questionText: 'Les trains sont grands',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'The restaurants are big',
-      questionText: 'Les restaurants sont grands',
-      additionalWords: [
-        'for',
-        'is',
-        'five',
-        "cafe"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "The dogs are small",
-      questionText: "Les chiens sont petits",
-      additionalWords: [
-        'and',
-        'woman',
-        'man',
-        'girl'
-      ], // Liste des mots supplémentaires
+    TextQuestion(
+      'Nous ____ une pizza ',
+      [
+        Option1('manges', 'assets/chat.png'),
+        Option1('mangeons', 'assets/fille.png'),
+        Option1("mangez", 'assets/mere.png'),
+        Option1('mange', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
     ),
     TranslationQuestion(
-      originalText: "Les restaurants sont grands",
-      correctTranslation: 'The restaurants are big',
+      originalText: "Ils",
+      correctTranslation: "They",
       userTranslationn: '',
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The restaurants are small',
-      questionText: 'Les restaurants sont petits',
-      additionalWords: [
-        'for',
-        'is',
-        'five',
-        "cafe"
-      ], // Liste des mots supplémentaires
+    TextQuestion(
+      'Nous habit___ à Montréal. ',
+      [
+        Option1('ez', 'assets/chat.png'),
+        Option1('e', 'assets/fille.png'),
+        Option1("es", 'assets/mere.png'),
+        Option1('ons', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
     ),
     TextQuestion(
-      'Elles ______ beaucoup les magasins de New York',
+      'Elles _____ le français. ',
       [
-        Option1('mangent', 'assets/chat.png'),
-        Option1('habitent', 'assets/fille.png'),
-        Option1("aiment", 'assets/mere.png'),
-        Option1("s'appelent", 'assets/main.png'),
+        Option1('étudient', 'assets/chat.png'),
+        Option1('étudies', 'assets/fille.png'),
+        Option1("étudie", 'assets/mere.png'),
+        Option1('étudiez', 'assets/main.png'),
       ],
       [false, false, false, false],
-      [false, false, true, false],
+      [true, false, false, false],
+    ),
+    TextQuestion(
+      'Nous _____, vous aimez , ils/elles aiment ',
+      [
+        Option1('aimons', 'assets/chat.png'),
+        Option1('aimez', 'assets/fille.png'),
+        Option1("aiment", 'assets/mere.png'),
+        Option1('aime', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    TextQuestion(
+      'Ils _____ les croissants',
+      [
+        Option1('mangeons', 'assets/chat.png'),
+        Option1('mangent', 'assets/fille.png'),
+        Option1("mangez", 'assets/mere.png'),
+        Option1('manges', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
+    ),
+    TranslationQuestion(
+      originalText: "Ce sont des chiens",
+      correctTranslation: "they are dogs",
+      userTranslationn: '',
     ),
     Question(
-      'the school',
+      'the strawberries',
       [
-        Option1('le chocoloat', 'assets/choco.png'),
-        Option1('le livre', 'assets/livre-ouvert.png'),
-        Option1("l'école", 'assets/ecole.png'),
-        Option1("le train", 'assets/train.png'),
+        Option1('le croissant', 'assets/croissant.png'),
+        Option1('la pizza', 'assets/pizza.png'),
+        Option1("le fraises", 'assets/fraise.png'),
+        Option1("pomme", 'assets/pomme.png'),
       ],
       [false, false, false, false],
-      [false, false, true, false],
+      [true, false, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The stores are big',
-      questionText: 'Les magasins sont grands',
-      additionalWords: [
-        'small',
-        'to',
-        'open',
-        "they"
-      ], // Liste des mots supplémentaires
+    Question(
+      'a bee',
+      [
+        Option1("l'homme", 'assets/homme.png'),
+        Option1('le chien', 'assets/chien.png'),
+        Option1('une abeille', 'assets/abeille.png'),
+        Option1('le cheval', 'assets/cheval.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Les restaurants sont petits',
-      questionText: 'the restaurants are small',
-      additionalWords: [
-        'mange',
-        'croissants',
-        'vélo',
-        "cing"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'le magasin est grand',
-      questionText: 'the store is big',
-      additionalWords: [
-        'mange',
-        'croissants',
-        'vélo',
-        "cing"
-      ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
+
+    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
@@ -288,6 +268,90 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
   }
 
   void _showBottomSheet(bool isCorrect, Question question) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 200.0,
+          width: 350,
+          // Adjust the height here
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect
+                        ? "That's right"
+                        : "Ups.. That's not quite right \n",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect ? "Amazing!" : "don't worry",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                    onPressed: () {
+                      // Add the code you want to execute when the button is pressed
+                      Navigator.pop(context); // Close the BottomSheet
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          isCorrect ? Color(0xFF99CC29) : Colors.red,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the borderRadius value
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal:
+                              120.0), // Adjust padding for height and width
+                      minimumSize: const Size(
+                          200.0, 40.0), // Set minimum size for height and width
+                    ),
+                    child: isCorrect
+                        ? const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : const Text(
+                            'Try Again',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showBottomSheetForTextQuestion(bool isCorrect, TextQuestion question) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -583,23 +647,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
 
-              // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon2Bonjour': true,
+                'lecon8Bonjour': true,
               });
 
-              print('Champ lecon2Bonjour ajouté avec succès!');
+              print('Champ lecon8Bonjour ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon2Bonjour est déjà vrai!');
+            print('Le champ lecon8Bonjour est déjà vrai!');
           }
         }
       } else {
@@ -647,23 +711,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
 
-              // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon2Bonjour': true,
+                'lecon8Bonjour': true,
               });
 
-              print('Champ lecon2Bonjour ajouté avec succès!');
+              print('Champ lecon8Bonjour ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon2Bonjour est déjà vrai!');
+            print('Le champ lecon8Bonjour est déjà vrai!');
           }
         }
       } else {
@@ -710,28 +774,87 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
 
-            // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon2Bonjour': true,
+              'lecon8Bonjour': true,
             });
 
-            print('Champ lecon2Bonjour ajouté avec succès!');
+            print('Champ lecon8Bonjour ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon2Bonjour est déjà vrai!');
+          print('Le champ lecon8Bonjour est déjà vrai!');
         }
       }
     } else {
       // Show Bottom Sheet with "Incorrect" text
       _showBottomSheet(isCorrect, questions[_currentPage]);
+    }
+
+    return isCorrect;
+  }
+
+  Future<bool> _nextPageForTextQuestion() async {
+    bool isCorrect = ListEquality().equals(
+      (questions[_currentPage] as TextQuestion).selectedOptions,
+      (questions[_currentPage] as TextQuestion).correctOptions,
+    );
+
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+
+      if (_currentPage < questions.length - 1) {
+        setState(() {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
+
+            // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon8Bonjour': true,
+            });
+
+            print('Champ lecon8Bonjour ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon8Bonjour est déjà vrai!');
+        }
+      }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
     }
 
     return isCorrect;
@@ -769,23 +892,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
 
-            // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon2Bonjour': true,
+              'lecon8Bonjour': true,
             });
 
-            print('Champ lecon2Bonjour ajouté avec succès!');
+            print('Champ lecon8Bonjour ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon2Bonjour est déjà vrai!');
+          print('Le champ lecon8Bonjour est déjà vrai!');
         }
       }
     } else {
@@ -945,8 +1068,14 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
                       question: questions[index] as SoundQuestion,
                       onCorrectAnswer: _nextPageForSoundQuestion,
                     );
+                  } else if (questions[index] is TextQuestion) {
+                    return TextQuestionPage(
+                      question: questions[index]
+                          as TextQuestion, // Cast to TextQuestion
+                      onCorrectAnswer: _nextPageForTextQuestion,
+                    );
                   } else {
-                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion
+                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion, ni TextQuestion
                     return Container(); // ou tout autre widget par défaut
                   }
                 },
