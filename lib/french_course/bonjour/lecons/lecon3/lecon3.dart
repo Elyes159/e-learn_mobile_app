@@ -65,6 +65,17 @@ class _ExLeconthreeState extends State<ExLeconthree> {
       selectedWord:
           '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
+    Question(
+      'the sandwich',
+      [
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('thé', 'assets/thé.png'),
+        Option1('le sandwich', 'assets/sandwich.png'),
+        Option1('Le gâteau', 'assets/gateau.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
     ScrambledWordsQuestion(
       correctSentence: 'an orange',
       questionText: 'une orange',
@@ -74,6 +85,17 @@ class _ExLeconthreeState extends State<ExLeconthree> {
         'boy',
         "it"
       ], // Liste des mots supplémentaires
+    ),
+    Question(
+      'the cheese',
+      [
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('le fromage', 'assets/fromage.png'),
+        Option1('le sandwich', 'assets/sandwich.png'),
+        Option1('Le gâteau', 'assets/gateau.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
     ),
     Question(
       'the pizza',

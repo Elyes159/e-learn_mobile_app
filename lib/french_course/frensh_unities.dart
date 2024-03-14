@@ -205,6 +205,30 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
     }
   }
 
+  Future<bool> checkLecon1ParleExistence() async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon1Parle') ?? false;
+
+        return lecon1BonjourExists;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -638,12 +662,12 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   child: Lecon(
                                     imagePath: "assets/tableau-a-feuilles.png",
                                     leconTitle: "Lecon 1",
-                                    navigator: "lecon8",
+                                    navigator: "leconParle1",
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 FutureBuilder<bool>(
-                                  future: checkLecon8BonjourExistence(),
+                                  future: checkLecon1ParleExistence(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {

@@ -22,101 +22,70 @@ class _ExParleLeconOneState extends State<ExParleLeconOne> {
 
   List<dynamic> questions = [
     Question(
-      'the woman',
+      'the kitchen',
       [
-        Option1('le chat', 'assets/chat.png'),
-        Option1('la fille', 'assets/fille.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1('un', 'assets/main.png'),
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('thé', 'assets/thé.png'),
+        Option1('le repas', 'assets/repas.png'),
+        Option1('Le beurre', 'assets/propage.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'He is running',
+      questionText: "il court",
+      additionalWords: ['she', 'am', 'and'], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'You cook',
+      questionText: "Tu cuisines",
+      additionalWords: ['she', "I'm", 'and'], // Liste des mots supplémentaires
+    ),
+    Question(
+      'an egg',
+      [
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('thé', 'assets/thé.png'),
+        Option1('un oeuf', 'assets/egg.png'),
+        Option1('Le beurre', 'assets/propage.png'),
       ],
       [false, false, false, false],
       [false, false, true, false],
     ),
     Question(
-      'the girl',
+      'the cake',
       [
-        Option1('la fille', 'assets/fille.png'),
-        Option1('le garçon', 'assets/utilisateur.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1('nombres', 'assets/nombres.png'),
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('thé', 'assets/thé.png'),
+        Option1('un oeuf', 'assets/egg.png'),
+        Option1('Le gâteau', 'assets/gateau.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('zou', 'assets/chat.png'),
-        Option1('jou', 'assets/chat.png'),
-        Option1('je', 'assets/chat.png'),
-        Option1('ce', 'assets/chat.png'),
-      ],
-      spokenWord: 'je', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'a woman',
-      questionText: 'une femme',
-      additionalWords: ['horse', 'am', 'and'], // Liste des mots supplémentaires
-    ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('une', 'assets/chat.png'),
-        Option1('un', 'assets/chat.png'),
-        Option1('a', 'assets/chat.png'),
-        Option1('na', 'assets/chat.png'),
-      ],
-      spokenWord: 'une', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+      [false, false, false, true],
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'a daughter',
-      questionText: 'une fille',
+      correctSentence: 'he respects his woman',
+      questionText: 'Il respecte sa femme',
       additionalWords: [
-        'boy',
-        'and',
+        'you',
+        'rich',
         'am',
         'I'
       ], // Liste des mots supplémentaires
     ),
-    TranslationQuestion(
-      originalText: "femme",
-      correctTranslation: 'woman',
-      userTranslationn: '',
-    ),
+
     ScrambledWordsQuestion(
-      correctSentence: 'I am Anna',
-      questionText: 'Je suis Anna',
+      correctSentence: 'the cake contains an egg',
+      questionText: 'le gateau contient un oeuf',
       additionalWords: [
-        'daughter',
+        'run',
         'girl',
-        'woman',
+        'on',
         'boy'
       ], // Liste des mots supplémentaires
     ),
 
-    Question(
-      'the cat',
-      [
-        Option1('un garçon', 'assets/utilisateur.png'),
-        Option1('le chat', 'assets/chat.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1('une fille', 'assets/fille.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-
-    TranslationQuestion(
-      originalText: "Je suis",
-      correctTranslation: 'I am',
-      userTranslationn: '',
-    ),
     ScrambledWordsQuestion(
       correctSentence: 'une femme et un homme',
       questionText: 'a woman and a man',
@@ -127,6 +96,13 @@ class _ExParleLeconOneState extends State<ExParleLeconOne> {
         'pizza',
       ], // Liste des mots supplémentaires
     ),
+
+    TranslationQuestion(
+      originalText: "Je suis",
+      correctTranslation: 'I am',
+      userTranslationn: '',
+    ),
+
     TranslationQuestion(
       originalText: "Je",
       correctTranslation: 'I',
@@ -549,23 +525,23 @@ class _ExParleLeconOneState extends State<ExParleLeconOne> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-              // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon1Bonjour': true,
+                'lecon1Parle': true,
               });
 
-              print('Champ lecon1Bonjour ajouté avec succès!');
+              print('Champ lecon1Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon1Bonjour est déjà vrai!');
+            print('Le champ lecon1Parle est déjà vrai!');
           }
         }
       } else {
@@ -613,23 +589,23 @@ class _ExParleLeconOneState extends State<ExParleLeconOne> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-              // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon1Bonjour': true,
+                'lecon1Parle': true,
               });
 
-              print('Champ lecon1Bonjour ajouté avec succès!');
+              print('Champ lecon1Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon1Bonjour est déjà vrai!');
+            print('Le champ lecon1Parle est déjà vrai!');
           }
         }
       } else {
@@ -676,23 +652,23 @@ class _ExParleLeconOneState extends State<ExParleLeconOne> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon1Bonjour': true,
+              'lecon1Parle': true,
             });
 
-            print('Champ lecon1Bonjour ajouté avec succès!');
+            print('Champ lecon1Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon1Bonjour est déjà vrai!');
+          print('Le champ lecon1Parle est déjà vrai!');
         }
       }
     } else {
@@ -735,23 +711,23 @@ class _ExParleLeconOneState extends State<ExParleLeconOne> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon1Bonjour': true,
+              'lecon1Parle': true,
             });
 
-            print('Champ lecon1Bonjour ajouté avec succès!');
+            print('Champ lecon1Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon1Bonjour est déjà vrai!');
+          print('Le champ lecon1Parle est déjà vrai!');
         }
       }
     } else {
