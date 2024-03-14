@@ -26,142 +26,127 @@ class _ExParleLeconfiveState extends State<ExParleLeconfive> {
       additionalWords: [], // Liste des mots supplémentaires
     ),
 
-    TextQuestion(
-      '_____ garçon',
+    Question(
+      'the tree',
       [
-        Option1('te', 'assets/chat.png'),
-        Option1('une', 'assets/fille.png'),
-        Option1("c'est", 'assets/mere.png'),
-        Option1('un', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
-
-    TextQuestion(
-      'je suis un ______',
-      [
-        Option1('home', 'assets/chat.png'),
-        Option1('homme', 'assets/fille.png'),
-        Option1("homm", 'assets/mere.png'),
-        Option1('hoom', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    TextQuestion(
-      'je suis une ______',
-      [
-        Option1('femme', 'assets/chat.png'),
-        Option1('garçon', 'assets/fille.png'),
-        Option1("homme", 'assets/mere.png'),
-        Option1('croissant', 'assets/main.png'),
+        Option1("bouteille", 'assets/bouteille-en-plastique.png'),
+        Option1('salade', 'assets/salade.png'),
+        Option1("l'arbre", 'assets/arbre.png'),
+        Option1("orange", 'assets/orange.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "une femme",
-      questionText: "a woman",
-      additionalWords: [
-        'mange',
-        'croissant',
-        'homme',
-        "chien"
-      ], // Liste des mots supplémentaires
-    ),
 
     ScrambledWordsQuestion(
-      correctSentence: "une un",
-      questionText: "____ femme et ____ homme",
-      additionalWords: ['', '', '', ""], // Liste des mots supplémentaires
+      correctSentence: "The neighbor",
+      questionText: "le voisin",
+      additionalWords: [
+        'house',
+        'garden',
+        'where',
+        "big"
+      ], // Liste des mots supplémentaires
+    ),
+    SoundQuestion(
+      questionText: 'What is the correctly pronounced word?',
+      options: [
+        Option1('il a', 'assets/chat.png'),
+        Option1('ily', 'assets/chat.png'),
+        Option1('léa', 'assets/chat.png'),
+        Option1("il y a", 'assets/chat.png'),
+      ],
+      spokenWord: "il y a", // Remplacez par le mot correctement prononcé
+      selectedWord:
+          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+    ),
+
+    SoundQuestion(
+      questionText: 'What is the correctly pronounced word?',
+      options: [
+        Option1('gentille', 'assets/chat.png'),
+        Option1('chontu', 'assets/chat.png'),
+        Option1('gentil', 'assets/chat.png'),
+        Option1("chantie", 'assets/chat.png'),
+      ],
+      spokenWord: "gentil", // Remplacez par le mot correctement prononcé
+      selectedWord:
+          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
     ScrambledWordsQuestion(
-      correctSentence: "I am a boy",
-      questionText: "je suis un garçon",
+      correctSentence: "He is kind",
+      questionText: "Il est gentil",
       additionalWords: [
-        'girl',
-        'woman',
-        'daughter',
+        'very',
+        'neighbor',
+        'horse',
         "you"
       ], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "I am a girl",
-      questionText: "Je suis une fille",
+      correctSentence: "My neighbor is kind",
+      questionText: "Mon voisin est gentil",
       additionalWords: [
-        'are',
-        'is',
-        'boy',
-        'man'
+        'spanish',
+        'wife',
+        'family',
+        'very',
       ], // Liste des mots supplémentaires
     ),
+
     ScrambledWordsQuestion(
-      correctSentence: 'a daughter',
-      questionText: 'une fille',
+      correctSentence: "There is a dog",
+      questionText: "Il y a un chien",
       additionalWords: [
-        'I',
-        'and',
-        'woamn',
-        'am'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Un chat mange un croissant",
-      questionText: "A cat is eating a croissant",
-      additionalWords: [
-        'homme',
-        'et',
-        'fille',
-        'farçon',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "The woman and the man",
-      questionText: "La femme et l'homme",
-      additionalWords: [
-        'horse',
-        'girl',
-        'boy',
+        'two',
+        'you',
+        'they',
         'daughter',
       ], // Liste des mots supplémentaires
     ),
-    TranslationQuestion(
-      originalText: "a daughter",
-      correctTranslation: 'une fille',
-      userTranslationn: '',
-    ),
+
     ScrambledWordsQuestion(
-      correctSentence: "A woman is eating an orange",
-      questionText: "Une femme mange une orange",
+      correctSentence: "They are kind",
+      questionText: "ils sont gentils",
       additionalWords: [
-        'horse',
-        "it's",
-        'girl',
-        'croissant',
+        'very',
+        "There",
+        'your',
+        'dog',
       ], // Liste des mots supplémentaires
     ),
-    TextQuestion(
-      '_____ fille et un garçon',
+
+    ScrambledWordsQuestion(
+      correctSentence: "They are very kind",
+      questionText: "Ils sont trés gentils",
+      additionalWords: [
+        'hey',
+        "There",
+        'your',
+        'dog',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "I like trees",
+      questionText: "J'aime les arbres",
+      additionalWords: [
+        'italy',
+        "garden",
+        'a',
+        'Spain',
+      ], // Liste des mots supplémentaires
+    ),
+    Question(
+      'garden',
       [
-        Option1('une', 'assets/chat.png'),
-        Option1('un', 'assets/fille.png'),
-        Option1("le", 'assets/mere.png'),
-        Option1('ce', 'assets/main.png'),
+        Option1("bouteille", 'assets/bouteille-en-plastique.png'),
+        Option1('salade', 'assets/salade.png'),
+        Option1("l'arbre", 'assets/arbre.png'),
+        Option1("jardin", 'assets/jardin.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
-    ),
-    TranslationQuestion(
-      originalText: "a woman and a man",
-      correctTranslation: 'une femme et un homme',
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "a boy and a girl",
-      correctTranslation: 'un garçon et une fille',
-      userTranslationn: '',
+      [false, false, false, true],
     ), // Add more questions as needed
   ];
   void _showBottomSheetTranslation(

@@ -20,134 +20,126 @@ class _ExParleLeconfourState extends State<ExParleLeconfour> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    TextQuestion(
-      'Je suis Félix. Je suis un chat \nFélix est...',
-      [
-        Option1('un animal', 'assets/chat.png'),
-        Option1('un garçon', 'assets/fille.png'),
-        Option1('un chien', 'assets/mere.png'),
-        Option1('un cheval', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
+    ScrambledWordsQuestion(
+      correctSentence: 'vont avion',
+      questionText: 'Ils _____ au États-Unis en ____',
+      additionalWords: [
+        "s'appelent",
+        "ont",
+        'bus',
+        'voiture'
+      ], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: 'I am Marie',
-      questionText: 'Je suis Marie',
+      correctSentence: 'He likes museums',
+      questionText: 'Il aime les musées',
       additionalWords: [
-        'you',
-        "girl",
-        'horse',
-        'boy'
+        'work',
+        "music",
+        'boy',
+        'girl'
       ], // Liste des mots supplémentaires
     ),
     TextQuestion(
-      '_____ garçon',
+      'Les ____ dans le restaurant \n sont petites',
       [
-        Option1('te', 'assets/chat.png'),
-        Option1('une', 'assets/fille.png'),
-        Option1("c'est", 'assets/mere.png'),
-        Option1('un', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
-
-    TextQuestion(
-      'je suis un ______',
-      [
-        Option1('home', 'assets/chat.png'),
-        Option1('homme', 'assets/fille.png'),
-        Option1("homm", 'assets/mere.png'),
-        Option1('hoom', 'assets/main.png'),
+        Option1('écoles', 'assets/chat.png'),
+        Option1('tables', 'assets/fille.png'),
+        Option1("familles", 'assets/mere.png'),
+        Option1('voitures', 'assets/main.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
-    TextQuestion(
-      'je suis une ______',
+
+    Question(
+      'car',
       [
-        Option1('femme', 'assets/chat.png'),
-        Option1('garçon', 'assets/fille.png'),
-        Option1("homme", 'assets/mere.png'),
-        Option1('croissant', 'assets/main.png'),
+        Option1("voiture", 'assets/voiture.png'),
+        Option1('vélo', 'assets/velo.png'),
+        Option1("le train", 'assets/train.png'),
+        Option1("orange", 'assets/orange.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "une femme",
-      questionText: "a woman",
+      correctSentence: "The movie theater is open",
+      questionText: "Le cinéma est ouvert",
       additionalWords: [
-        'mange',
-        'croissant',
-        'homme',
-        "chien"
+        'orange',
+        'apple',
+        'passport',
+        "read"
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Are you visiting Bordeaux",
+      questionText: "Vous visitez Bordeaux?",
+      additionalWords: [
+        'orange',
+        'car',
+        'hello',
+        "dog"
       ], // Liste des mots supplémentaires
     ),
 
-    ScrambledWordsQuestion(
-      correctSentence: "une un",
-      questionText: "____ femme et ____ homme",
-      additionalWords: ['', '', '', ""], // Liste des mots supplémentaires
+    Question(
+      'the beach',
+      [
+        Option1("voiture", 'assets/voiture.png'),
+        Option1('la plage', 'assets/plage.png'),
+        Option1("vélo", 'assets/velo.png'),
+        Option1("orange", 'assets/orange.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "I am a boy",
-      questionText: "je suis un garçon",
+      correctSentence: "I like the beach",
+      questionText: "J'aime la plage",
       additionalWords: [
         'girl',
-        'woman',
-        'daughter',
-        "you"
+        'go',
+        'movie',
+        "Espagne"
       ], // Liste des mots supplémentaires
     ),
 
-    ScrambledWordsQuestion(
-      correctSentence: "I am a girl",
-      questionText: "Je suis une fille",
-      additionalWords: [
-        'are',
-        'is',
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a daughter',
-      questionText: 'une fille',
-      additionalWords: [
-        'I',
-        'and',
-        'woamn',
-        'am'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Un chat mange un croissant",
-      questionText: "A cat is eating a croissant",
-      additionalWords: [
-        'homme',
-        'et',
-        'fille',
-        'farçon',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "The woman and the man ",
-      questionText: "Une femme et un homme",
-      additionalWords: [
-        'horse',
-        'girl',
-        'boy',
-        'daughter',
-      ], // Liste des mots supplémentaires
-    ),
     TranslationQuestion(
-      originalText: "a daughter",
-      correctTranslation: 'une fille',
+      originalText: "The park is big",
+      correctTranslation: 'le parc est grand',
       userTranslationn: '',
     ),
+    TranslationQuestion(
+      originalText: "My bike",
+      correctTranslation: 'Mon vélo',
+      userTranslationn: '',
+    ),
+    Question(
+      'the subway station',
+      [
+        Option1("voiture", 'assets/voiture.png'),
+        Option1('la gare', 'assets/gare.png'),
+        Option1("vélo", 'assets/velo.png'),
+        Option1("orange", 'assets/orange.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
+    ),
+    Question(
+      'the bank',
+      [
+        Option1("voiture", 'assets/voiture.png'),
+        Option1('le fromage', 'assets/fromage.png'),
+        Option1("vélo", 'assets/velo.png'),
+        Option1("le banque", 'assets/banque.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
+    ),
+
     ScrambledWordsQuestion(
       correctSentence: "A woman is eating an orange",
       questionText: "Une femme mange une orange",
