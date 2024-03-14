@@ -1,180 +1,164 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_final_fields
 
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExParleLecontwo extends StatefulWidget {
-  const ExParleLecontwo({super.key});
+class ExParleLeconOne extends StatefulWidget {
+  const ExParleLeconOne({super.key});
 
   @override
-  _ExParleLecontwoState createState() => _ExParleLecontwoState();
+  _ExParleLeconOneState createState() => _ExParleLeconOneState();
 }
 
-class _ExParleLecontwoState extends State<ExParleLecontwo> {
+class _ExParleLeconOneState extends State<ExParleLeconOne> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
     Question(
-      'the dog',
+      'the kitchen',
       [
-        Option1('le cheval', 'assets/cheval.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1("l'homme", 'assets/homme.png'),
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('thé', 'assets/thé.png'),
+        Option1('le repas', 'assets/repas.png'),
+        Option1('Le beurre', 'assets/propage.png'),
       ],
       [false, false, false, false],
-      [false, true, false, false],
+      [true, false, false, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'a dog',
-      questionText: 'un chien',
-      additionalWords: [
-        'are',
-        "it's",
-        'boy',
-        'woman'
-      ], // Liste des mots supplémentaires
+      correctSentence: 'He is running',
+      questionText: "il court",
+      additionalWords: ['she', 'am', 'and'], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'You cook',
+      questionText: "Tu cuisines",
+      additionalWords: ['she', "I'm", 'and'], // Liste des mots supplémentaires
     ),
     Question(
-      'the horse',
+      'an egg',
       [
-        Option1("l'homme", 'assets/homme.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1('le cheval', 'assets/cheval.png'),
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('thé', 'assets/thé.png'),
+        Option1('un oeuf', 'assets/egg.png'),
+        Option1('Le beurre', 'assets/propage.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    Question(
+      'the cake',
+      [
+        Option1('la cuisine', 'assets/cuisine.png'),
+        Option1('thé', 'assets/thé.png'),
+        Option1('un oeuf', 'assets/egg.png'),
+        Option1('Le gâteau', 'assets/gateau.png'),
       ],
       [false, false, false, false],
       [false, false, false, true],
     ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('tu', 'assets/chat.png'),
-        Option1('ta', 'assets/chat.png'),
-        Option1('te', 'assets/chat.png'),
-        Option1('ti', 'assets/chat.png'),
-      ],
-      spokenWord: 'tu', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('ca', 'assets/chat.png'),
-        Option1('pét', 'assets/chat.png'),
-        Option1('dat', 'assets/chat.png'),
-        Option1("c'est", 'assets/chat.png'),
-      ],
-      spokenWord: "c'est", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    TranslationQuestion(
-      originalText: "cheval",
-      correctTranslation: 'horse',
-      userTranslationn: '',
-    ),
     ScrambledWordsQuestion(
-      correctSentence: 'a horse',
-      questionText: 'Un cheval',
+      correctSentence: 'he respects his woman',
+      questionText: 'Il respecte sa femme',
       additionalWords: [
-        'I',
-        'woman',
         'you',
-        "it's"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "it's a cat",
-      questionText: "c'est un chat",
-      additionalWords: [
-        'girl',
-        'boy',
-        'horse',
-        "you"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Are you Paul",
-      questionText: "tu es paul ?",
-      additionalWords: [
-        'and',
-        'I',
-        'woman',
-        "it's"
-            "you"
+        'rich',
+        'am',
+        'I'
       ], // Liste des mots supplémentaires
     ),
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('thé', 'assets/chat.png'),
-        Option1('tes', 'assets/chat.png'),
-        Option1('tu es', 'assets/chat.png'),
-        Option1("ces", 'assets/chat.png'),
-      ],
-      spokenWord: "tu es", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+    ScrambledWordsQuestion(
+      correctSentence: 'your bag contains vegetables',
+      questionText: 'Ton sac contient des légumes',
+      additionalWords: [
+        'how',
+        'what',
+        'where',
+        'on'
+      ], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "it's a horse",
-      questionText: "c'est un cheval",
+      correctSentence: 'men cut apples',
+      questionText: 'les hommes coupent des pommes',
       additionalWords: [
-        'are',
         'woman',
-        'you',
-        'boy'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Are you Alice",
-      questionText: "Tu es Alice ?",
-      additionalWords: [
-        'and',
-        'woman',
-        'man',
-        'girl'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'I am a woman',
-      questionText: 'Je suis une femme',
-      additionalWords: [
-        'boy',
-        'and',
-        'hello',
-        'what'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Tu es Paul',
-      questionText: 'Are you Paul?',
-      additionalWords: [
-        'manges',
         'orange',
-        'garçcon',
-        'fille'
+        'appple',
+        'pizza',
+      ], // Liste des mots supplémentaires
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: 'We respect his woman',
+      questionText: 'Nous respectons sa femme',
+      additionalWords: [
+        'man',
+        'orange',
+        'now',
+        'tomorrow',
+      ], // Liste des mots supplémentaires
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: 'We run',
+      questionText: 'Nous courons',
+      additionalWords: [
+        'horse',
+        'pizza',
+        'how',
+        'where',
+      ], // Liste des mots supplémentaires
+    ),
+    Question(
+      'shoes',
+      [
+        Option1('chaussures', 'assets/baskets.png'),
+        Option1('une cappuche', 'assets/veste.png'),
+        Option1('un pantalon', 'assets/pantalon.png'),
+        Option1('un pull', 'assets/pull.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: 'You run',
+      questionText: 'Vous courez',
+      additionalWords: [
+        'we',
+        'am',
+        'I',
+        'why',
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "C' est un cheval",
-      questionText: "It's a horse",
+      correctSentence: 'he cuts an orange',
+      questionText: 'Il coupe un orange',
       additionalWords: [
-        'manges',
-        'cheval',
-        'femme',
-        'pizza',
+        'we',
+        'am',
+        'I',
+        'why',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'they respect the woman',
+      questionText: 'Ils respectent la femme',
+      additionalWords: [
+        'man',
+        'orange',
+        'now',
+        'tomorrow',
       ], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];
@@ -563,23 +547,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-              // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon2Bonjour': true,
+                'lecon1Parle': true,
               });
 
-              print('Champ lecon2Bonjour ajouté avec succès!');
+              print('Champ lecon1Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon2Bonjour est déjà vrai!');
+            print('Le champ lecon1Parle est déjà vrai!');
           }
         }
       } else {
@@ -627,23 +611,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-              // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon2Bonjour': true,
+                'lecon1Parle': true,
               });
 
-              print('Champ lecon2Bonjour ajouté avec succès!');
+              print('Champ lecon1Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon2Bonjour est déjà vrai!');
+            print('Le champ lecon1Parle est déjà vrai!');
           }
         }
       } else {
@@ -690,23 +674,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-            // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon2Bonjour': true,
+              'lecon1Parle': true,
             });
 
-            print('Champ lecon2Bonjour ajouté avec succès!');
+            print('Champ lecon1Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon2Bonjour est déjà vrai!');
+          print('Le champ lecon1Parle est déjà vrai!');
         }
       }
     } else {
@@ -749,23 +733,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon2Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon1Parle'
 
-            // Mettez à jour le champ 'lecon2Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon1Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon2Bonjour': true,
+              'lecon1Parle': true,
             });
 
-            print('Champ lecon2Bonjour ajouté avec succès!');
+            print('Champ lecon1Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon2Bonjour est déjà vrai!');
+          print('Le champ lecon1Parle est déjà vrai!');
         }
       }
     } else {

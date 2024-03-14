@@ -76,67 +76,88 @@ class _ExParleLeconOneState extends State<ExParleLeconOne> {
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: 'the cake contains an egg',
-      questionText: 'le gateau contient un oeuf',
+      correctSentence: 'your bag contains vegetables',
+      questionText: 'Ton sac contient des légumes',
       additionalWords: [
-        'run',
-        'girl',
-        'on',
-        'boy'
+        'how',
+        'what',
+        'where',
+        'on'
       ], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: 'une femme et un homme',
-      questionText: 'a woman and a man',
+      correctSentence: 'men cut apples',
+      questionText: 'les hommes coupent des pommes',
       additionalWords: [
-        'manges',
-        'cheval',
-        'fille',
+        'woman',
+        'orange',
+        'appple',
         'pizza',
       ], // Liste des mots supplémentaires
     ),
 
-    TranslationQuestion(
-      originalText: "Je suis",
-      correctTranslation: 'I am',
-      userTranslationn: '',
+    ScrambledWordsQuestion(
+      correctSentence: 'We respect his woman',
+      questionText: 'Nous respectons sa femme',
+      additionalWords: [
+        'man',
+        'orange',
+        'now',
+        'tomorrow',
+      ], // Liste des mots supplémentaires
     ),
 
-    TranslationQuestion(
-      originalText: "Je",
-      correctTranslation: 'I',
-      userTranslationn: '',
-    ),
     ScrambledWordsQuestion(
-      correctSentence: 'I am a woman',
-      questionText: 'Je suis une femme',
+      correctSentence: 'We run',
+      questionText: 'Nous courons',
       additionalWords: [
-        'boy',
-        'and',
-        'hello',
-        'what'
+        'horse',
+        'pizza',
+        'how',
+        'where',
       ], // Liste des mots supplémentaires
     ),
     Question(
-      'le garçon',
+      'shoes',
       [
-        Option1('the girl', 'assets/fille.png'),
-        Option1('numbers', "assets/nombres.png"),
-        Option1('the woman', 'assets/mere.png'),
-        Option1('the boy', 'assets/utilisateur.png'),
+        Option1('chaussures', 'assets/baskets.png'),
+        Option1('une cappuche', 'assets/veste.png'),
+        Option1('un pantalon', 'assets/pantalon.png'),
+        Option1('un pull', 'assets/pull.png'),
       ],
       [false, false, false, false],
-      [false, false, false, true],
+      [true, false, false, false],
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: 'You run',
+      questionText: 'Vous courez',
+      additionalWords: [
+        'we',
+        'am',
+        'I',
+        'why',
+      ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Je suis Paul',
-      questionText: 'I am Paul',
+      correctSentence: 'he cuts an orange',
+      questionText: 'Il coupe un orange',
       additionalWords: [
-        'manges',
-        'cheval',
-        'fille',
-        'pizza',
+        'we',
+        'am',
+        'I',
+        'why',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'they respect the woman',
+      questionText: 'Ils respectent la femme',
+      additionalWords: [
+        'man',
+        'orange',
+        'now',
+        'tomorrow',
       ], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];
