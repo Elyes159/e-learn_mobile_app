@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/arabic_course/arabic_main.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/LanguageProvider.dart';
@@ -11,6 +10,9 @@ import 'package:pfe_1/french_course/bonjour/lecons/lecon2/lecon2.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon3/lecon3.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon4/lecon4.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon5/lecon5.dart';
+import 'package:pfe_1/french_course/bonjour/lecons/lecon6/lecon6.dart';
+import 'package:pfe_1/french_course/bonjour/lecons/lecon7/lecon7.dart';
+import 'package:pfe_1/french_course/bonjour/lecons/lecon8/lecon8.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
@@ -84,6 +86,9 @@ class _MyAppState extends State<MyApp> {
         'lecon3': (context) => ExLeconthree(),
         'lecon4': (context) => ExLeconfour(),
         'lecon5': (context) => ExLeconfive(),
+        'lecon6': (context) => ExLeconSix(),
+        'lecon7': (context) => ExLeconSeven(),
+        'lecon8': (context) => ExLeconEight(),
         'frenshunities': (context) => FrenchUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),

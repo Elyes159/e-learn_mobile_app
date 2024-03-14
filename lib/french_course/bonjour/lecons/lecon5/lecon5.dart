@@ -118,7 +118,7 @@ class _ExLeconfiveState extends State<ExLeconfive> {
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "The woman and the man ",
+      correctSentence: "The woman and the man",
       questionText: "La femme et l'homme",
       additionalWords: [
         'horse',

@@ -133,6 +133,78 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
     }
   }
 
+  Future<bool> checkLecon6BonjourExistence() async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon6Bonjour') ?? false;
+
+        return lecon1BonjourExists;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
+
+  Future<bool> checkLecon7BonjourExistence() async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon7Bonjour') ?? false;
+
+        return lecon1BonjourExists;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
+
+  Future<bool> checkLecon8BonjourExistence() async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon8Bonjour') ?? false;
+
+        return lecon1BonjourExists;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -219,7 +291,8 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return CircularProgressIndicator(
+                                          color: Colors.white);
                                     } else if (snapshot.hasError) {
                                       return Text('Erreur : ${snapshot.error}');
                                     } else {
@@ -254,7 +327,8 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return CircularProgressIndicator(
+                                          color: Colors.white);
                                     } else if (snapshot.hasError) {
                                       return Text('Erreur : ${snapshot.error}');
                                     } else {
@@ -289,7 +363,8 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return CircularProgressIndicator(
+                                          color: Colors.white);
                                     } else if (snapshot.hasError) {
                                       return Text('Erreur : ${snapshot.error}');
                                     } else {
@@ -324,7 +399,8 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return CircularProgressIndicator(
+                                          color: Colors.white);
                                     } else if (snapshot.hasError) {
                                       return Text('Erreur : ${snapshot.error}');
                                     } else {
@@ -359,7 +435,8 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return CircularProgressIndicator(
+                                          color: Colors.white);
                                     } else if (snapshot.hasError) {
                                       return Text('Erreur : ${snapshot.error}');
                                     } else {
@@ -379,20 +456,116 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                 ),
                               ],
                             ),
-                            Lecon(
-                              imagePath: "assets/tableau-a-feuilles.png",
-                              leconTitle: "Lecon 6",
-                              navigator: "lecon2",
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 6",
+                                    navigator: "lecon6",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon6BonjourExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator(
+                                        color: Colors.white,
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
-                            Lecon(
-                              imagePath: "assets/tableau-a-feuilles.png",
-                              leconTitle: "Lecon 7",
-                              navigator: "lecon2",
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 7",
+                                    navigator: "lecon7",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon7BonjourExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator(
+                                        color: Colors.white,
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
-                            Lecon(
-                              imagePath: "assets/tableau-a-feuilles.png",
-                              leconTitle: "Lecon 8",
-                              navigator: "lecon2",
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 8",
+                                    navigator: "lecon8",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon8BonjourExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator(
+                                        color: Colors.white,
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -409,38 +582,96 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
               });
             },
             child: Padding(
-              padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
               child: AnimatedContainer(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: const Color(0xFF3DB2FF),
                 ),
-                duration: const Duration(milliseconds: 300),
-                height: isExpanded1 ? 200 : 70,
+                duration: const Duration(milliseconds: 0),
+                height: isExpanded1 ? 600 : 70,
                 width: screenWidth,
                 child: Column(
                   children: [
-                    Text(
-                      "Bonjour",
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, top: 8),
+                          child: Image.asset(
+                            "assets/parlant.png",
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 140),
+                          child: Text(
+                            "Je parle",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                          size: 40,
+                        )
+                      ],
                     ),
                     if (isExpanded1)
-                      Column(
-                        children: [
-                          Container(
-                            height: 50,
-                            width: screenWidth,
-                            child: Row(
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          right: 20,
+                          left: 20,
+                          bottom: 20,
+                          top: 5,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
                               children: [
-                                Image.asset("assets/tableau-a-feuilles.png"),
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 8",
+                                    navigator: "lecon8",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon8BonjourExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator(
+                                        color: Colors.white,
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
                               ],
                             ),
-                          )
-                        ],
-                      )
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),

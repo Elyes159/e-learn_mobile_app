@@ -20,149 +20,115 @@ class _ExLeconSixState extends State<ExLeconSix> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    ScrambledWordsQuestion(
-      correctSentence: 'es suis',
-      questionText: 'Tu ____ un gaçon et je ____ un homme.',
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
-
     TextQuestion(
-      '_____ garçon',
+      'Good Morning',
       [
-        Option1('te', 'assets/chat.png'),
-        Option1('une', 'assets/fille.png'),
-        Option1("c'est", 'assets/mere.png'),
-        Option1('un', 'assets/main.png'),
+        Option1('non', 'assets/chat.png'),
+        Option1('bonjour', 'assets/fille.png'),
+        Option1("merci", 'assets/mere.png'),
+        Option1('au revoir', 'assets/main.png'),
       ],
       [false, false, false, false],
-      [false, false, false, true],
+      [false, false, true, false],
     ),
 
-    TextQuestion(
-      'je suis un ______',
-      [
-        Option1('home', 'assets/chat.png'),
-        Option1('homme', 'assets/fille.png'),
-        Option1("homm", 'assets/mere.png'),
-        Option1('hoom', 'assets/main.png'),
+    SoundQuestion(
+      questionText: 'What is the correctly pronounced word?',
+      options: [
+        Option1('oui', 'assets/chat.png'),
+        Option1('biensur', 'assets/chat.png'),
+        Option1("D'accord", 'assets/chat.png'),
+        Option1('non', 'assets/chat.png'),
       ],
-      [false, false, false, false],
-      [false, true, false, false],
+      spokenWord: "D'accord", // Remplacez par le mot correctement prononcé
+      selectedWord:
+          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
     TextQuestion(
-      'je suis une ______',
+      'Good evening',
       [
-        Option1('femme', 'assets/chat.png'),
-        Option1('garçon', 'assets/fille.png'),
-        Option1("homme", 'assets/mere.png'),
-        Option1('croissant', 'assets/main.png'),
+        Option1('bonsoir', 'assets/chat.png'),
+        Option1('désolé', 'assets/fille.png'),
+        Option1("merci", 'assets/mere.png'),
+        Option1('elle', 'assets/main.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
     ),
+
     ScrambledWordsQuestion(
-      correctSentence: "une femme",
-      questionText: "a woman",
+      correctSentence: "Thanks and goodbye",
+      questionText: "Merci et au revoir",
       additionalWords: [
-        'mange',
-        'croissant',
-        'homme',
-        "chien"
+        'please',
+        'paul',
+        'hello',
+        "ok"
       ], // Liste des mots supplémentaires
+    ),
+    TextQuestion(
+      'It was nothing',
+      [
+        Option1('de rien', 'assets/chat.png'),
+        Option1('non', 'assets/fille.png'),
+        Option1("s'il te plaît", 'assets/mere.png'),
+        Option1('au revoir', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "une un",
-      questionText: "____ femme et ____ homme",
-      additionalWords: ['', '', '', ""], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "I am a boy",
-      questionText: "je suis un garçon",
+      correctSentence: "Yes , thank you very much",
+      questionText: "Oui , merci beaucoup!",
       additionalWords: [
-        'girl',
-        'woman',
-        'daughter',
-        "you"
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "I am a girl",
-      questionText: "Je suis une fille",
-      additionalWords: [
-        'are',
-        'is',
+        'tommorow',
+        'ofcourse',
         'boy',
         'man'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'a daughter',
-      questionText: 'une fille',
+      correctSentence: 'sorry',
+      questionText: 'désolé',
       additionalWords: [
-        'I',
+        'how',
         'and',
-        'woamn',
-        'am'
+        'no',
+        'now'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "Un chat mange un croissant",
-      questionText: "A cat is eating a croissant",
+      correctSentence: "No i'm sorry",
+      questionText: "Non , je suis désolé",
       additionalWords: [
-        'homme',
-        'et',
-        'fille',
-        'farçon',
+        'thank',
+        'you',
+        'apple',
+        'the',
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "The woman and the man",
-      questionText: "La femme et l'homme",
+      correctSentence: "Please",
+      questionText: "S'il vous plaît",
       additionalWords: [
-        'horse',
-        'girl',
+        'how',
+        'you',
         'boy',
-        'daughter',
+        'good morning',
       ], // Liste des mots supplémentaires
     ),
     TranslationQuestion(
-      originalText: "a daughter",
-      correctTranslation: 'une fille',
-      userTranslationn: '',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "A woman is eating an orange",
-      questionText: "Une femme mange une orange",
-      additionalWords: [
-        'horse',
-        "it's",
-        'girl',
-        'croissant',
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      '_____ fille et un garçon',
-      [
-        Option1('une', 'assets/chat.png'),
-        Option1('un', 'assets/fille.png'),
-        Option1("le", 'assets/mere.png'),
-        Option1('ce', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    TranslationQuestion(
-      originalText: "a woman and a man",
-      correctTranslation: 'une femme et un homme',
+      originalText: "Good Morning",
+      correctTranslation: 'Bonjour',
       userTranslationn: '',
     ),
     TranslationQuestion(
-      originalText: "a boy and a girl",
-      correctTranslation: 'un garçon et une fille',
+      originalText: "Good night",
+      correctTranslation: 'Bonne nuit',
       userTranslationn: '',
-    ), // Add more questions as needed
+    ),
+    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {

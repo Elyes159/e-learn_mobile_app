@@ -1,10 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_final_fields
 
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
