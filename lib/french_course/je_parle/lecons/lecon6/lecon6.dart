@@ -7,179 +7,128 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExParleLeconthree extends StatefulWidget {
-  const ExParleLeconthree({super.key});
+class ExParleLeconSix extends StatefulWidget {
+  const ExParleLeconSix({super.key});
 
   @override
-  _ExParleLeconthreeState createState() => _ExParleLeconthreeState();
+  _ExParleLeconSixState createState() => _ExParleLeconSixState();
 }
 
-class _ExParleLeconthreeState extends State<ExParleLeconthree> {
+class _ExParleLeconSixState extends State<ExParleLeconSix> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    Question(
-      'the croissant',
+    TextQuestion(
+      'Good Morning',
       [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("l'orange", 'assets/orange.png'),
-        Option1("pomme", 'assets/pomme.png'),
+        Option1('non', 'assets/chat.png'),
+        Option1('bonjour', 'assets/fille.png'),
+        Option1("merci", 'assets/mere.png'),
+        Option1('au revoir', 'assets/main.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a croissant',
-      questionText: 'un croissant',
-      additionalWords: [
-        'are',
-        "it's",
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'the orange',
-      [
-        Option1("l'orange", 'assets/orange.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("le croissant", 'assets/croissant.png'),
-        Option1("pomme", 'assets/pomme.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
+      [false, false, true, false],
     ),
 
     SoundQuestion(
       questionText: 'What is the correctly pronounced word?',
       options: [
-        Option1('a', 'assets/chat.png'),
-        Option1('ante', 'assets/chat.png'),
-        Option1('ant', 'assets/chat.png'),
-        Option1('anna', 'assets/chat.png'),
+        Option1('oui', 'assets/chat.png'),
+        Option1('biensur', 'assets/chat.png'),
+        Option1("D'accord", 'assets/chat.png'),
+        Option1('non', 'assets/chat.png'),
       ],
-      spokenWord: 'ant', // Remplacez par le mot correctement prononcé
+      spokenWord: "D'accord", // Remplacez par le mot correctement prononcé
       selectedWord:
           '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'an orange',
-      questionText: 'une orange',
-      additionalWords: [
-        'are',
-        'eating',
-        'boy',
-        "it"
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'the pizza',
+    TextQuestion(
+      'Good evening',
       [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("l'orange", 'assets/orange.png'),
-        Option1("pomme", 'assets/pomme.png'),
+        Option1('bonsoir', 'assets/chat.png'),
+        Option1('désolé', 'assets/fille.png'),
+        Option1("merci", 'assets/mere.png'),
+        Option1('elle', 'assets/main.png'),
       ],
       [false, false, false, false],
-      [false, true, false, false],
+      [true, false, false, false],
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "a croissant and an orange",
-      questionText: "un croissant et une orange",
+      correctSentence: "Thanks and goodbye",
+      questionText: "Merci et au revoir",
       additionalWords: [
-        'pizza',
-        'man',
-        'horse',
-        "it"
+        'please',
+        'paul',
+        'hello',
+        "ok"
       ], // Liste des mots supplémentaires
     ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('pissa', 'assets/chat.png'),
-        Option1('croissant', 'assets/chat.png'),
-        Option1('pizza', 'assets/chat.png'),
-        Option1('orange', 'assets/chat.png'),
+    TextQuestion(
+      'It was nothing',
+      [
+        Option1('de rien', 'assets/chat.png'),
+        Option1('non', 'assets/fille.png'),
+        Option1("s'il te plaît", 'assets/mere.png'),
+        Option1('au revoir', 'assets/main.png'),
       ],
-      spokenWord: 'pizza', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+      [false, false, false, false],
+      [false, false, true, false],
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "It's an orange",
-      questionText: "C'est une orange",
+      correctSentence: "Yes , thank you very much",
+      questionText: "Oui , merci beaucoup!",
       additionalWords: [
-        'are',
-        'is',
-        'horse',
+        'tommorow',
+        'ofcourse',
+        'boy',
         'man'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Marie is eating',
-      questionText: 'Marie mange',
+      correctSentence: 'sorry',
+      questionText: 'désolé',
       additionalWords: [
-        'croissant',
-        'pizza',
-        'it',
-        'orange'
+        'how',
+        'and',
+        'no',
+        'now'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'You are eating a pizza',
-      questionText: 'Tu mange une pizza',
+      correctSentence: "No i'm sorry",
+      questionText: "Non , je suis désolé",
       additionalWords: [
-        'girl',
-        "it's",
-        'woman',
-        'is'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Un chat mange un croissant",
-      questionText: "A cat is eating a croissant",
-      additionalWords: [
-        'homme',
-        'et',
-        'fille',
-        'farçon',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Tu manges une pizza",
-      questionText: "You are eating a pizza",
-      additionalWords: [
-        'homme',
-        'femme',
-        'orange',
-        'suis',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "A woman is eating an orange",
-      questionText: "Une femme mange une orange",
-      additionalWords: [
-        'horse',
-        "it's",
-        'girl',
-        'croissant',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "A girl and a dog",
-      questionText: "Une fille et un chien",
-      additionalWords: [
-        'horse',
-        "it's",
+        'thank',
         'you',
-        'are',
+        'apple',
+        'the',
       ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Please",
+      questionText: "S'il vous plaît",
+      additionalWords: [
+        'how',
+        'you',
+        'boy',
+        'good morning',
+      ], // Liste des mots supplémentaires
+    ),
+    TranslationQuestion(
+      originalText: "Good Morning",
+      correctTranslation: 'Bonjour',
+      userTranslationn: '',
+    ),
+    TranslationQuestion(
+      originalText: "Good night",
+      correctTranslation: 'Bonne nuit',
+      userTranslationn: '',
+    ),
+    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
@@ -271,6 +220,90 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
   }
 
   void _showBottomSheet(bool isCorrect, Question question) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 200.0,
+          width: 350,
+          // Adjust the height here
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect
+                        ? "That's right"
+                        : "Ups.. That's not quite right \n",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect ? "Amazing!" : "don't worry",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                    onPressed: () {
+                      // Add the code you want to execute when the button is pressed
+                      Navigator.pop(context); // Close the BottomSheet
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          isCorrect ? Color(0xFF99CC29) : Colors.red,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the borderRadius value
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal:
+                              120.0), // Adjust padding for height and width
+                      minimumSize: const Size(
+                          200.0, 40.0), // Set minimum size for height and width
+                    ),
+                    child: isCorrect
+                        ? const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : const Text(
+                            'Try Again',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showBottomSheetForTextQuestion(bool isCorrect, TextQuestion question) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -566,23 +599,23 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon3Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon6Bonjour'
 
-              // Mettez à jour le champ 'lecon3Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon6Bonjour' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon3Bonjour': true,
+                'lecon6Bonjour': true,
               });
 
-              print('Champ lecon3Bonjour ajouté avec succès!');
+              print('Champ lecon6Bonjour ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon3Bonjour est déjà vrai!');
+            print('Le champ lecon6Bonjour est déjà vrai!');
           }
         }
       } else {
@@ -630,23 +663,23 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon3Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon6Bonjour'
 
-              // Mettez à jour le champ 'lecon3Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon6Bonjour' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon3Bonjour': true,
+                'lecon6Bonjour': true,
               });
 
-              print('Champ lecon3Bonjour ajouté avec succès!');
+              print('Champ lecon6Bonjour ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon3Bonjour est déjà vrai!');
+            print('Le champ lecon6Bonjour est déjà vrai!');
           }
         }
       } else {
@@ -693,28 +726,87 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon3Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon6Bonjour'
 
-            // Mettez à jour le champ 'lecon3Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon6Bonjour' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon3Bonjour': true,
+              'lecon6Bonjour': true,
             });
 
-            print('Champ lecon3Bonjour ajouté avec succès!');
+            print('Champ lecon6Bonjour ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon3Bonjour est déjà vrai!');
+          print('Le champ lecon6Bonjour est déjà vrai!');
         }
       }
     } else {
       // Show Bottom Sheet with "Incorrect" text
       _showBottomSheet(isCorrect, questions[_currentPage]);
+    }
+
+    return isCorrect;
+  }
+
+  Future<bool> _nextPageForTextQuestion() async {
+    bool isCorrect = ListEquality().equals(
+      (questions[_currentPage] as TextQuestion).selectedOptions,
+      (questions[_currentPage] as TextQuestion).correctOptions,
+    );
+
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+
+      if (_currentPage < questions.length - 1) {
+        setState(() {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon6Bonjour'
+
+            // Mettez à jour le champ 'lecon6Bonjour' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon6Bonjour': true,
+            });
+
+            print('Champ lecon6Bonjour ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon6Bonjour est déjà vrai!');
+        }
+      }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
     }
 
     return isCorrect;
@@ -752,23 +844,23 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon3Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon6Bonjour'
 
-            // Mettez à jour le champ 'lecon3Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon6Bonjour' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon3Bonjour': true,
+              'lecon6Bonjour': true,
             });
 
-            print('Champ lecon3Bonjour ajouté avec succès!');
+            print('Champ lecon6Bonjour ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon3Bonjour est déjà vrai!');
+          print('Le champ lecon6Bonjour est déjà vrai!');
         }
       }
     } else {
@@ -928,8 +1020,14 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
                       question: questions[index] as SoundQuestion,
                       onCorrectAnswer: _nextPageForSoundQuestion,
                     );
+                  } else if (questions[index] is TextQuestion) {
+                    return TextQuestionPage(
+                      question: questions[index]
+                          as TextQuestion, // Cast to TextQuestion
+                      onCorrectAnswer: _nextPageForTextQuestion,
+                    );
                   } else {
-                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion
+                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion, ni TextQuestion
                     return Container(); // ou tout autre widget par défaut
                   }
                 },

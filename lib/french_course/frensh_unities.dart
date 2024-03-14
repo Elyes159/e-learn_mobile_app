@@ -637,7 +637,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                 Expanded(
                                   child: Lecon(
                                     imagePath: "assets/tableau-a-feuilles.png",
-                                    leconTitle: "Lecon 8",
+                                    leconTitle: "Lecon 1",
                                     navigator: "lecon8",
                                   ),
                                 ),

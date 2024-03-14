@@ -7,14 +7,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExLecontwo extends StatefulWidget {
-  const ExLecontwo({super.key});
+class ExParleLecontwo extends StatefulWidget {
+  const ExParleLecontwo({super.key});
 
   @override
-  _ExLecontwoState createState() => _ExLecontwoState();
+  _ExParleLecontwoState createState() => _ExParleLecontwoState();
 }
 
-class _ExLecontwoState extends State<ExLecontwo> {
+class _ExParleLecontwoState extends State<ExParleLecontwo> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;

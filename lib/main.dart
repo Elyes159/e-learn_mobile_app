@@ -16,6 +16,14 @@ import 'package:pfe_1/french_course/bonjour/lecons/lecon8/lecon8.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon2/lecon2.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon3/lecon3.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon4/lecon4.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon5/lecon5.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon6/lecon6.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon7/lecon7.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon8/lecon8.dart';
 import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';
 import 'package:pfe_1/starting/signin.dart';
@@ -89,6 +97,14 @@ class _MyAppState extends State<MyApp> {
         'lecon6': (context) => ExLeconSix(),
         'lecon7': (context) => ExLeconSeven(),
         'lecon8': (context) => ExLeconEight(),
+        'leconParle1': (context) => ExParleLeconOne(),
+        'leconParle2': (context) => ExParleLecontwo(),
+        'leconParle3': (context) => ExParleLeconthree(),
+        'leconParle4': (context) => ExParleLeconfour(),
+        'leconParle5': (context) => ExParleLeconfive(),
+        'leconParle6': (context) => ExParleLeconSix(),
+        'leconParle7': (context) => ExParleLeconSeven(),
+        'leconParle8': (context) => ExParleLeconEight(),
         'frenshunities': (context) => FrenchUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),

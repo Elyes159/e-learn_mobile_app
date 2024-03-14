@@ -7,14 +7,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExLeconfive extends StatefulWidget {
-  const ExLeconfive({super.key});
+class ExParleLeconfive extends StatefulWidget {
+  const ExParleLeconfive({super.key});
 
   @override
-  _ExLeconfiveState createState() => _ExLeconfiveState();
+  _ExParleLeconfiveState createState() => _ExParleLeconfiveState();
 }
 
-class _ExLeconfiveState extends State<ExLeconfive> {
+class _ExParleLeconfiveState extends State<ExParleLeconfive> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;

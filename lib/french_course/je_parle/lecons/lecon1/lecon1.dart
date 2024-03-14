@@ -8,14 +8,14 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../constant/question.dart';
 
-class ExLeconOne extends StatefulWidget {
-  const ExLeconOne({super.key});
+class ExParleLeconOne extends StatefulWidget {
+  const ExParleLeconOne({super.key});
 
   @override
-  _ExLeconOneState createState() => _ExLeconOneState();
+  _ExParleLeconOneState createState() => _ExParleLeconOneState();
 }
 
-class _ExLeconOneState extends State<ExLeconOne> {
+class _ExParleLeconOneState extends State<ExParleLeconOne> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
