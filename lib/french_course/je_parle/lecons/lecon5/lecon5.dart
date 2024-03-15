@@ -20,12 +20,6 @@ class _ExParleLeconfiveState extends State<ExParleLeconfive> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    ScrambledWordsQuestion(
-      correctSentence: 'es suis',
-      questionText: 'Tu ____ un gaçon et je ____ un homme.',
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
-
     Question(
       'the tree',
       [
@@ -147,6 +141,16 @@ class _ExParleLeconfiveState extends State<ExParleLeconfive> {
       ],
       [false, false, false, false],
       [false, false, false, true],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Mes voisins sont gentils",
+      questionText: "My neighbors are kind",
+      additionalWords: [
+        'garçon',
+        "coontent",
+        'oranges',
+        'mangent',
+      ], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];
   void _showBottomSheetTranslation(

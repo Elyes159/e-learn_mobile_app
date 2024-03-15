@@ -20,15 +20,9 @@ class _ExParleLeconEightState extends State<ExParleLeconEight> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    TranslationQuestion(
-      originalText: "I love girls",
-      correctTranslation: "j'aime les filles",
-      userTranslationn: '',
-    ),
-
     ScrambledWordsQuestion(
-      correctSentence: "Yes , thank you very much",
-      questionText: "vous mangez une pomme",
+      correctSentence: "ces fermé petit-déjeuner",
+      questionText: "These",
       additionalWords: [
         'tommorow',
         'ofcourse',
@@ -37,102 +31,116 @@ class _ExParleLeconEightState extends State<ExParleLeconEight> {
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "J'ai des livres",
-      questionText: "I have some books",
+      correctSentence: "I want an apple",
+      questionText: "Je veux une pomme",
       additionalWords: [
-        'robes',
-        'elles',
-        'si',
-        'as'
+        'bakery',
+        'you',
+        'girl',
+        'the'
       ], // Liste des mots supplémentaires
     ),
 
     Question(
-      'the bear',
+      'dish',
       [
-        Option1('le cheval', 'assets/cheval.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1("l'ourse", 'assets/ours.png'),
+        Option1('déjeuner', 'assets/dejeuner.png'),
+        Option1('une salade', 'assets/salade.png'),
+        Option1('plat', 'assets/plat.png'),
+        Option1("pain", 'assets/pain.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: "They are making a pizza",
+      questionText: "Elles préparent une pizza",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    Question(
+      'meal',
+      [
+        Option1('un cheval', 'assets/cheval.png'),
+        Option1('une vache', 'assets/vache.png'),
+        Option1('repas', 'assets/repas.png'),
+        Option1("pain", 'assets/pain.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    TextQuestion(
+      'Tu prépare ce plat français pour ____?',
+      [
+        Option1('croissant', 'assets/chat.png'),
+        Option1('salade', 'assets/fille.png'),
+        Option1("le diner", 'assets/mere.png'),
+        Option1('voitures', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "The salad is ready",
+      questionText: "la salade est prête",
+      additionalWords: [
+        'horse',
+        'cow',
+        'eat',
+        'passport',
+      ], // Liste des mots supplémentaires
+    ),
+    Question(
+      'Wine',
+      [
+        Option1('un cheval', 'assets/cheval.png'),
+        Option1('une bouteille', 'assets/bouteille.png'),
+        Option1('repas', 'assets/repas.png'),
+        Option1("vin", 'assets/vin.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "les salades",
+      questionText: "______ dans ce restaurant sont bonnes",
+      additionalWords: [
+        'le vin',
+        'la pizza',
+        'how',
+        'hey',
+      ], // Liste des mots supplémentaires
+    ),
+    TextQuestion(
+      'Ce matin, je prépare le petit ____ ',
+      [
+        Option1('diner', 'assets/chat.png'),
+        Option1('déjeuner', 'assets/fille.png'),
+        Option1("prépare", 'assets/mere.png'),
+        Option1('numéro', 'assets/main.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "It's a meal",
-      questionText: "C'est un repas",
-      additionalWords: [
-        'winter',
-        'friend',
-        'more',
-        'now'
-      ], // Liste des mots supplémentaires
+    TextQuestion(
+      'Cette pizza est ___ ',
+      [
+        Option1('bonne', 'assets/chat.png'),
+        Option1('bon', 'assets/fille.png'),
+      ],
+      [false, false],
+      [true, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "No i'm sorry",
-      questionText: "Non , je suis désolé",
-      additionalWords: [
-        'thank',
-        'you',
-        'apple',
-        'the',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "they have a horse",
-      questionText: "Elles ont un cheval",
-      additionalWords: [
-        'listen',
-        'you',
-        'girl',
-        'good',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "I have a tomato and an apple",
-      questionText: "J'ai une tomate et une pomme",
-      additionalWords: [
-        'listen',
-        'you',
-        'girl',
-        'good',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "they are hot",
-      questionText: "Elles ont chaud",
-      additionalWords: [
-        'dress',
-        'family',
-        'gave',
-        'bye',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "It's a pancake",
-      questionText: "C'est une crêpe",
-      additionalWords: [
-        'strong',
-        'cake',
-        'he',
-        'begin',
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "J'ai un canard",
-      correctTranslation: "I have a duck",
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "tu as un chat",
-      correctTranslation: "You have a cat",
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "C'est un chat",
-      correctTranslation: "It's a cat",
-      userTranslationn: '',
+    TextQuestion(
+      'Ce repas est ____ ',
+      [
+        Option1('bon', 'assets/chat.png'),
+        Option1('ouvert', 'assets/fille.png'),
+        Option1("aime", 'assets/mere.png'),
+        Option1('mange', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
     ),
     ScrambledWordsQuestion(
       correctSentence: "They are Paul and Wendy",

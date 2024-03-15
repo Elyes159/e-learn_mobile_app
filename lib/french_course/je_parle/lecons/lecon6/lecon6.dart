@@ -20,109 +20,81 @@ class _ExParleLeconSixState extends State<ExParleLeconSix> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    TextQuestion(
-      'Good Morning',
+    Question(
+      'the book',
       [
-        Option1('non', 'assets/chat.png'),
-        Option1('bonjour', 'assets/fille.png'),
-        Option1("merci", 'assets/mere.png'),
-        Option1('au revoir', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('oui', 'assets/chat.png'),
-        Option1('biensur', 'assets/chat.png'),
-        Option1("D'accord", 'assets/chat.png'),
-        Option1('non', 'assets/chat.png'),
-      ],
-      spokenWord: "D'accord", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    TextQuestion(
-      'Good evening',
-      [
-        Option1('bonsoir', 'assets/chat.png'),
-        Option1('désolé', 'assets/fille.png'),
-        Option1("merci", 'assets/mere.png'),
-        Option1('elle', 'assets/main.png'),
+        Option1('le livre', 'assets/livre-ouvert.png'),
+        Option1('arbre', 'assets/tree.png'),
+        Option1("la vache", 'assets/vache.png'),
+        Option1('train', 'assets/train.png'),
       ],
       [false, false, false, false],
       [true, false, false, false],
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "Thanks and goodbye",
-      questionText: "Merci et au revoir",
+      correctSentence: "The books",
+      questionText: "les livres",
       additionalWords: [
-        'please',
-        'paul',
-        'hello',
+        'cows',
+        'his',
+        'here',
         "ok"
       ], // Liste des mots supplémentaires
     ),
-    TextQuestion(
-      'It was nothing',
+    ScrambledWordsQuestion(
+      correctSentence: "lire",
+      questionText: "Cédric veut ____ trois livres",
+      additionalWords: [
+        'visiter',
+        'aime',
+        'mangent',
+      ], // Liste des mots supplémentaires
+    ),
+
+    Question(
+      'the cow',
       [
-        Option1('de rien', 'assets/chat.png'),
-        Option1('non', 'assets/fille.png'),
-        Option1("s'il te plaît", 'assets/mere.png'),
-        Option1('au revoir', 'assets/main.png'),
+        Option1('le livre', 'assets/livre-ouvert.png'),
+        Option1("L'Espagne", 'assets/espagne.png'),
+        Option1("la vache", 'assets/vache.png'),
+        Option1('train', 'assets/train.png'),
       ],
       [false, false, false, false],
       [false, false, true, false],
     ),
 
-    ScrambledWordsQuestion(
-      correctSentence: "Yes , thank you very much",
-      questionText: "Oui , merci beaucoup!",
-      additionalWords: [
-        'tommorow',
-        'ofcourse',
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
+    TranslationQuestion(
+      originalText: "nice",
+      correctTranslation: 'gentil',
+      userTranslationn: '',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'sorry',
-      questionText: 'désolé',
+      correctSentence: 'a cow',
+      questionText: 'une vache',
       additionalWords: [
         'how',
-        'and',
-        'no',
-        'now'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "No i'm sorry",
-      questionText: "Non , je suis désolé",
-      additionalWords: [
-        'thank',
-        'you',
-        'apple',
-        'the',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Please",
-      questionText: "S'il vous plaît",
-      additionalWords: [
-        'how',
-        'you',
-        'boy',
-        'good morning',
+        'very',
+        'neighbors',
+        'is'
       ], // Liste des mots supplémentaires
     ),
     TranslationQuestion(
-      originalText: "Good Morning",
-      correctTranslation: 'Bonjour',
+      originalText: "cow",
+      correctTranslation: 'vache',
       userTranslationn: '',
     ),
+    ScrambledWordsQuestion(
+      correctSentence: "she is kind",
+      questionText: "Elle est gentille",
+      additionalWords: [
+        'sisters',
+        'neghbor',
+        'his',
+        'a',
+      ], // Liste des mots supplémentaires
+    ),
+
     TranslationQuestion(
       originalText: "Good night",
       correctTranslation: 'Bonne nuit',

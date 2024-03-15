@@ -20,58 +20,53 @@ class _ExParleLeconSevenState extends State<ExParleLeconSeven> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    TranslationQuestion(
-      originalText: "I love girls",
-      correctTranslation: "j'aime les filles",
-      userTranslationn: '',
+    Question(
+      'the egg',
+      [
+        Option1('le petit\ndéjeuner', 'assets/petit-dejeuner.png'),
+        Option1('cinq', 'assets/cinq.png'),
+        Option1("l'oeuf", 'assets/egg.png'),
+        Option1("l'ourse", 'assets/ours.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "Yes , thank you very much",
-      questionText: "vous mangez une pomme",
+      correctSentence: "the egg",
+      questionText: "l'oeuf",
       additionalWords: [
-        'tommorow',
-        'ofcourse',
-        'boy',
-        'man'
+        'plane',
+        'they',
+        'this',
+        'ready'
       ], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "J'ai des livres",
-      questionText: "I have some books",
+      correctSentence: "Are you eating an egg",
+      questionText: "Tu manges un oeuf",
       additionalWords: [
-        'robes',
-        'elles',
-        'si',
+        'good',
+        'boy',
+        'and',
         'as'
       ], // Liste des mots supplémentaires
     ),
 
     Question(
-      'the bear',
+      'the breakfast',
       [
-        Option1('le cheval', 'assets/cheval.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('la femme', 'assets/mere.png'),
+        Option1('le petit\ndéjeuner', 'assets/petit-dejeuner.png'),
+        Option1('cinq', 'assets/cinq.png'),
+        Option1("l'oeuf", 'assets/egg.png'),
         Option1("l'ourse", 'assets/ours.png'),
       ],
       [false, false, false, false],
-      [false, true, false, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "It's a meal",
-      questionText: "C'est un repas",
-      additionalWords: [
-        'winter',
-        'friend',
-        'more',
-        'now'
-      ], // Liste des mots supplémentaires
+      [true, false, false, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "No i'm sorry",
-      questionText: "Non , je suis désolé",
+      correctSentence: "The breakfast",
+      questionText: "le petit déjeuner",
       additionalWords: [
         'thank',
         'you',
@@ -79,117 +74,107 @@ class _ExParleLeconSevenState extends State<ExParleLeconSeven> {
         'the',
       ], // Liste des mots supplémentaires
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "they have a horse",
-      questionText: "Elles ont un cheval",
-      additionalWords: [
-        'listen',
-        'you',
-        'girl',
-        'good',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "I have a tomato and an apple",
-      questionText: "J'ai une tomate et une pomme",
-      additionalWords: [
-        'listen',
-        'you',
-        'girl',
-        'good',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "they are hot",
-      questionText: "Elles ont chaud",
-      additionalWords: [
-        'dress',
-        'family',
-        'gave',
-        'bye',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "It's a pancake",
-      questionText: "C'est une crêpe",
-      additionalWords: [
-        'strong',
-        'cake',
-        'he',
-        'begin',
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "J'ai un canard",
-      correctTranslation: "I have a duck",
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "tu as un chat",
-      correctTranslation: "You have a cat",
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "C'est un chat",
-      correctTranslation: "It's a cat",
-      userTranslationn: '',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "They are Paul and Wendy",
-      questionText: "Ce sont Paul et Wendy",
-      additionalWords: [
-        'strong',
-        'cake',
-        'he',
-        'begin',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "do you have vegetables",
-      questionText: "As-tu des légumes?",
-      additionalWords: [
-        'teenager',
-        'cake',
-        'she',
-        'end',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Ils ont un cheval",
-      questionText: "they have horse",
-      additionalWords: [
-        'rouges',
-        'cohcon',
-        'mouton',
-        'riches',
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "Ce sont des chiens",
-      correctTranslation: "they are dogs",
-      userTranslationn: '',
-    ),
     Question(
-      'the strawberries',
+      'the bread',
       [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("le fraises", 'assets/fraise.png'),
-        Option1("pomme", 'assets/pomme.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    Question(
-      'a bee',
-      [
-        Option1("l'homme", 'assets/homme.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('une abeille', 'assets/abeille.png'),
-        Option1('le cheval', 'assets/cheval.png'),
+        Option1('le petit\ndéjeuner', 'assets/petit-dejeuner.png'),
+        Option1('cinq', 'assets/cinq.png'),
+        Option1("l'oeuf", 'assets/egg.png'),
+        Option1("le pain", 'assets/pain.png'),
       ],
       [false, false, false, false],
       [false, false, false, true],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "This bread",
+      questionText: "Ce pain",
+      additionalWords: [
+        'the',
+        'are',
+        'egg',
+        'breakfast',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "This cheese is French",
+      questionText: "Ce fromage est français",
+      additionalWords: [
+        'listen',
+        'you',
+        'girl',
+        'good',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "a morning",
+      questionText: "un matin",
+      additionalWords: [
+        'and',
+        'an',
+        'eats',
+        'They',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "We are having a tea",
+      questionText: "Nous prenons un thé",
+      additionalWords: [
+        'eating',
+        'coffee',
+        'He',
+        'an',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "We are having coffee",
+      questionText: "Nous prenons un thé",
+      additionalWords: [
+        'eating',
+        'tea',
+        'He',
+        'an',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "They are having tea",
+      questionText: "Ils prennent un thé",
+      additionalWords: [
+        'egg',
+        'boy',
+        "it's",
+        'and',
+      ], // Liste des mots supplémentaires
+    ),
+    TextQuestion(
+      'Ils prennent des  ____ pour le petit déjeuner',
+      [
+        Option1('restaurants', 'assets/chat.png'),
+        Option1('croissants', 'assets/fille.png'),
+        Option1("thés", 'assets/mere.png'),
+        Option1('voitures', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, true, false, false],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "C' est le matin",
+      questionText: "It's morning",
+      additionalWords: [
+        'à',
+        'chien',
+        "passeport",
+        "j'ai",
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Ce fromage est français",
+      questionText: "This cheese is French",
+      additionalWords: [
+        'bananes',
+        'parles',
+        "pomme",
+        "et",
+      ], // Liste des mots supplémentaires
     ),
 
     // Add more questions as needed
