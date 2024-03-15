@@ -150,41 +150,25 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
         'plane',
       ], // Liste des mots supplémentaires
     ),
-    Question(
-      'a cake',
-      [
-        Option1('un cheval', 'assets/cheval.png'),
-        Option1('un gâteau', 'assets/gateau.png'),
-        Option1('repas', 'assets/repas.png'),
-        Option1("les fruits", 'assets/fruit.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
     ScrambledWordsQuestion(
-      correctSentence: "Dinner is ready",
-      questionText: "Le dîner est prêt",
+      correctSentence: "Elle regarde la télé chaque jour",
+      questionText: "She watches TV every day",
       additionalWords: [
-        'cow',
-        'dog',
-        'fruits',
-        'why',
+        "s'appelle",
+        'espagne',
+        "comment tu t'appelles",
+        'samedi',
       ], // Liste des mots supplémentaires
     ),
-    TranslationQuestion(
-      originalText: "the fruit",
-      correctTranslation: 'le fruit',
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "the banana",
-      correctTranslation: 'la banana',
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "the vegetables",
-      correctTranslation: 'les légumes',
-      userTranslationn: '',
+    ScrambledWordsQuestion(
+      correctSentence: "Caque matin ils regardent la télé",
+      questionText: "Every morning they watch TV",
+      additionalWords: [
+        'voiture',
+        'aprés',
+        'journal',
+        'soirs',
+      ], // Liste des mots supplémentaires
     ),
 
     // Add more questions as needed
@@ -658,23 +642,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon9Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon9Parle'
 
-              // Mettez à jour le champ 'lecon9Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon9Bonjour': true,
+                'lecon9Parle': true,
               });
 
-              print('Champ lecon9Bonjour ajouté avec succès!');
+              print('Champ lecon9Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon9Bonjour est déjà vrai!');
+            print('Le champ lecon9Parle est déjà vrai!');
           }
         }
       } else {
@@ -722,23 +706,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon9Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon9Parle'
 
-              // Mettez à jour le champ 'lecon9Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon9Bonjour': true,
+                'lecon9Parle': true,
               });
 
-              print('Champ lecon9Bonjour ajouté avec succès!');
+              print('Champ lecon9Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon9Bonjour est déjà vrai!');
+            print('Le champ lecon9Parle est déjà vrai!');
           }
         }
       } else {
@@ -785,23 +769,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon9Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon9Parle'
 
-            // Mettez à jour le champ 'lecon9Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon9Bonjour': true,
+              'lecon9Parle': true,
             });
 
-            print('Champ lecon9Bonjour ajouté avec succès!');
+            print('Champ lecon9Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon9Bonjour est déjà vrai!');
+          print('Le champ lecon9Parle est déjà vrai!');
         }
       }
     } else {
@@ -844,23 +828,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon9Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon9Parle'
 
-            // Mettez à jour le champ 'lecon9Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon9Bonjour': true,
+              'lecon9Parle': true,
             });
 
-            print('Champ lecon9Bonjour ajouté avec succès!');
+            print('Champ lecon9Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon9Bonjour est déjà vrai!');
+          print('Le champ lecon9Parle est déjà vrai!');
         }
       }
     } else {
@@ -903,23 +887,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon9Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon9Parle'
 
-            // Mettez à jour le champ 'lecon9Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon9Bonjour': true,
+              'lecon9Parle': true,
             });
 
-            print('Champ lecon9Bonjour ajouté avec succès!');
+            print('Champ lecon9Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon9Bonjour est déjà vrai!');
+          print('Le champ lecon9Parle est déjà vrai!');
         }
       }
     } else {

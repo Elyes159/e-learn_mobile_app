@@ -671,23 +671,23 @@ class _ExParleLeconEightState extends State<ExParleLeconEight> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon8Parle'
 
-              // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon8Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon8Bonjour': true,
+                'lecon8Parle': true,
               });
 
-              print('Champ lecon8Bonjour ajouté avec succès!');
+              print('Champ lecon8Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon8Bonjour est déjà vrai!');
+            print('Le champ lecon8Parle est déjà vrai!');
           }
         }
       } else {
@@ -735,23 +735,23 @@ class _ExParleLeconEightState extends State<ExParleLeconEight> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon8Parle'
 
-              // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon8Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon8Bonjour': true,
+                'lecon8Parle': true,
               });
 
-              print('Champ lecon8Bonjour ajouté avec succès!');
+              print('Champ lecon8Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon8Bonjour est déjà vrai!');
+            print('Le champ lecon8Parle est déjà vrai!');
           }
         }
       } else {
@@ -798,23 +798,23 @@ class _ExParleLeconEightState extends State<ExParleLeconEight> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon8Parle'
 
-            // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon8Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon8Bonjour': true,
+              'lecon8Parle': true,
             });
 
-            print('Champ lecon8Bonjour ajouté avec succès!');
+            print('Champ lecon8Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon8Bonjour est déjà vrai!');
+          print('Le champ lecon8Parle est déjà vrai!');
         }
       }
     } else {
@@ -857,23 +857,23 @@ class _ExParleLeconEightState extends State<ExParleLeconEight> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon8Parle'
 
-            // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon8Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon8Bonjour': true,
+              'lecon8Parle': true,
             });
 
-            print('Champ lecon8Bonjour ajouté avec succès!');
+            print('Champ lecon8Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon8Bonjour est déjà vrai!');
+          print('Le champ lecon8Parle est déjà vrai!');
         }
       }
     } else {
@@ -916,23 +916,23 @@ class _ExParleLeconEightState extends State<ExParleLeconEight> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon8Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon8Parle'
 
-            // Mettez à jour le champ 'lecon8Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon8Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon8Bonjour': true,
+              'lecon8Parle': true,
             });
 
-            print('Champ lecon8Bonjour ajouté avec succès!');
+            print('Champ lecon8Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon8Bonjour est déjà vrai!');
+          print('Le champ lecon8Parle est déjà vrai!');
         }
       }
     } else {
