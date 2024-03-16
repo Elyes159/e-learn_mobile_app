@@ -21,155 +21,121 @@ class _ExConnaisLeconfourState extends State<ExConnaisLeconfour> {
 
   List<dynamic> questions = [
     ScrambledWordsQuestion(
-      correctSentence: 'vont avion',
-      questionText: 'Ils _____ au États-Unis en ____',
-      additionalWords: [
-        "s'appelent",
-        "ont",
-        'bus',
-        'voiture'
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'He likes museums',
-      questionText: 'Il aime les musées',
-      additionalWords: [
-        'work',
-        "music",
-        'boy',
-        'girl'
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'Les ____ dans le restaurant \n sont petites',
-      [
-        Option1('écoles', 'assets/chat.png'),
-        Option1('tables', 'assets/fille.png'),
-        Option1("familles", 'assets/mere.png'),
-        Option1('voitures', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
+      correctSentence: 'This the right avenue',
+      questionText: "C'est la bonne avenue ?",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
 
     Question(
-      'car',
+      'yellow',
       [
         Option1("voiture", 'assets/voiture.png'),
         Option1('vélo', 'assets/velo.png'),
         Option1("le train", 'assets/train.png'),
-        Option1("orange", 'assets/orange.png'),
+        Option1("jaune", 'assets/jaune.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "The movie theater is open",
-      questionText: "Le cinéma est ouvert",
-      additionalWords: [
-        'orange',
-        'apple',
-        'passport',
-        "read"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Are you visiting Bordeaux",
-      questionText: "Vous visitez Bordeaux?",
-      additionalWords: [
-        'orange',
-        'car',
-        'hello',
-        "dog"
-      ], // Liste des mots supplémentaires
-    ),
-
-    Question(
-      'the beach',
-      [
-        Option1("voiture", 'assets/voiture.png'),
-        Option1('la plage', 'assets/plage.png'),
-        Option1("vélo", 'assets/velo.png'),
-        Option1("orange", 'assets/orange.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "I like the beach",
-      questionText: "J'aime la plage",
-      additionalWords: [
-        'girl',
-        'go',
-        'movie',
-        "Espagne"
-      ], // Liste des mots supplémentaires
-    ),
-
-    TranslationQuestion(
-      originalText: "The park is big",
-      correctTranslation: 'le parc est grand',
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "My bike",
-      correctTranslation: 'Mon vélo',
-      userTranslationn: '',
+      [false, false, false, true],
     ),
     Question(
-      'the subway station',
+      'glasses',
       [
+        Option1("jaune", 'assets/jaune.png'),
         Option1("voiture", 'assets/voiture.png'),
-        Option1('la gare', 'assets/gare.png'),
-        Option1("vélo", 'assets/velo.png'),
-        Option1("orange", 'assets/orange.png'),
+        Option1('lunettes', 'assets/lunettes.png'),
+        Option1("toilette", 'assets/toilette.png'),
       ],
       [false, false, false, false],
-      [false, true, false, false],
-    ),
-    Question(
-      'the bank',
-      [
-        Option1("voiture", 'assets/voiture.png'),
-        Option1('le fromage', 'assets/fromage.png'),
-        Option1("vélo", 'assets/velo.png'),
-        Option1("le banque", 'assets/banque.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
+      [false, false, true, false],
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: "A woman is eating an orange",
-      questionText: "Une femme mange une orange",
+      correctSentence: 'What pretty bikes',
+      questionText: "Quels jolis vélos",
       additionalWords: [
-        'horse',
-        "it's",
-        'girl',
-        'croissant',
+        'museum',
+        'house',
+        'yes',
+        'louvre',
       ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "I would like a black dress",
+      questionText: "Je voudrais une robe noir",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Today, I don't go out, I stay at home.",
+      questionText: "Aujourd'hui, je ne sors pas, je reste chez moi.",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: "You're not walking very fast. Walk faster!",
+      questionText: "Tu ne marches pas très vite. Marche plus vite !",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "à côté",
+      questionText: "Next",
+      additionalWords: [
+        'nourriture',
+        'riz',
+      ], // Liste des mots supplémentaires
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: "Do you want to buy a new jacket?",
+      questionText: "Tu veux acheter une nouvelle veste ?",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    Question(
+      'boot',
+      [
+        Option1("lunettes", 'assets/lunettes.png'),
+        Option1("botte", 'assets/bottes.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1("chapeau", 'assets/chapeau.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Do you want to buy a new jacket?",
+      questionText: "Tu veux acheter une nouvelle veste ?",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Where are you going?",
+      questionText: "Où est-ce que tu vas ?",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: "Are you turning to the left or to the right",
+      questionText: "Tu tournes à gauche ou à droite ?",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
     TextQuestion(
-      '_____ fille et un garçon',
+      'Vous _____ toujours des manteaux noirs',
       [
-        Option1('une', 'assets/chat.png'),
-        Option1('un', 'assets/fille.png'),
-        Option1("le", 'assets/mere.png'),
-        Option1('ce', 'assets/main.png'),
+        Option1('porter', 'assets/chat.png'),
+        Option1('porte', 'assets/fille.png'),
+        Option1("portez", 'assets/mere.png'),
+        Option1('portent', 'assets/main.png'),
       ],
       [false, false, false, false],
-      [true, false, false, false],
+      [false, false, true, false],
     ),
-    TranslationQuestion(
-      originalText: "a woman and a man",
-      correctTranslation: 'une femme et un homme',
-      userTranslationn: '',
+    ScrambledWordsQuestion(
+      correctSentence: "Je reste ici",
+      questionText: "I am staying here",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
-    TranslationQuestion(
-      originalText: "a boy and a girl",
-      correctTranslation: 'un garçon et une fille',
-      userTranslationn: '',
+    ScrambledWordsQuestion(
+      correctSentence: "Don't take a right",
+      questionText: "Ne prenez pas à droite",
+      additionalWords: [], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
