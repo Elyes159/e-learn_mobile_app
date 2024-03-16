@@ -20,23 +20,12 @@ class _ExConnaisLeconthreeState extends State<ExConnaisLeconthree> {
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    TextQuestion(
-      'small',
-      [
-        Option1('serveur', 'assets/chat.png'),
-        Option1('petit', 'assets/fille.png'),
-        Option1("biére", 'assets/mere.png'),
-        Option1("grand", 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
     Question(
-      'university',
+      'the black',
       [
-        Option1("l'école", 'assets/ecole.png'),
-        Option1('université', 'assets/universite.png'),
-        Option1("le train", 'assets/train.png'),
+        Option1("le noir", 'assets/ecole.png'),
+        Option1('monteau', 'assets/monteau.png'),
+        Option1("chapeau", 'assets/chapeau.png'),
         Option1("pomme", 'assets/pomme.png'),
       ],
       [false, false, false, false],
@@ -44,137 +33,107 @@ class _ExConnaisLeconthreeState extends State<ExConnaisLeconthree> {
     ),
 
     Question(
-      'coffee',
+      'the coat',
       [
-        Option1("toilette", 'assets/ecole.png'),
-        Option1('café', 'assets/café.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
+        Option1("le noir", 'assets/noir.png'),
+        Option1("chapeau", 'assets/chapeau.png'),
+        Option1('monteau', 'assets/monteau.png'),
+        Option1("l'été", 'assets/lete.png'),
       ],
       [false, false, false, false],
-      [false, true, false, false],
+      [false, false, true, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'I am visiting Brazil',
-      questionText: 'Je visite le Brésil',
+      correctSentence: 'this one',
+      questionText: 'Celui-ci',
       additionalWords: [
-        'passport',
-        'suitcase',
-        'you',
-        "Mexico"
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'closed',
-      [
-        Option1('fermé', 'assets/chat.png'),
-        Option1("aujourd'hui", 'assets/fille.png'),
-        Option1("vélo", 'assets/mere.png'),
-        Option1("voiture", 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "They travel a lot",
-      questionText: "Ils voyagent beaucoup",
-      additionalWords: [
-        'she',
-        'good evening',
-        'hi',
-        "travels"
+        'really',
+        'dress',
+        'pants',
+        "coat"
       ], // Liste des mots supplémentaires
     ),
     Question(
-      'coffee',
+      'the hat',
       [
-        Option1("vélo", 'assets/velo.png'),
-        Option1('café', 'assets/café.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
+        Option1("le noir", 'assets/noir.png'),
+        Option1('monteau', 'assets/monteau.png'),
+        Option1("le mari", 'assets/mari.png'),
+        Option1("chapeau", 'assets/chapeau.png'),
       ],
       [false, false, false, false],
-      [false, true, false, false],
+      [false, false, false, true],
     ),
 
-    Question(
-      'a castle',
-      [
-        Option1("un château", 'assets/chateau.png'),
-        Option1('une maison', 'assets/maison.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
+    ScrambledWordsQuestion(
+      correctSentence: "a black coat",
+      questionText: "un monteau noir",
+      additionalWords: [
+        'brown',
+        'and',
+        'blue',
+        "I"
+      ], // Liste des mots supplémentaires
     ),
-    Question(
-      'the house',
-      [
-        Option1("un château", 'assets/chateau.png'),
-        Option1('une maison', 'assets/maison.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
+    ScrambledWordsQuestion(
+      correctSentence: "I love that one",
+      questionText: "J'adore celui-là",
+      additionalWords: [
+        "don't",
+        'university',
+        'or',
+        "coat"
+      ], // Liste des mots supplémentaires
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: "This one or that one",
+      questionText: "Celui-ci oui celui-là?",
+      additionalWords: [
+        "Do",
+        'dress',
+        "don't",
+        "She"
+      ], // Liste des mots supplémentaires
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: "She prefers that one",
+      questionText: "Elle préfère celui-là",
+      additionalWords: [
+        "coat",
+        'same',
+        "some",
+        "orange juice"
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "new pants",
+      questionText: "Un nouveau pantalon",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
     TextQuestion(
-      'la maison est _____ .',
+      'Mon manteau est ______.',
       [
-        Option1('grandes', 'assets/chat.png'),
-        Option1('grande', 'assets/fille.png'),
-        Option1("petit", 'assets/mere.png'),
-        Option1('grands', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    TextQuestion(
-      'je _____ le château .',
-      [
-        Option1('prends', 'assets/chat.png'),
-        Option1('parle', 'assets/fille.png'),
-        Option1("m'appelle", 'assets/mere.png'),
+        Option1('école', 'assets/chat.png'),
+        Option1('nouveau', 'assets/fille.png'),
+        Option1("chapeau", 'assets/mere.png'),
         Option1('visite', 'assets/main.png'),
       ],
       [false, false, false, false],
-      [false, false, false, true],
-    ),
-    Question(
-      'bottle of water',
-      [
-        Option1("fromage", 'assets/fromage.png'),
-        Option1("bouteille d'eau", 'assets/bouteille-en-plastique.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
       [false, true, false, false],
     ),
-    Question(
-      'the plane',
-      [
-        Option1("l'école", 'assets/ecole.png'),
-        Option1('université', 'assets/universite.png'),
-        Option1("le train", 'assets/train.png'),
-        Option1("l'avion", 'assets/avion.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
+    ScrambledWordsQuestion(
+      correctSentence: "This bag is very beautiful",
+      questionText: "Ce sac est trés beau",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
-    Question(
-      'passport',
-      [
-        Option1("vélo", 'assets/velo.png'),
-        Option1('université', 'assets/universite.png'),
-        Option1("passeport", 'assets/passeport.png'),
-        Option1("l'avion", 'assets/avion.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ), // Add more questions as needed
+    ScrambledWordsQuestion(
+      correctSentence: "This coat is really beautiful",
+      questionText: "Ce monteau est vraiment beau",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {

@@ -45,13 +45,11 @@ class _ExConnaisLecontwoState extends State<ExConnaisLecontwo> {
       [false, false, false, false],
       [false, true, false, false],
     ),
-
     ScrambledWordsQuestion(
       correctSentence: 'là-bas',
       questionText: "over there",
       additionalWords: ['printemps', "maman"], // Liste des mots supplémentaires
     ),
-
     ScrambledWordsQuestion(
       correctSentence: 'combien?',
       questionText: "how much",
@@ -67,13 +65,11 @@ class _ExConnaisLecontwoState extends State<ExConnaisLecontwo> {
       questionText: "J'achéte du lait pour faire des crêpes",
       additionalWords: ["l'été", "il"], // Liste des mots supplémentaires
     ),
-
     ScrambledWordsQuestion(
       correctSentence: 'about twenty euros',
       questionText: "environ vingt euros",
       additionalWords: [], // Liste des mots supplémentaires
     ),
-
     ScrambledWordsQuestion(
       correctSentence: "You don't want eggs from the market",
       questionText: "Tu ne veux pas d'oeufs du marché",
@@ -89,7 +85,6 @@ class _ExConnaisLecontwoState extends State<ExConnaisLecontwo> {
       correctTranslation: 'The restaurants are big',
       userTranslationn: '',
     ),
-
     Question(
       'the school',
       [
@@ -101,8 +96,6 @@ class _ExConnaisLecontwoState extends State<ExConnaisLecontwo> {
       [false, false, false, false],
       [false, false, true, false],
     ),
-
-    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
