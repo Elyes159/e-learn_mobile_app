@@ -17,6 +17,16 @@ import 'package:pfe_1/french_course/bonjour/lecons/lecon9/lecon9.dart';
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon10/lecon10.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon2/lecon2.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon3/lecon3.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon4/lecon4.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon5/lecon5.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon6/lecon6.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon7/lecon7.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon8/lecon8.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon9/lecon9.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecon1.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon10/lecon10.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon11/lecon11.dart';
@@ -117,6 +127,16 @@ class _MyAppState extends State<MyApp> {
         'leconParle11': (context) => ExParleLeconTwelve(),
         'leconParle12': (context) => ExParleLeconEleven(),
         'leconParle13': (context) => ExParleLeconThirteen(),
+        'leconConnais1': (context) => ExConnaisLeconOne(),
+        'leconConnais2': (context) => ExConnaisLecontwo(),
+        'leconConnais3': (context) => ExConnaisLeconthree(),
+        'leconConnais4': (context) => ExConnaisLeconfour(),
+        'leconConnais5': (context) => ExConnaisLeconfive(),
+        'leconConnais6': (context) => ExConnaisLeconSix(),
+        'leconConnais7': (context) => ExConnaisLeconSeven(),
+        'leconConnais8': (context) => ExConnaisLeconEight(),
+        'leconConnais9': (context) => ExConnaisLeconNine(),
+        'leconConnais10': (context) => ExConnaisLeconTen(),
         'frenshunities': (context) => FrenchUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),

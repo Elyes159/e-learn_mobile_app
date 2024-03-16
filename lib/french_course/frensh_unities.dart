@@ -1503,7 +1503,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                             "Je connais ",
                             style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontSize: 15,
+                              fontSize: 15.5,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -1515,7 +1515,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                         )
                       ],
                     ),
-                    if (isExpanded1)
+                    if (isExpanded2)
                       Padding(
                         padding: const EdgeInsets.only(
                           right: 20,
@@ -1524,7 +1524,44 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                           top: 5,
                         ),
                         child: Column(
-                          children: [],
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 1",
+                                    navigator: "leconConnais1",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon13ParleExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator(
+                                        color: Colors.white,
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                   ],

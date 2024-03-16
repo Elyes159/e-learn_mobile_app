@@ -62,8 +62,8 @@ class _ExParleLeconThirteenState extends State<ExParleLeconThirteen> {
       additionalWords: [], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "Mes bras sont plus longs que tes bras",
-      questionText: "my arms are longer than your arms",
+      correctSentence: "Mes bras sont longs",
+      questionText: "my arms are long",
       additionalWords: [], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(

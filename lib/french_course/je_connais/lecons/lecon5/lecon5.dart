@@ -4,17 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExParleLeconfive extends StatefulWidget {
-  const ExParleLeconfive({super.key});
+class ExConnaisLeconfive extends StatefulWidget {
+  const ExConnaisLeconfive({super.key});
 
   @override
-  _ExParleLeconfiveState createState() => _ExParleLeconfiveState();
+  _ExConnaisLeconfiveState createState() => _ExConnaisLeconfiveState();
 }
 
-class _ExParleLeconfiveState extends State<ExParleLeconfive> {
+class _ExConnaisLeconfiveState extends State<ExConnaisLeconfive> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;

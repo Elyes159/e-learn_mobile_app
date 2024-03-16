@@ -4,17 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExParleLeconthree extends StatefulWidget {
-  const ExParleLeconthree({super.key});
+class ExConnaisLeconthree extends StatefulWidget {
+  const ExConnaisLeconthree({super.key});
 
   @override
-  _ExParleLeconthreeState createState() => _ExParleLeconthreeState();
+  _ExConnaisLeconthreeState createState() => _ExConnaisLeconthreeState();
 }
 
-class _ExParleLeconthreeState extends State<ExParleLeconthree> {
+class _ExConnaisLeconthreeState extends State<ExConnaisLeconthree> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
@@ -561,23 +561,23 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon3Parle'
+              // et vérifier la valeur actuelle du champ 'lecon3Connais'
 
-              // Mettez à jour le champ 'lecon3Parle' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon3Connais' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon3Parle': true,
+                'lecon3Connais': true,
               });
 
-              print('Champ lecon3Parle ajouté avec succès!');
+              print('Champ lecon3Connais ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon3Parle est déjà vrai!');
+            print('Le champ lecon3Connais est déjà vrai!');
           }
         }
       } else {
@@ -625,23 +625,23 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon3Parle'
+              // et vérifier la valeur actuelle du champ 'lecon3Connais'
 
-              // Mettez à jour le champ 'lecon3Parle' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon3Connais' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon3Parle': true,
+                'lecon3Connais': true,
               });
 
-              print('Champ lecon3Parle ajouté avec succès!');
+              print('Champ lecon3Connais ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon3Parle est déjà vrai!');
+            print('Le champ lecon3Connais est déjà vrai!');
           }
         }
       } else {
@@ -688,23 +688,23 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon3Parle'
+            // et vérifier la valeur actuelle du champ 'lecon3Connais'
 
-            // Mettez à jour le champ 'lecon3Parle' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon3Connais' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon3Parle': true,
+              'lecon3Connais': true,
             });
 
-            print('Champ lecon3Parle ajouté avec succès!');
+            print('Champ lecon3Connais ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon3Parle est déjà vrai!');
+          print('Le champ lecon3Connais est déjà vrai!');
         }
       }
     } else {
@@ -747,23 +747,23 @@ class _ExParleLeconthreeState extends State<ExParleLeconthree> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon3Parle'
+            // et vérifier la valeur actuelle du champ 'lecon3Connais'
 
-            // Mettez à jour le champ 'lecon3Parle' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon3Connais' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon3Parle': true,
+              'lecon3Connais': true,
             });
 
-            print('Champ lecon3Parle ajouté avec succès!');
+            print('Champ lecon3Connais ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon3Parle est déjà vrai!');
+          print('Le champ lecon3Connais est déjà vrai!');
         }
       }
     } else {

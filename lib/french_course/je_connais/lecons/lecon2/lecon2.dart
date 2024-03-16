@@ -4,158 +4,92 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExParleLecontwo extends StatefulWidget {
-  const ExParleLecontwo({super.key});
+class ExConnaisLecontwo extends StatefulWidget {
+  const ExConnaisLecontwo({super.key});
 
   @override
-  _ExParleLecontwoState createState() => _ExParleLecontwoState();
+  _ExConnaisLecontwoState createState() => _ExConnaisLecontwoState();
 }
 
-class _ExParleLecontwoState extends State<ExParleLecontwo> {
+class _ExConnaisLecontwoState extends State<ExConnaisLecontwo> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
+    ScrambledWordsQuestion(
+      correctSentence: 'trente',
+      questionText: 'thirty',
+      additionalWords: [
+        'ciel',
+        "chaud",
+        'froid',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Summer, Chloe drinks sparkling water',
+      questionText: "L'été, Chloé boit de l'eau gazeuse.",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
     Question(
-      'the store',
+      'the winter',
       [
-        Option1('le chocoloat', 'assets/choco.png'),
-        Option1('le livre', 'assets/livre-ouvert.png'),
-        Option1('la magasin', 'assets/magasin.png'),
-        Option1("la cahier", 'assets/carnet.png'),
+        Option1("l'été", 'assets/lete.png'),
+        Option1("l'hiver", 'assets/hiver.png'),
+        Option1("le printemps", 'assets/le-printemps.png'),
+        Option1("l'automne", 'assets/lautomne.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a store',
-      questionText: 'un magasin',
-      additionalWords: [
-        'big',
-        "small",
-        'horse',
-        'dogs'
-      ], // Liste des mots supplémentaires
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('in', 'assets/chat.png'),
-        Option1('an', 'assets/chat.png'),
-        Option1('on', 'assets/chat.png'),
-        Option1('é', 'assets/chat.png'),
-      ],
-      spokenWord: 'in', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('on', 'assets/chat.png'),
-        Option1('a', 'assets/chat.png'),
-        Option1('in', 'assets/chat.png'),
-        Option1("an", 'assets/chat.png'),
-      ],
-      spokenWord: "an", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+    ScrambledWordsQuestion(
+      correctSentence: 'là-bas',
+      questionText: "over there",
+      additionalWords: ['printemps', "maman"], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: 'The park is small',
-      questionText: 'Le parc est petit',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'small',
-      [
-        Option1('bouteille', 'assets/chat.png'),
-        Option1('bébé', 'assets/fille.png'),
-        Option1("petit", 'assets/mere.png'),
-        Option1('grand', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
+      correctSentence: 'combien?',
+      questionText: "how much",
+      additionalWords: ["l'été", "il"], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'The park is big',
-      questionText: 'Le parc est grand',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
+      correctSentence: 'I am buying tomatoes',
+      questionText: "J'achete des tomates",
+      additionalWords: ["l'été", "il"], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'I am buying milk to make crepes',
+      questionText: "J'achéte du lait pour faire des crêpes",
+      additionalWords: ["l'été", "il"], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: 'The trains are big',
-      questionText: 'Les trains sont grands',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
+      correctSentence: 'about twenty euros',
+      questionText: "environ vingt euros",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
 
     ScrambledWordsQuestion(
-      correctSentence: 'The restaurants are big',
-      questionText: 'Les restaurants sont grands',
-      additionalWords: [
-        'for',
-        'is',
-        'five',
-        "cafe"
-      ], // Liste des mots supplémentaires
+      correctSentence: "You don't want eggs from the market",
+      questionText: "Tu ne veux pas d'oeufs du marché",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "The dogs are small",
-      questionText: "Les chiens sont petits",
-      additionalWords: [
-        'and',
-        'woman',
-        'man',
-        'girl'
-      ], // Liste des mots supplémentaires
+      correctSentence: "We don't buy milk",
+      questionText: "Nous n'achetons pas de lait",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
     TranslationQuestion(
       originalText: "Les restaurants sont grands",
       correctTranslation: 'The restaurants are big',
       userTranslationn: '',
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The restaurants are small',
-      questionText: 'Les restaurants sont petits',
-      additionalWords: [
-        'for',
-        'is',
-        'five',
-        "cafe"
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'Elles ______ beaucoup les magasins de New York',
-      [
-        Option1('mangent', 'assets/chat.png'),
-        Option1('habitent', 'assets/fille.png'),
-        Option1("aiment", 'assets/mere.png'),
-        Option1("s'appelent", 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
+
     Question(
       'the school',
       [
@@ -167,36 +101,8 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
       [false, false, false, false],
       [false, false, true, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The stores are big',
-      questionText: 'Les magasins sont grands',
-      additionalWords: [
-        'small',
-        'to',
-        'open',
-        "they"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Les restaurants sont petits',
-      questionText: 'the restaurants are small',
-      additionalWords: [
-        'mange',
-        'croissants',
-        'vélo',
-        "cing"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'le magasin est grand',
-      questionText: 'the store is big',
-      additionalWords: [
-        'mange',
-        'croissants',
-        'vélo',
-        "cing"
-      ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
+
+    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
@@ -583,23 +489,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon2Parle'
+              // et vérifier la valeur actuelle du champ 'lecon2Connais'
 
-              // Mettez à jour le champ 'lecon2Parle' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon2Connais' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon2Parle': true,
+                'lecon2Connais': true,
               });
 
-              print('Champ lecon2Parle ajouté avec succès!');
+              print('Champ lecon2Connais ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon2Parle est déjà vrai!');
+            print('Le champ lecon2Connais est déjà vrai!');
           }
         }
       } else {
@@ -647,23 +553,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon2Parle'
+              // et vérifier la valeur actuelle du champ 'lecon2Connais'
 
-              // Mettez à jour le champ 'lecon2Parle' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon2Connais' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon2Parle': true,
+                'lecon2Connais': true,
               });
 
-              print('Champ lecon2Parle ajouté avec succès!');
+              print('Champ lecon2Connais ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon2Parle est déjà vrai!');
+            print('Le champ lecon2Connais est déjà vrai!');
           }
         }
       } else {
@@ -710,23 +616,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon2Parle'
+            // et vérifier la valeur actuelle du champ 'lecon2Connais'
 
-            // Mettez à jour le champ 'lecon2Parle' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon2Connais' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon2Parle': true,
+              'lecon2Connais': true,
             });
 
-            print('Champ lecon2Parle ajouté avec succès!');
+            print('Champ lecon2Connais ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon2Parle est déjà vrai!');
+          print('Le champ lecon2Connais est déjà vrai!');
         }
       }
     } else {
@@ -769,23 +675,23 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon2Parle'
+            // et vérifier la valeur actuelle du champ 'lecon2Connais'
 
-            // Mettez à jour le champ 'lecon2Parle' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon2Connais' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon2Parle': true,
+              'lecon2Connais': true,
             });
 
-            print('Champ lecon2Parle ajouté avec succès!');
+            print('Champ lecon2Connais ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon2Parle est déjà vrai!');
+          print('Le champ lecon2Connais est déjà vrai!');
         }
       }
     } else {
