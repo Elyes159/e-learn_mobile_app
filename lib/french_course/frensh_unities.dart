@@ -949,7 +949,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0, top: 8),
                           child: Image.asset(
-                            "assets/parlant.png",
+                            "assets/parlez.png",
                             width: 50,
                             height: 50,
                           ),
@@ -1482,7 +1482,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                   color: const Color(0xFF3DB2FF),
                 ),
                 duration: const Duration(milliseconds: 0),
-                height: isExpanded2 ? 700 : 70,
+                height: isExpanded2 ? 800 : 70,
                 width: screenWidth,
                 child: Column(
                   children: [
@@ -1492,7 +1492,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0, top: 8),
                           child: Image.asset(
-                            "assets/parlant.png",
+                            "assets/connaissance.png",
                             width: 50,
                             height: 50,
                           ),
@@ -1500,10 +1500,10 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                         Padding(
                           padding: const EdgeInsets.only(top: 10, right: 140),
                           child: Text(
-                            "Je parle",
+                            "Je connais ",
                             style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
