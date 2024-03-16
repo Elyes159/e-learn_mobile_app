@@ -19,6 +19,7 @@ import 'package:pfe_1/french_course/frensh_unities.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecon1.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon10/lecon10.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon11/lecon11.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon2/lecon2.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon3/lecon3.dart';
 import 'package:pfe_1/french_course/je_parle/lecons/lecon4/lecon4.dart';
@@ -111,6 +112,7 @@ class _MyAppState extends State<MyApp> {
         'leconParle8': (context) => ExParleLeconEight(),
         'leconParle9': (context) => ExParleLeconNine(),
         'leconParle10': (context) => ExParleLeconTen(),
+        'leconParle11': (context) => ExParleLeconTwelve(),
         'frenshunities': (context) => FrenchUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),

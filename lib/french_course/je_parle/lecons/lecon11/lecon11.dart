@@ -23,11 +23,7 @@ class _ExParleLeconTwelveState extends State<ExParleLeconTwelve> {
     ScrambledWordsQuestion(
       correctSentence: "Today, it's saturday",
       questionText: "Aujourd'hui, c'est samedi",
-      additionalWords: [
-        'car',
-        'bus'
-            'ok'
-      ], // Liste des mots supplémentaires
+      additionalWords: ['car', 'bus', 'ok'], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
       correctSentence: "every Saturday, they go to the park for lunch",
@@ -35,99 +31,93 @@ class _ExParleLeconTwelveState extends State<ExParleLeconTwelve> {
       additionalWords: [], // Liste des mots supplémentaires
     ),
     ScrambledWordsQuestion(
-      correctSentence: "I read every evening",
-      questionText: "Je lis chaque soir",
+      correctSentence: "le sac",
+      questionText: "the bag",
       additionalWords: [
-        'boy',
+        'taxi',
+        'train',
+        'où',
+        'billet'
       ], // Liste des mots supplémentaires
     ),
-    Question(
-      'Night',
-      [
-        Option1('nuit', 'assets/oeuf.png'),
-        Option1('veste', 'assets/veste.png'),
-        Option1('jour', 'assets/soleil.png'),
-        Option1('oeuf', 'assets/egg.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
+    ScrambledWordsQuestion(
+      correctSentence: "I buy a bag",
+      questionText: "j'achéte un sac",
+      additionalWords: [
+        'taxi',
+        'train',
+        'bus',
+        'wednesday',
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "J'ai deux enfants",
+      questionText: "I have two children",
+      additionalWords: [
+        'Espagne',
+        'vendredi',
+        'écoute'
+      ], // Liste des mots supplémentaires
     ),
     TranslationQuestion(
-      originalText: "veste",
-      correctTranslation: 'Jacket',
+      originalText: "the children",
+      correctTranslation: "les enfant",
       userTranslationn: '',
     ),
     Question(
-      'The price',
+      'the dress',
       [
         Option1('nuit', 'assets/oeuf.png'),
         Option1('veste', 'assets/veste.png'),
-        Option1('fromage', 'assets/fromage.png'),
-        Option1('le prix', 'assets/prix.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "the price of the bag",
-      questionText: "le prix du sac",
-      additionalWords: [
-        'airport',
-        'that',
-        'white',
-        'in',
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'day',
-      [
-        Option1('nuit', 'assets/oeuf.png'),
-        Option1('veste', 'assets/veste.png'),
-        Option1('jour', 'assets/soleil.png'),
-        Option1('oeuf', 'assets/egg.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-    TextQuestion('Elle ____ la télé', [
-      Option1('regarde', 'assets/chat.png'),
-      Option1('regardent', 'assets/fille.png'),
-    ], [
-      false,
-      false
-    ], [
-      true,
-      false
-    ]),
-    Question(
-      'Clothes',
-      [
-        Option1('nuit', 'assets/oeuf.png'),
-        Option1('veste', 'assets/veste.png'),
-        Option1('jour', 'assets/soleil.png'),
+        Option1('la robe', 'assets/robe.png'),
         Option1('vêtements', 'assets/vetements.png'),
       ],
       [false, false, false, false],
       [false, false, true, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "clothes are expensive in this store",
-      questionText: "les vêtements sont chers dans ce magasin",
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      "J'achète ____ pour ma fille",
+    Question(
+      'video games',
       [
-        Option1('bon', 'assets/chat.png'),
-        Option1('ouvert', 'assets/fille.png'),
-        Option1("une voiture", 'assets/mere.png'),
-        Option1('mange', 'assets/main.png'),
+        Option1('pizza', 'assets/pizza.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('croissant', 'assets/croissant.png'),
+        Option1('jeux vidéo', 'assets/jeux-video.png'),
       ],
       [false, false, false, false],
-      [false, false, true, false],
+      [false, false, false, true],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "he play video games",
+      questionText: "il joue aux jeux vidéo",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    Question(
+      'the skirt',
+      [
+        Option1('la jupe', 'assets/jupe.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('la robe', 'assets/robe.png'),
+        Option1('vêtements', 'assets/vetements.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "mercredi, jeudi",
+      questionText: "Wednesday , Thursday",
+      additionalWords: [
+        'hello',
+        'car',
+        'play'
+      ], // Liste des mots supplémentaires
+    ),
+    TranslationQuestion(
+      originalText: "These pants cost eight euro",
+      correctTranslation: "Ces pantalons coûtent huit euros",
+      userTranslationn: '',
     ),
     TextQuestion(
-      "______ , c'est lundi",
+      "______ , c'est mardi",
       [
         Option1("Ajourd'hui", 'assets/chat.png'),
         Option1('ouvert', 'assets/fille.png'),
@@ -147,11 +137,6 @@ class _ExParleLeconTwelveState extends State<ExParleLeconTwelve> {
       ],
       [false, false, false, false],
       [true, false, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "These pants cost eight euros.",
-      questionText: "Ces pantalons coûtent neuf euros",
-      additionalWords: [], // Liste des mots supplémentaires
     ),
   ];
   void _showBottomSheetTranslation(

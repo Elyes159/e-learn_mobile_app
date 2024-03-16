@@ -445,6 +445,30 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
     }
   }
 
+  Future<bool> checkLecon11ParleExistence() async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon11Parle') ?? false;
+
+        return lecon1BonjourExists;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -1267,6 +1291,42 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                           snapshot.data ?? false;
 
                                       // Affiche l'image seulement si lecon1Bonjour existe
+                                      return lecon1BonjourExists
+                                          ? Image.asset(
+                                              'assets/cocher.png',
+                                              width: 40,
+                                              height: 40,
+                                            )
+                                          : const SizedBox(); // or any other widget you want to return when the condition is false
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Lecon(
+                                    imagePath: "assets/tableau-a-feuilles.png",
+                                    leconTitle: "Lecon 11",
+                                    navigator: "leconParle11",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: checkLecon11ParleExistence(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator(
+                                        color: Colors.white,
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text('Erreur : ${snapshot.error}');
+                                    } else {
+                                      bool lecon1BonjourExists =
+                                          snapshot.data ?? false;
+
                                       return lecon1BonjourExists
                                           ? Image.asset(
                                               'assets/cocher.png',
