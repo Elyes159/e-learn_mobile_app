@@ -21,157 +21,146 @@ class _ExParleLeconTenState extends State<ExParleLeconTen> {
 
   List<dynamic> questions = [
     Question(
-      'The TV',
+      'Jacket',
       [
-        Option1('la porte', 'assets/porte.png'),
-        Option1('la télé', 'assets/tele.png'),
-        Option1('la porte', 'assets/plat.png'),
-        Option1("fenêtre", 'assets/pain.png'),
+        Option1('oeuf', 'assets/egg.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('neuf', 'assets/neuf.png'),
+        Option1("fromage", 'assets/fromage.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
+    Question(
+      'The bag',
+      [
+        Option1('oeuf', 'assets/egg.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('le sac', 'assets/cartable.png'),
+        Option1("pizza", 'assets/pizza.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
     ScrambledWordsQuestion(
-      correctSentence: "Monday",
-      questionText: "lundi",
+      correctSentence: "I read every evening",
+      questionText: "Je lis chaque soir",
       additionalWords: [
         'boy',
-        'you',
-        'girl',
-        'the',
       ], // Liste des mots supplémentaires
     ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('lun', 'assets/chat.png'),
-        Option1('lou', 'assets/chat.png'),
-        Option1('lon', 'assets/chat.png'),
-        Option1("lan", 'assets/chat.png'),
+    Question(
+      'Night',
+      [
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('oeuf', 'assets/egg.png'),
       ],
-      spokenWord: "lun", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+      [false, false, false, false],
+      [false, true, false, false],
+    ),
+    TranslationQuestion(
+      originalText: "veste",
+      correctTranslation: 'Jacket',
+      userTranslationn: '',
+    ),
+    Question(
+      'The price',
+      [
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('fromage', 'assets/fromage.png'),
+        Option1('le prix', 'assets/prix.png'),
+      ],
+      [false, false, false, false],
+      [false, false, false, true],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "It's monday",
-      questionText: "C'est lundi",
+      correctSentence: "the price of the bag",
+      questionText: "le prix du sac",
       additionalWords: [
-        'after',
-        'four',
-        'trains',
-        'friday',
+        'airport',
+        'that',
+        'white',
+        'in',
       ], // Liste des mots supplémentaires
+    ),
+    Question(
+      'day',
+      [
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('oeuf', 'assets/egg.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    TextQuestion('Elle ____ la télé', [
+      Option1('regarde', 'assets/chat.png'),
+      Option1('regardent', 'assets/fille.png'),
+    ], [
+      false,
+      false
+    ], [
+      true,
+      false
+    ]),
+    Question(
+      'Clothes',
+      [
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('vêtements', 'assets/vetements.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "day",
-      questionText: "Jour",
-      additionalWords: [
-        'trains',
-        'fruit',
-        'vegetables',
-        'friday',
-      ], // Liste des mots supplémentaires
+      correctSentence: "clothes are expensive in this store",
+      questionText: "les vêtements sont chers dans ce magasin",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    TextQuestion(
+      "J'achète ____ pour ma fille",
+      [
+        Option1('bon', 'assets/chat.png'),
+        Option1('ouvert', 'assets/fille.png'),
+        Option1("une voiture", 'assets/mere.png'),
+        Option1('mange', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    TextQuestion(
+      "______ , c'est lundi",
+      [
+        Option1("Ajourd'hui", 'assets/chat.png'),
+        Option1('ouvert', 'assets/fille.png'),
+        Option1("Enchanté", 'assets/mere.png'),
+        Option1('mange', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    Question(
+      'pant',
+      [
+        Option1('pantalon', 'assets/pantalon.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('oeuf', 'assets/egg.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "every morning",
-      questionText: "chaque matin",
-      additionalWords: [
-        'she',
-        'day',
-        'trains',
-        'TV',
-      ], // Liste des mots supplémentaires
+      correctSentence: "These pants cost eight euros.",
+      questionText: "Ces pantalons coûtent neuf euros",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "He watches TV",
-      questionText: "Il regarde la télé",
-      additionalWords: [
-        'every',
-        'car',
-        'where',
-        'morning',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "She watches TV",
-      questionText: "Elle regarde la télé",
-      additionalWords: [
-        'every',
-        'car',
-        'where',
-        'morning',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "They watch TV",
-      questionText: "Ils regardent la télé",
-      additionalWords: [
-        'two',
-        'cow',
-        'friday',
-        'Tuesday',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "They watch TV",
-      questionText: "Elles regardent la télé",
-      additionalWords: [
-        'two',
-        'cow',
-        'friday',
-        'Tuesday',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "jour",
-      questionText: "day",
-      additionalWords: [
-        'ordinateur',
-        'chauffeur',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "télé",
-      questionText: "Chaque jour, elles regardent la____",
-      additionalWords: [
-        'lundi',
-        'jour',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "He watches TV every day",
-      questionText: "Il regarde la télé chaque jour",
-      additionalWords: [
-        'friday',
-        'french',
-        'Mexican',
-        'plane',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Elle regarde la télé chaque jour",
-      questionText: "She watches TV every day",
-      additionalWords: [
-        "s'appelle",
-        'espagne',
-        "comment tu t'appelles",
-        'samedi',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Caque matin ils regardent la télé",
-      questionText: "Every morning they watch TV",
-      additionalWords: [
-        'voiture',
-        'aprés',
-        'journal',
-        'soirs',
-      ], // Liste des mots supplémentaires
-    ),
-
-    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {

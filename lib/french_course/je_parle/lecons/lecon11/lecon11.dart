@@ -7,171 +7,152 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
 import '../../../../constant/question.dart';
 
-class ExParleLeconNine extends StatefulWidget {
-  const ExParleLeconNine({super.key});
+class ExParleLeconTwelve extends StatefulWidget {
+  const ExParleLeconTwelve({super.key});
 
   @override
-  _ExParleLeconNineState createState() => _ExParleLeconNineState();
+  _ExParleLeconTwelveState createState() => _ExParleLeconTwelveState();
 }
 
-class _ExParleLeconNineState extends State<ExParleLeconNine> {
+class _ExParleLeconTwelveState extends State<ExParleLeconTwelve> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
+    ScrambledWordsQuestion(
+      correctSentence: "Today, it's saturday",
+      questionText: "Aujourd'hui, c'est samedi",
+      additionalWords: [
+        'car',
+        'bus'
+            'ok'
+      ], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "every Saturday, they go to the park for lunch",
+      questionText: "chaque samedi , elles vont au parc pour le déjeuner",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "I read every evening",
+      questionText: "Je lis chaque soir",
+      additionalWords: [
+        'boy',
+      ], // Liste des mots supplémentaires
+    ),
     Question(
-      'The TV',
+      'Night',
       [
-        Option1('la porte', 'assets/porte.png'),
-        Option1('la télé', 'assets/tele.png'),
-        Option1('la porte', 'assets/plat.png'),
-        Option1("fenêtre", 'assets/fenetre.png'),
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('oeuf', 'assets/egg.png'),
       ],
       [false, false, false, false],
       [false, true, false, false],
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "Monday",
-      questionText: "lundi",
-      additionalWords: [
-        'boy',
-        'you',
-        'girl',
-        'the',
-      ], // Liste des mots supplémentaires
+    TranslationQuestion(
+      originalText: "veste",
+      correctTranslation: 'Jacket',
+      userTranslationn: '',
     ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('lun', 'assets/chat.png'),
-        Option1('lou', 'assets/chat.png'),
-        Option1('lon', 'assets/chat.png'),
-        Option1("lan", 'assets/chat.png'),
+    Question(
+      'The price',
+      [
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('fromage', 'assets/fromage.png'),
+        Option1('le prix', 'assets/prix.png'),
       ],
-      spokenWord: "lun", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
+      [false, false, false, false],
+      [false, false, false, true],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "It's monday",
-      questionText: "C'est lundi",
+      correctSentence: "the price of the bag",
+      questionText: "le prix du sac",
       additionalWords: [
-        'after',
-        'four',
-        'trains',
-        'friday',
+        'airport',
+        'that',
+        'white',
+        'in',
       ], // Liste des mots supplémentaires
+    ),
+    Question(
+      'day',
+      [
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('oeuf', 'assets/egg.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    TextQuestion('Elle ____ la télé', [
+      Option1('regarde', 'assets/chat.png'),
+      Option1('regardent', 'assets/fille.png'),
+    ], [
+      false,
+      false
+    ], [
+      true,
+      false
+    ]),
+    Question(
+      'Clothes',
+      [
+        Option1('nuit', 'assets/oeuf.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('vêtements', 'assets/vetements.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "day",
-      questionText: "Jour",
-      additionalWords: [
-        'trains',
-        'fruit',
-        'vegetables',
-        'friday',
-      ], // Liste des mots supplémentaires
+      correctSentence: "clothes are expensive in this store",
+      questionText: "les vêtements sont chers dans ce magasin",
+      additionalWords: [], // Liste des mots supplémentaires
+    ),
+    TextQuestion(
+      "J'achète ____ pour ma fille",
+      [
+        Option1('bon', 'assets/chat.png'),
+        Option1('ouvert', 'assets/fille.png'),
+        Option1("une voiture", 'assets/mere.png'),
+        Option1('mange', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [false, false, true, false],
+    ),
+    TextQuestion(
+      "______ , c'est lundi",
+      [
+        Option1("Ajourd'hui", 'assets/chat.png'),
+        Option1('ouvert', 'assets/fille.png'),
+        Option1("Enchanté", 'assets/mere.png'),
+        Option1('mange', 'assets/main.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
+    ),
+    Question(
+      'pant',
+      [
+        Option1('pantalon', 'assets/pantalon.png'),
+        Option1('veste', 'assets/veste.png'),
+        Option1('jour', 'assets/soleil.png'),
+        Option1('oeuf', 'assets/egg.png'),
+      ],
+      [false, false, false, false],
+      [true, false, false, false],
     ),
     ScrambledWordsQuestion(
-      correctSentence: "every morning",
-      questionText: "chaque matin",
-      additionalWords: [
-        'she',
-        'day',
-        'trains',
-        'TV',
-      ], // Liste des mots supplémentaires
+      correctSentence: "These pants cost eight euros.",
+      questionText: "Ces pantalons coûtent neuf euros",
+      additionalWords: [], // Liste des mots supplémentaires
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "He watches TV",
-      questionText: "Il regarde la télé",
-      additionalWords: [
-        'every',
-        'car',
-        'where',
-        'morning',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "She watches TV",
-      questionText: "Elle regarde la télé",
-      additionalWords: [
-        'every',
-        'car',
-        'where',
-        'morning',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "They watch TV",
-      questionText: "Ils regardent la télé",
-      additionalWords: [
-        'two',
-        'cow',
-        'friday',
-        'Tuesday',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "They watch TV",
-      questionText: "Elles regardent la télé",
-      additionalWords: [
-        'two',
-        'cow',
-        'friday',
-        'Tuesday',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "jour",
-      questionText: "day",
-      additionalWords: [
-        'ordinateur',
-        'chauffeur',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "télé",
-      questionText: "Chaque jour, elles regardent la____",
-      additionalWords: [
-        'lundi',
-        'jour',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "He watches TV every day",
-      questionText: "Il regarde la télé chaque jour",
-      additionalWords: [
-        'friday',
-        'french',
-        'Mexican',
-        'plane',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Elle regarde la télé chaque jour",
-      questionText: "She watches TV every day",
-      additionalWords: [
-        "s'appelle",
-        'espagne',
-        "comment tu t'appelles",
-        'samedi',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Caque matin ils regardent la télé",
-      questionText: "Every morning they watch TV",
-      additionalWords: [
-        'voiture',
-        'aprés',
-        'journal',
-        'soirs',
-      ], // Liste des mots supplémentaires
-    ),
-
-    // Add more questions as needed
   ];
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
@@ -642,23 +623,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon9Parle'
+              // et vérifier la valeur actuelle du champ 'lecon11Parle'
 
-              // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon11Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon9Parle': true,
+                'lecon11Parle': true,
               });
 
-              print('Champ lecon9Parle ajouté avec succès!');
+              print('Champ lecon11Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon9Parle est déjà vrai!');
+            print('Le champ lecon11Parle est déjà vrai!');
           }
         }
       } else {
@@ -706,23 +687,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon9Parle'
+              // et vérifier la valeur actuelle du champ 'lecon11Parle'
 
-              // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon11Parle' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon9Parle': true,
+                'lecon11Parle': true,
               });
 
-              print('Champ lecon9Parle ajouté avec succès!');
+              print('Champ lecon11Parle ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon9Parle est déjà vrai!');
+            print('Le champ lecon11Parle est déjà vrai!');
           }
         }
       } else {
@@ -769,23 +750,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon9Parle'
+            // et vérifier la valeur actuelle du champ 'lecon11Parle'
 
-            // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon11Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon9Parle': true,
+              'lecon11Parle': true,
             });
 
-            print('Champ lecon9Parle ajouté avec succès!');
+            print('Champ lecon11Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon9Parle est déjà vrai!');
+          print('Le champ lecon11Parle est déjà vrai!');
         }
       }
     } else {
@@ -828,23 +809,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon9Parle'
+            // et vérifier la valeur actuelle du champ 'lecon11Parle'
 
-            // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon11Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon9Parle': true,
+              'lecon11Parle': true,
             });
 
-            print('Champ lecon9Parle ajouté avec succès!');
+            print('Champ lecon11Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon9Parle est déjà vrai!');
+          print('Le champ lecon11Parle est déjà vrai!');
         }
       }
     } else {
@@ -887,23 +868,23 @@ class _ExParleLeconNineState extends State<ExParleLeconNine> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon9Parle'
+            // et vérifier la valeur actuelle du champ 'lecon11Parle'
 
-            // Mettez à jour le champ 'lecon9Parle' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon11Parle' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon9Parle': true,
+              'lecon11Parle': true,
             });
 
-            print('Champ lecon9Parle ajouté avec succès!');
+            print('Champ lecon11Parle ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon9Parle est déjà vrai!');
+          print('Le champ lecon11Parle est déjà vrai!');
         }
       }
     } else {
