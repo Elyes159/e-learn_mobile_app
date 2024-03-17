@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pfe_1/constant/question.dart';
 
@@ -66,8 +67,8 @@ class _AddSoundQuestionFormState extends State<AddSoundQuestionForm> {
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                // Récupérer les données du formulaire et ajouter la question
+              onPressed: () async {
+                // Récupérer les données du formulaire
                 String questionText = questionTextController.text;
                 List<Option1> options = [
                   Option1(option1TextController.text, ''),
@@ -77,9 +78,29 @@ class _AddSoundQuestionFormState extends State<AddSoundQuestionForm> {
                 ];
                 String spokenWord = spokenWordController.text;
 
-                // Ajouter la question en utilisant une fonction de rappel fournie par le parent
-                // Par exemple, vous pouvez appeler une fonction de rappel fournie par ExConnaisLeconfive pour ajouter la question
-                // exConnaisLeconfive.addSoundQuestion(questionText, options, spokenWord);
+                // Enregistrer les données dans Firestore
+                try {
+                  // Obtenir une référence à la collection "admin" dans Firestore
+                  CollectionReference adminCollection =
+                      FirebaseFirestore.instance.collection('admin');
+
+                  // Ajouter un nouveau document avec les données du formulaire
+                  await adminCollection.add({
+                    'questionText': questionText,
+                    'options': options
+                        .map((option) => {
+                              'text': option.text,
+                              'imagePath': option.imagePath,
+                            })
+                        .toList(),
+                    'spokenWord': spokenWord,
+                  });
+
+                  // Afficher un message de succès ou effectuer d'autres actions si nécessaire
+                } catch (e) {
+                  // Gérer les erreurs éventuelles
+                  print('Erreur lors de l\'enregistrement des données : $e');
+                }
               },
               child: Text('Add Question'),
             ),
