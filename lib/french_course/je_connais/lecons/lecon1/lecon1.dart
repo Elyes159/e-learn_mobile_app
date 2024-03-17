@@ -118,6 +118,19 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
       ], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];
+  void addSoundQuestionToExConnaisLeconfive(String questionText,
+      List<Option1> options, String spokenWord, String selectedWord) {
+    SoundQuestion newSoundQuestion = SoundQuestion(
+      questionText: questionText,
+      options: options,
+      spokenWord: spokenWord,
+      selectedWord: selectedWord,
+    );
+    setState(() {
+      questions.add(newSoundQuestion);
+    });
+  }
+
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
     showModalBottomSheet(
