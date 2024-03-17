@@ -15,10 +15,10 @@ class _AddSoundQuestionFormState extends State<AddSoundQuestionForm> {
   TextEditingController option3TextController = TextEditingController();
   TextEditingController option4TextController = TextEditingController();
   TextEditingController spokenWordController = TextEditingController();
+  TextEditingController Chapitre_LeconController = TextEditingController();
 
   @override
   void dispose() {
-    // Libérer les contrôleurs de texte lorsqu'ils ne sont plus utilisés
     questionTextController.dispose();
     option1TextController.dispose();
     option2TextController.dispose();
@@ -65,6 +65,12 @@ class _AddSoundQuestionFormState extends State<AddSoundQuestionForm> {
               controller: spokenWordController,
               decoration: InputDecoration(labelText: 'Spoken Word'),
             ),
+            TextField(
+              controller: Chapitre_LeconController,
+              decoration: InputDecoration(
+                  labelText:
+                      'ecris sous la forme suivante : chapitre/lecon<Numero de lecon>'),
+            ),
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
@@ -81,11 +87,15 @@ class _AddSoundQuestionFormState extends State<AddSoundQuestionForm> {
                 // Enregistrer les données dans Firestore
                 try {
                   // Obtenir une référence à la collection "admin" dans Firestore
-                  CollectionReference adminCollection =
-                      FirebaseFirestore.instance.collection('admin');
+                  CollectionReference adminCollection = FirebaseFirestore
+                      .instance
+                      .collection('admin')
+                      .doc()
+                      .collection("Question_added");
 
                   // Ajouter un nouveau document avec les données du formulaire
                   await adminCollection.add({
+                    'chapitre_lecon': Chapitre_LeconController.text,
                     'questionText': questionText,
                     'options': options
                         .map((option) => {
@@ -95,8 +105,6 @@ class _AddSoundQuestionFormState extends State<AddSoundQuestionForm> {
                         .toList(),
                     'spokenWord': spokenWord,
                   });
-
-                  // Afficher un message de succès ou effectuer d'autres actions si nécessaire
                 } catch (e) {
                   // Gérer les erreurs éventuelles
                   print('Erreur lors de l\'enregistrement des données : $e');

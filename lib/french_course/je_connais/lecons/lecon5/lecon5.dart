@@ -34,57 +34,51 @@ class _ExConnaisLeconfiveState extends State<ExConnaisLeconfive> {
 
     // Add more questions as needed
   ];
-  void addSoundQuestion(
-      String questionText, List<Option1> options, String spokenWord) async {
+  void importQuestionsFromFirestore() async {
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
       CollectionReference adminCollection =
           FirebaseFirestore.instance.collection('admin');
 
-      // Ajoutez la nouvelle question à la collection "admin"
-      DocumentReference newQuestionRef = await adminCollection.add({
-        'questionText': questionText,
-        'options': options
-            .map((option) => {
-                  'text': option.text,
-                  'imagePath': option.imagePath,
-                })
-            .toList(),
-        'spokenWord': spokenWord,
-      });
+      // Récupérez tous les documents de la collection "admin"
+      QuerySnapshot querySnapshot = await adminCollection.get();
 
-      // Récupérez les données du document Firestore nouvellement ajouté
-      DocumentSnapshot questionSnapshot = await newQuestionRef.get();
+      // Parcourez les documents récupérés
+      for (var doc in querySnapshot.docs) {
+        // Vérifiez si le document contient des données
+        if (doc.exists) {
+          // Récupérez les données du document Firestore
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-      // Vérifiez si les données ont été récupérées avec succès
-      if (questionSnapshot.exists) {
-        // Récupérez les données du document Firestore
-        Map<String, dynamic> data =
-            questionSnapshot.data() as Map<String, dynamic>;
-
-        // Créez une nouvelle instance de SoundQuestion avec les données récupérées
-        SoundQuestion newSoundQuestion = SoundQuestion(
-          questionText: data['questionText'],
-          options: (data['options'] as List<dynamic>)
-              .map((option) => Option1(
-                    option['text'],
-                    option['imagePath'],
-                  ))
-              .toList(),
-          spokenWord: data['spokenWord'],
-          selectedWord: '', // Initialiser selectedWord selon vos besoins
-        );
-
-        // Ajoutez la nouvelle question à la liste questions
-        setState(() {
-          questions.add(newSoundQuestion);
-        });
-      } else {
-        print('Le document n\'existe pas dans Firestore.');
+          // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+          if (data.containsKey('spokenWord')) {
+            // Si le document est de type SoundQuestion
+            SoundQuestion soundQuestion = SoundQuestion(
+              questionText: data['questionText'],
+              options: (data['options'] as List<dynamic>)
+                  .map((option) => Option1(
+                        option['text'],
+                        option['imagePath'],
+                      ))
+                  .toList(),
+              spokenWord: data['spokenWord'],
+              selectedWord: '', // Initialiser selectedWord selon vos besoins
+            );
+            setState(() {
+              questions.add(soundQuestion);
+            });
+          }
+        }
       }
     } catch (e) {
-      print('Erreur lors de la récupération des données depuis Firestore : $e');
+      print("Erreur lors de l'importation des questions depuis Firestore : $e");
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    importQuestionsFromFirestore();
   }
 
   void _showBottomSheetTranslation(
