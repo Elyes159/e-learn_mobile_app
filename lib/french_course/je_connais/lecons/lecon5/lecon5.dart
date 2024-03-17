@@ -32,127 +32,21 @@ class _ExConnaisLeconfiveState extends State<ExConnaisLeconfive> {
       [true, false, false, false],
     ),
 
-    ScrambledWordsQuestion(
-      correctSentence: "The neighbor",
-      questionText: "le voisin",
-      additionalWords: [
-        'house',
-        'garden',
-        'where',
-        "big"
-      ], // Liste des mots supplémentaires
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('il a', 'assets/chat.png'),
-        Option1('ily', 'assets/chat.png'),
-        Option1('léa', 'assets/chat.png'),
-        Option1("il y a", 'assets/chat.png'),
-      ],
-      spokenWord: "il y a", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('gentille', 'assets/chat.png'),
-        Option1('chontu', 'assets/chat.png'),
-        Option1('gentil', 'assets/chat.png'),
-        Option1("chantie", 'assets/chat.png'),
-      ],
-      spokenWord: "gentil", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "He is kind",
-      questionText: "Il est gentil",
-      additionalWords: [
-        'very',
-        'neighbor',
-        'horse',
-        "you"
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "My neighbor is kind",
-      questionText: "Mon voisin est gentil",
-      additionalWords: [
-        'spanish',
-        'wife',
-        'family',
-        'very',
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "There is a dog",
-      questionText: "Il y a un chien",
-      additionalWords: [
-        'two',
-        'you',
-        'they',
-        'daughter',
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "They are kind",
-      questionText: "ils sont gentils",
-      additionalWords: [
-        'very',
-        "There",
-        'your',
-        'dog',
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "They are very kind",
-      questionText: "Ils sont trés gentils",
-      additionalWords: [
-        'hey',
-        "There",
-        'your',
-        'dog',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "I like trees",
-      questionText: "J'aime les arbres",
-      additionalWords: [
-        'italy',
-        "garden",
-        'a',
-        'Spain',
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'garden',
-      [
-        Option1("bouteille", 'assets/bouteille-en-plastique.png'),
-        Option1('salade', 'assets/salade.png'),
-        Option1("l'arbre", 'assets/arbre.png'),
-        Option1("jardin", 'assets/jardin.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Mes voisins sont gentils",
-      questionText: "My neighbors are kind",
-      additionalWords: [
-        'garçon',
-        "coontent",
-        'oranges',
-        'mangent',
-      ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
+    // Add more questions as needed
   ];
+  void addSoundQuestionToExConnaisLeconfive(String questionText,
+      List<Option1> options, String spokenWord, String selectedWord) {
+    SoundQuestion newSoundQuestion = SoundQuestion(
+      questionText: questionText,
+      options: options,
+      spokenWord: spokenWord,
+      selectedWord: selectedWord,
+    );
+    setState(() {
+      questions.add(newSoundQuestion);
+    });
+  }
+
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
     showModalBottomSheet(
