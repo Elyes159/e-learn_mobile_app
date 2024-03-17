@@ -34,14 +34,18 @@ class _ExConnaisLeconfiveState extends State<ExConnaisLeconfive> {
 
     // Add more questions as needed
   ];
-  void addSoundQuestionToExConnaisLeconfive(String questionText,
-      List<Option1> options, String spokenWord, String selectedWord) {
+  void addSoundQuestion(
+      String questionText, List<Option1> options, String spokenWord) {
+    // Créer une nouvelle instance de SoundQuestion avec les données du formulaire
     SoundQuestion newSoundQuestion = SoundQuestion(
       questionText: questionText,
       options: options,
       spokenWord: spokenWord,
-      selectedWord: selectedWord,
+      selectedWord:
+          '', // Vous pouvez initialiser selectedWord selon vos besoins
     );
+
+    // Ajouter la nouvelle question à la liste questions
     setState(() {
       questions.add(newSoundQuestion);
     });

@@ -216,6 +216,9 @@ class _LoginState extends State<Login> {
                 ),
                 //SizedBox(height: 10),
                 InkWell(
+                  onLongPress: () {
+                    Navigator.of(context).pushReplacementNamed("loginadmin");
+                  },
                   onTap: () {
                     Navigator.of(context).push(PageRouteBuilder(
                         transitionDuration: Duration.zero,

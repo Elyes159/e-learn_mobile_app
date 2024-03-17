@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pfe_1/ML/image_picker.dart';
+import 'package:pfe_1/admin/Login_admin.dart';
+import 'package:pfe_1/admin/add_questions.dart';
 import 'package:pfe_1/arabic_course/arabic_main.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/LanguageProvider.dart';
@@ -146,7 +148,9 @@ class _MyAppState extends State<MyApp> {
         "signup": (context) => const Signup(),
         "login": (context) => Login(),
         "chatt": (context) => ChatScreen(),
-        "signup1": (context) => Signup1()
+        "signup1": (context) => Signup1(),
+        "loginadmin": (context) => LoginPageAdmin(),
+        "addQuestionPage": (context) => AddSoundQuestionForm(),
       },
     );
   }
