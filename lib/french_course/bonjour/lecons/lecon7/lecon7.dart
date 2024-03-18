@@ -194,6 +194,51 @@ class _ExLeconSevenState extends State<ExLeconSeven> {
 
     // Add more questions as needed
   ];
+  void importQuestionsFromFirestore() async {
+    try {
+      // Obtenez une référence à la collection "admin" dans Firestore
+      CollectionReference adminCollection =
+          FirebaseFirestore.instance.collection('admin');
+
+      // Récupérez tous les documents de la sous-collection "Question_added"
+      QuerySnapshot querySnapshot = await adminCollection
+          .doc("T3Ql5faOK93AQp390964")
+          .collection("Question_added")
+          .where('chapitre_lecon', isEqualTo: 'bonjour/lecon7')
+          .get();
+
+      // Parcourez les documents récupérés
+      for (var doc in querySnapshot.docs) {
+        // Vérifiez si le document contient des données
+        if (doc.exists) {
+          // Récupérez les données du document Firestore
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+          // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+          if (data.containsKey('spokenWord')) {
+            // Si le document est de type SoundQuestion
+            SoundQuestion soundQuestion = SoundQuestion(
+              questionText: data['questionText'],
+              options: (data['options'] as List<dynamic>)
+                  .map((option) => Option1(
+                        option['text'],
+                        option['imagePath'],
+                      ))
+                  .toList(),
+              spokenWord: data['spokenWord'],
+              selectedWord: '', // Initialiser selectedWord selon vos besoins
+            );
+            setState(() {
+              questions.add(soundQuestion);
+            });
+          }
+        }
+      }
+    } catch (e) {
+      print("Erreur lors de l'importation des questions depuis Firestore : $e");
+    }
+  }
+
   void _showBottomSheetTranslation(
       bool isCorrect, TranslationQuestion question) {
     showModalBottomSheet(

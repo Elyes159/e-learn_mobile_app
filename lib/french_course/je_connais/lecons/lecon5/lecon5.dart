@@ -40,8 +40,12 @@ class _ExConnaisLeconfiveState extends State<ExConnaisLeconfive> {
       CollectionReference adminCollection =
           FirebaseFirestore.instance.collection('admin');
 
-      // Récupérez tous les documents de la collection "admin"
-      QuerySnapshot querySnapshot = await adminCollection.get();
+      // Récupérez tous les documents de la sous-collection "Question_added"
+      QuerySnapshot querySnapshot = await adminCollection
+          .doc("T3Ql5faOK93AQp390964")
+          .collection("Question_added")
+          .where('chapitre_lecon', isEqualTo: 'je connais/lecon5')
+          .get();
 
       // Parcourez les documents récupérés
       for (var doc in querySnapshot.docs) {
