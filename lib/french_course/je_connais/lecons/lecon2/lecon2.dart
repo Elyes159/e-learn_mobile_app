@@ -107,7 +107,7 @@ class _ExConnaisLecontwoState extends State<ExConnaisLecontwo> {
       QuerySnapshot querySnapshot = await adminCollection
           .doc("T3Ql5faOK93AQp390964")
           .collection("Question_added")
-          .where('chapitre_lecon', isEqualTo: 'je connais/lecon5')
+          .where('chapitre_lecon', isEqualTo: 'je connais/lecon2')
           .get();
 
       // Parcourez les documents récupérés

@@ -87,7 +87,7 @@ class _LoginPageAdminState extends State<LoginPageAdmin> {
                         // Login successful
                         print('Login successful');
                         Navigator.of(context)
-                            .pushReplacementNamed("addQuestionPage");
+                            .pushReplacementNamed("mainAdminPage");
                       } else {
                         // Login failed
                         print('Login failed');

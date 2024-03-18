@@ -3,7 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
+import 'package:pfe_1/admin/add_lecon.dart';
 import 'package:pfe_1/admin/add_questions.dart';
+import 'package:pfe_1/admin/admin_page_main.dart';
+import 'package:pfe_1/admin/users.dart';
 import 'package:pfe_1/arabic_course/arabic_main.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/LanguageProvider.dart';
@@ -151,6 +154,9 @@ class _MyAppState extends State<MyApp> {
         "signup1": (context) => Signup1(),
         "loginadmin": (context) => LoginPageAdmin(),
         "addQuestionPage": (context) => AddSoundQuestionForm(),
+        "mainAdminPage": (context) => Admin_main(),
+        "usersPage": (context) => UserListPage(),
+        "AddLeconFromAdmin": (context) => AddLessonForm(),
       },
     );
   }
@@ -159,7 +165,7 @@ class _MyAppState extends State<MyApp> {
     if (FirebaseAuth.instance.currentUser == null) {
       return Login();
     } else {
-      return HomeScreen();
+      return ImagePickerDemo();
     }
   }
 }

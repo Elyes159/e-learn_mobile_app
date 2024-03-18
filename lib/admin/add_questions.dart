@@ -69,7 +69,7 @@ class _AddSoundQuestionFormState extends State<AddSoundQuestionForm> {
               controller: Chapitre_LeconController,
               decoration: InputDecoration(
                   labelText:
-                      'ecris sous la forme suivante : chapitre/lecon<Numero de lecon>'),
+                      'la forme suivante : chapitre/lecon<Numero de lecon>'),
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
