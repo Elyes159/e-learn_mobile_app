@@ -24,7 +24,7 @@ class _ExParleLeconSixState extends State<ExParleLeconSix> {
       'the book',
       [
         Option1('le livre', 'assets/livre-ouvert.png'),
-        Option1('arbre', 'assets/tree.png'),
+        Option1('arbre', 'assets/arbre.png'),
         Option1("la vache", 'assets/vache.png'),
         Option1('train', 'assets/train.png'),
       ],
@@ -102,6 +102,7 @@ class _ExParleLeconSixState extends State<ExParleLeconSix> {
     ),
     // Add more questions as needed
   ];
+
   void importQuestionsFromFirestore() async {
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
