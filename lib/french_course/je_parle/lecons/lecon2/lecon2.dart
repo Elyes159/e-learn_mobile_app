@@ -15,188 +15,19 @@ class ExParleLecontwo extends StatefulWidget {
 }
 
 class _ExParleLecontwoState extends State<ExParleLecontwo> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    importQuestionsFromFirestore();
+  }
+
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    Question(
-      'the store',
-      [
-        Option1('le chocoloat', 'assets/choco.png'),
-        Option1('le livre', 'assets/livre-ouvert.png'),
-        Option1('la magasin', 'assets/magasin.png'),
-        Option1("la cahier", 'assets/carnet.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a store',
-      questionText: 'un magasin',
-      additionalWords: [
-        'big',
-        "small",
-        'horse',
-        'dogs'
-      ], // Liste des mots supplémentaires
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('in', 'assets/chat.png'),
-        Option1('an', 'assets/chat.png'),
-        Option1('on', 'assets/chat.png'),
-        Option1('é', 'assets/chat.png'),
-      ],
-      spokenWord: 'in', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('on', 'assets/chat.png'),
-        Option1('a', 'assets/chat.png'),
-        Option1('in', 'assets/chat.png'),
-        Option1("an", 'assets/chat.png'),
-      ],
-      spokenWord: "an", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'The park is small',
-      questionText: 'Le parc est petit',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'small',
-      [
-        Option1('bouteille', 'assets/chat.png'),
-        Option1('bébé', 'assets/fille.png'),
-        Option1("petit", 'assets/mere.png'),
-        Option1('grand', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The park is big',
-      questionText: 'Le parc est grand',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'The trains are big',
-      questionText: 'Les trains sont grands',
-      additionalWords: [
-        'suitcase',
-        'passport',
-        'music',
-        "stores"
-      ], // Liste des mots supplémentaires
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: 'The restaurants are big',
-      questionText: 'Les restaurants sont grands',
-      additionalWords: [
-        'for',
-        'is',
-        'five',
-        "cafe"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "The dogs are small",
-      questionText: "Les chiens sont petits",
-      additionalWords: [
-        'and',
-        'woman',
-        'man',
-        'girl'
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "Les restaurants sont grands",
-      correctTranslation: 'The restaurants are big',
-      userTranslationn: '',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The restaurants are small',
-      questionText: 'Les restaurants sont petits',
-      additionalWords: [
-        'for',
-        'is',
-        'five',
-        "cafe"
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'Elles ______ beaucoup les magasins de New York',
-      [
-        Option1('mangent', 'assets/chat.png'),
-        Option1('habitent', 'assets/fille.png'),
-        Option1("aiment", 'assets/mere.png'),
-        Option1("s'appelent", 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-    Question(
-      'the school',
-      [
-        Option1('le chocoloat', 'assets/choco.png'),
-        Option1('le livre', 'assets/livre-ouvert.png'),
-        Option1("l'école", 'assets/ecole.png'),
-        Option1("le train", 'assets/train.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'The stores are big',
-      questionText: 'Les magasins sont grands',
-      additionalWords: [
-        'small',
-        'to',
-        'open',
-        "they"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Les restaurants sont petits',
-      questionText: 'the restaurants are small',
-      additionalWords: [
-        'mange',
-        'croissants',
-        'vélo',
-        "cing"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'le magasin est grand',
-      questionText: 'the store is big',
-      additionalWords: [
-        'mange',
-        'croissants',
-        'vélo',
-        "cing"
-      ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
+    // Add more questions as needed
   ];
   void addQuestionsToFirestore() async {
     try {
@@ -277,48 +108,83 @@ class _ExParleLecontwoState extends State<ExParleLecontwo> {
     }
   }
 
-  void importQuestionsFromFirestore() async {
+  Future<void> importQuestionsFromFirestore() async {
     try {
-      // Obtenez une référence à la collection "admin" dans Firestore
-      CollectionReference adminCollection =
-          FirebaseFirestore.instance.collection('admin');
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc('je_parle')
+          .collection('lecons')
+          .doc('lecon2')
+          .collection('questions');
 
-      // Récupérez tous les documents de la sous-collection "Question_added"
-      QuerySnapshot querySnapshot = await adminCollection
-          .doc("T3Ql5faOK93AQp390964")
-          .collection("Question_added")
-          .where('chapitre_lecon', isEqualTo: 'je parle/lecon2')
-          .get();
+      // Récupérez tous les documents de la collection "questions"
+      QuerySnapshot querySnapshot = await questionsCollection.get();
+
+      List<dynamic> importedQuestions = [];
 
       // Parcourez les documents récupérés
-      for (var doc in querySnapshot.docs) {
-        // Vérifiez si le document contient des données
-        if (doc.exists) {
-          // Récupérez les données du document Firestore
-          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      querySnapshot.docs.forEach((doc) {
+        // Récupérez les données du document Firestore
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-          // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
-          if (data.containsKey('spokenWord')) {
-            // Si le document est de type SoundQuestion
-            SoundQuestion soundQuestion = SoundQuestion(
+        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+        switch (data['type']) {
+          case 'Question':
+            importedQuestions.add(Question(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          case 'SoundQuestion':
+            importedQuestions.add(SoundQuestion(
               questionText: data['questionText'],
-              options: (data['options'] as List<dynamic>)
-                  .map((option) => Option1(
-                        option['text'],
-                        option['imagePath'],
-                      ))
-                  .toList(),
-              spokenWord: data['spokenWord'],
-              selectedWord: '', // Initialiser selectedWord selon vos besoins
-            );
-            setState(() {
-              questions.add(soundQuestion);
-            });
-          }
+              options: List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              spokenWord: data['spokenWord'] ?? '',
+              selectedWord: data['selectedWord'] ?? '',
+            ));
+            break;
+          case 'ScrambledWordsQuestion':
+            importedQuestions.add(ScrambledWordsQuestion(
+              correctSentence: data['correctSentence'] ?? '',
+              questionText: data['questionText'] ?? '',
+              additionalWords: List<String>.from(data['additionalWords'] ?? []),
+            ));
+            break;
+          case 'TranslationQuestion':
+            importedQuestions.add(TranslationQuestion(
+              originalText: data['originalText'] ?? '',
+              correctTranslation: data['correctTranslation'] ?? '',
+              userTranslationn: data['userTranslationn'] ?? '',
+            ));
+            break;
+          case 'TextQuestion':
+            importedQuestions.add(TextQuestion(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          default:
+            print('Type de question non pris en charge : ${data['type']}');
+            break;
         }
-      }
+      });
+
+      setState(() {
+        questions = importedQuestions;
+      });
+
+      print('Questions importées avec succès depuis Firestore');
     } catch (e) {
-      print("Erreur lors de l'importation des questions depuis Firestore : $e");
+      print(
+          'Erreur lors de l\'importation des questions depuis Firestore : $e');
     }
   }
 

@@ -15,210 +15,98 @@ class ExParleLeconthree extends StatefulWidget {
 }
 
 class _ExParleLeconthreeState extends State<ExParleLeconthree> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    importQuestionsFromFirestore();
+  }
+
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    TextQuestion(
-      'small',
-      [
-        Option1('serveur', 'assets/chat.png'),
-        Option1('petit', 'assets/fille.png'),
-        Option1("biére", 'assets/mere.png'),
-        Option1("grand", 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    Question(
-      'university',
-      [
-        Option1("l'école", 'assets/ecole.png'),
-        Option1('université', 'assets/universite.png'),
-        Option1("le train", 'assets/train.png'),
-        Option1("pomme", 'assets/pomme.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-
-    Question(
-      'coffee',
-      [
-        Option1("toilette", 'assets/ecole.png'),
-        Option1('café', 'assets/café.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'I am visiting Brazil',
-      questionText: 'Je visite le Brésil',
-      additionalWords: [
-        'passport',
-        'suitcase',
-        'you',
-        "Mexico"
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'closed',
-      [
-        Option1('fermé', 'assets/chat.png'),
-        Option1("aujourd'hui", 'assets/fille.png'),
-        Option1("vélo", 'assets/mere.png'),
-        Option1("voiture", 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "They travel a lot",
-      questionText: "Ils voyagent beaucoup",
-      additionalWords: [
-        'she',
-        'good evening',
-        'hi',
-        "travels"
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'coffee',
-      [
-        Option1("vélo", 'assets/velo.png'),
-        Option1('café', 'assets/café.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-
-    Question(
-      'a castle',
-      [
-        Option1("un château", 'assets/chateau.png'),
-        Option1('une maison', 'assets/maison.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    Question(
-      'the house',
-      [
-        Option1("un château", 'assets/chateau.png'),
-        Option1('une maison', 'assets/maison.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    TextQuestion(
-      'la maison est _____ .',
-      [
-        Option1('grandes', 'assets/chat.png'),
-        Option1('grande', 'assets/fille.png'),
-        Option1("petit", 'assets/mere.png'),
-        Option1('grands', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    TextQuestion(
-      'je _____ le château .',
-      [
-        Option1('prends', 'assets/chat.png'),
-        Option1('parle', 'assets/fille.png'),
-        Option1("m'appelle", 'assets/mere.png'),
-        Option1('visite', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
-    Question(
-      'bottle of water',
-      [
-        Option1("fromage", 'assets/fromage.png'),
-        Option1("bouteille d'eau", 'assets/bouteille-en-plastique.png'),
-        Option1("thé", 'assets/thé.png'),
-        Option1("toilette", 'assets/toilette.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    Question(
-      'the plane',
-      [
-        Option1("l'école", 'assets/ecole.png'),
-        Option1('université', 'assets/universite.png'),
-        Option1("le train", 'assets/train.png'),
-        Option1("l'avion", 'assets/avion.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
-    Question(
-      'passport',
-      [
-        Option1("vélo", 'assets/velo.png'),
-        Option1('université', 'assets/universite.png'),
-        Option1("passeport", 'assets/passeport.png'),
-        Option1("l'avion", 'assets/avion.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ), // Add more questions as needed
+    // Add more questions as needed
   ];
 
-  void importQuestionsFromFirestore() async {
+  Future<void> importQuestionsFromFirestore() async {
     try {
-      // Obtenez une référence à la collection "admin" dans Firestore
-      CollectionReference adminCollection =
-          FirebaseFirestore.instance.collection('admin');
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc('je_parle')
+          .collection('lecons')
+          .doc('lecon3')
+          .collection('questions');
 
-      // Récupérez tous les documents de la sous-collection "Question_added"
-      QuerySnapshot querySnapshot = await adminCollection
-          .doc("T3Ql5faOK93AQp390964")
-          .collection("Question_added")
-          .where('chapitre_lecon', isEqualTo: 'je parle/lecon3')
-          .get();
+      // Récupérez tous les documents de la collection "questions"
+      QuerySnapshot querySnapshot = await questionsCollection.get();
+
+      List<dynamic> importedQuestions = [];
 
       // Parcourez les documents récupérés
-      for (var doc in querySnapshot.docs) {
-        // Vérifiez si le document contient des données
-        if (doc.exists) {
-          // Récupérez les données du document Firestore
-          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      querySnapshot.docs.forEach((doc) {
+        // Récupérez les données du document Firestore
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-          // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
-          if (data.containsKey('spokenWord')) {
-            // Si le document est de type SoundQuestion
-            SoundQuestion soundQuestion = SoundQuestion(
+        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+        switch (data['type']) {
+          case 'Question':
+            importedQuestions.add(Question(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          case 'SoundQuestion':
+            importedQuestions.add(SoundQuestion(
               questionText: data['questionText'],
-              options: (data['options'] as List<dynamic>)
-                  .map((option) => Option1(
-                        option['text'],
-                        option['imagePath'],
-                      ))
-                  .toList(),
-              spokenWord: data['spokenWord'],
-              selectedWord: '', // Initialiser selectedWord selon vos besoins
-            );
-            setState(() {
-              questions.add(soundQuestion);
-            });
-          }
+              options: List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              spokenWord: data['spokenWord'] ?? '',
+              selectedWord: data['selectedWord'] ?? '',
+            ));
+            break;
+          case 'ScrambledWordsQuestion':
+            importedQuestions.add(ScrambledWordsQuestion(
+              correctSentence: data['correctSentence'] ?? '',
+              questionText: data['questionText'] ?? '',
+              additionalWords: List<String>.from(data['additionalWords'] ?? []),
+            ));
+            break;
+          case 'TranslationQuestion':
+            importedQuestions.add(TranslationQuestion(
+              originalText: data['originalText'] ?? '',
+              correctTranslation: data['correctTranslation'] ?? '',
+              userTranslationn: data['userTranslationn'] ?? '',
+            ));
+            break;
+          case 'TextQuestion':
+            importedQuestions.add(TextQuestion(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          default:
+            print('Type de question non pris en charge : ${data['type']}');
+            break;
         }
-      }
+      });
+
+      setState(() {
+        questions = importedQuestions;
+      });
+
+      print('Questions importées avec succès depuis Firestore');
     } catch (e) {
-      print("Erreur lors de l'importation des questions depuis Firestore : $e");
+      print(
+          'Erreur lors de l\'importation des questions depuis Firestore : $e');
     }
   }
 
