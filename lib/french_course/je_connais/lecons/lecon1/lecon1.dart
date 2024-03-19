@@ -16,108 +16,105 @@ class ExConnaisLeconOne extends StatefulWidget {
 }
 
 class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Récupérer les arguments passés par le Navigator
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter =
+        args['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
+
+    // Appeler la fonction d'importation avec les valeurs récupérées
+    importQuestionsFromFirestore(chapter, leconId);
+  }
+
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
-  List<dynamic> questions = [
-    Question(
-      'the cold',
-      [
-        Option1('les fruits', 'assets/fruits.png'),
-        Option1('le froid', 'assets/froid.png'),
-        Option1('la banane', 'assets/banane.png'),
-        Option1('Le beurre', 'assets/propage.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'I am very cold',
-      questionText: "j'ai trés froid",
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Really',
-      questionText: "Vraiment ?",
-      additionalWords: ['she', "I'm", 'and'], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "It's bad",
-      questionText: "C'est mal",
-      additionalWords: ['how', "I'm", 'cold'], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "I am hot",
-      questionText: "J'ai chaud",
-      additionalWords: [
-        'how are you',
-        "hello",
-        'bad'
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "hot",
-      correctTranslation: 'chaud',
-      userTranslationn: '',
-    ),
+  List<dynamic> questions = [];
+  Future<void> importQuestionsFromFirestore(String chapter, int leconId) async {
+    try {
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc(chapter)
+          .collection('lecons')
+          .doc('lecon$leconId') // Utilisation de l'argument leconId
+          .collection('questions');
 
-    ScrambledWordsQuestion(
-      correctSentence: "I feel well",
-      questionText: "Je me sens bien",
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
+      // Récupérez tous les documents de la collection "questions"
+      QuerySnapshot querySnapshot = await questionsCollection.get();
 
-    ScrambledWordsQuestion(
-      correctSentence: 'I feel really bad',
-      questionText: 'Je me sens vraiment mal',
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
+      List<dynamic> importedQuestions = [];
 
-    ScrambledWordsQuestion(
-      correctSentence: 'Do you feel well ?',
-      questionText: 'Tu te sens bien',
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
+      // Parcourez les documents récupérés
+      querySnapshot.docs.forEach((doc) {
+        // Récupérez les données du document Firestore
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-    Question(
-      'the bed',
-      [
-        Option1('le lit', 'assets/lit.png'),
-        Option1("l'oreiller", 'assets/oreiller.png'),
-        Option1('le chaise', 'assets/chiase.png'),
-        Option1('Le canapé', 'assets/canape.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Do you feel bad?',
-      questionText: 'Est-ce que tu te sens mal ?',
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
+        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+        switch (data['type']) {
+          case 'Question':
+            importedQuestions.add(Question(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          case 'SoundQuestion':
+            importedQuestions.add(SoundQuestion(
+              questionText: data['questionText'],
+              options: List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              spokenWord: data['spokenWord'] ?? '',
+              selectedWord: data['selectedWord'] ?? '',
+            ));
+            break;
+          case 'ScrambledWordsQuestion':
+            importedQuestions.add(ScrambledWordsQuestion(
+              correctSentence: data['correctSentence'] ?? '',
+              questionText: data['questionText'] ?? '',
+              additionalWords: List<String>.from(data['additionalWords'] ?? []),
+            ));
+            break;
+          case 'TranslationQuestion':
+            importedQuestions.add(TranslationQuestion(
+              originalText: data['originalText'] ?? '',
+              correctTranslation: data['correctTranslation'] ?? '',
+              userTranslationn: data['userTranslationn'] ?? '',
+            ));
+            break;
+          case 'TextQuestion':
+            importedQuestions.add(TextQuestion(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          default:
+            print('Type de question non pris en charge : ${data['type']}');
+            break;
+        }
+      });
 
-    ScrambledWordsQuestion(
-      correctSentence: "You 're going to be cold",
-      questionText: 'Tu vas avoir froid',
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Tomorrow, the weather will be nice',
-      questionText: 'Demain, il fera beau',
-      additionalWords: [], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'they respect the woman',
-      questionText: 'Ils respectent la femme',
-      additionalWords: [
-        'man',
-        'orange',
-        'now',
-        'tomorrow',
-      ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
-  ];
+      setState(() {
+        questions = importedQuestions;
+      });
+
+      print('Questions importées avec succès depuis Firestore');
+    } catch (e) {
+      print(
+          'Erreur lors de l\'importation des questions depuis Firestore : $e');
+    }
+  }
+
   void addQuestionsToFirestore() async {
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
@@ -197,7 +194,7 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
     }
   }
 
-  void importQuestionsFromFirestore() async {
+  void importQuestionsFromFirestoreAdmin() async {
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
       CollectionReference adminCollection =
@@ -590,6 +587,10 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
 
 ///////////////////////////////////////////////////
   Future<void> _nextPageForScrambledWordsQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     // Check if the current question is of type ScrambledWordsQuestion
     if (questions[_currentPage] is ScrambledWordsQuestion) {
       ScrambledWordsQuestion currentQuestion =
@@ -627,23 +628,23 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon1Connais'
+              // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-              // Mettez à jour le champ 'lecon1Connais' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon1Connais': true,
+                'lecon${leconId}${chapter}': true,
               });
 
-              print('Champ lecon1Connais ajouté avec succès!');
+              print('Champ lecon${leconId}${chapter} ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon1Connais est déjà vrai!');
+            print('Le champ lecon${leconId}${chapter} est déjà vrai!');
           }
         }
       } else {
@@ -658,6 +659,10 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
   }
 
   Future<bool> _nextPageForSoundQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     if (questions[_currentPage] is SoundQuestion) {
       String spokenWord = (questions[_currentPage] as SoundQuestion).spokenWord;
       String selectedWord =
@@ -691,23 +696,23 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon1Connais'
+              // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-              // Mettez à jour le champ 'lecon1Connais' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon1Connais': true,
+                'lecon${leconId}${chapter}': true,
               });
 
-              print('Champ lecon1Connais ajouté avec succès!');
+              print('Champ lecon${leconId}${chapter} ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon1Connais est déjà vrai!');
+            print('Le champ lecon${leconId}${chapter} est déjà vrai!');
           }
         }
       } else {
@@ -723,6 +728,10 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
   }
 
   Future<bool> _nextPageForQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     bool isCorrect = ListEquality().equals(
       (questions[_currentPage] as Question).selectedOptions,
       (questions[_currentPage] as Question).correctOptions,
@@ -754,23 +763,23 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon1Connais'
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-            // Mettez à jour le champ 'lecon1Connais' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon1Connais': true,
+              'lecon${leconId}${chapter}': true,
             });
 
-            print('Champ lecon1Connais ajouté avec succès!');
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon1Connais est déjà vrai!');
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
         }
       }
     } else {
@@ -782,6 +791,10 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
   }
 
   Future<bool> _nextPageForTranslationQuestion(String userTranslation) async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     String correctTranslation =
         (questions[_currentPage] as TranslationQuestion).correctTranslation;
     bool isCorrect =
@@ -813,23 +826,23 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon1Connais'
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-            // Mettez à jour le champ 'lecon1Connais' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon1Connais': true,
+              'lecon${leconId}${chapter}': true,
             });
 
-            print('Champ lecon1Connais ajouté avec succès!');
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon1Connais est déjà vrai!');
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
         }
       }
     } else {
@@ -838,6 +851,153 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
     }
 
     return isCorrect;
+  }
+
+  Future<bool> _nextPageForTextQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
+    bool isCorrect = ListEquality().equals(
+      (questions[_currentPage] as TextQuestion).selectedOptions,
+      (questions[_currentPage] as TextQuestion).correctOptions,
+    );
+
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+
+      if (_currentPage < questions.length - 1) {
+        setState(() {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
+
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon${leconId}${chapter}': true,
+            });
+
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
+        }
+      }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+    }
+
+    return isCorrect;
+  }
+
+  void _showBottomSheetForTextQuestion(bool isCorrect, TextQuestion question) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 200.0,
+          width: 350,
+          // Adjust the height here
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect
+                        ? "That's right"
+                        : "Ups.. That's not quite right \n",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect ? "Amazing!" : "don't worry",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                    onPressed: () {
+                      // Add the code you want to execute when the button is pressed
+                      Navigator.pop(context); // Close the BottomSheet
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          isCorrect ? Color(0xFF99CC29) : Colors.red,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the borderRadius value
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal:
+                              120.0), // Adjust padding for height and width
+                      minimumSize: const Size(
+                          200.0, 40.0), // Set minimum size for height and width
+                    ),
+                    child: isCorrect
+                        ? const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : const Text(
+                            'Try Again',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -989,8 +1149,14 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
                       question: questions[index] as SoundQuestion,
                       onCorrectAnswer: _nextPageForSoundQuestion,
                     );
+                  } else if (questions[index] is TextQuestion) {
+                    return TextQuestionPage(
+                      question: questions[index]
+                          as TextQuestion, // Cast to TextQuestion
+                      onCorrectAnswer: _nextPageForTextQuestion,
+                    );
                   } else {
-                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion
+                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion, ni TextQuestion
                     return Container(); // ou tout autre widget par défaut
                   }
                 },

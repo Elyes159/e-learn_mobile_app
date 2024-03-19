@@ -22,9 +22,9 @@ class _ExLeconOneState extends State<ExLeconOne> {
     // Récupérer les arguments passés par le Navigator
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final int leconId = args?['leconId'] ?? 1; // Valeur par défaut 1
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
     final String chapter =
-        args?['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
+        args['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
 
     // Appeler la fonction d'importation avec les valeurs récupérées
     importQuestionsFromFirestore(chapter, leconId);
@@ -508,6 +508,11 @@ class _ExLeconOneState extends State<ExLeconOne> {
 
 ///////////////////////////////////////////////////
   Future<void> _nextPageForScrambledWordsQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter =
+        args['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
     // Check if the current question is of type ScrambledWordsQuestion
     if (questions[_currentPage] is ScrambledWordsQuestion) {
       ScrambledWordsQuestion currentQuestion =
@@ -545,23 +550,23 @@ class _ExLeconOneState extends State<ExLeconOne> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-              // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon1Bonjour': true,
+                'lecon${leconId}${chapter}': true,
               });
 
-              print('Champ lecon1Bonjour ajouté avec succès!');
+              print('Champ lecon${leconId}${chapter} ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon1Bonjour est déjà vrai!');
+            print('Le champ lecon${leconId}${chapter} est déjà vrai!');
           }
         }
       } else {
@@ -576,6 +581,10 @@ class _ExLeconOneState extends State<ExLeconOne> {
   }
 
   Future<bool> _nextPageForSoundQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     if (questions[_currentPage] is SoundQuestion) {
       String spokenWord = (questions[_currentPage] as SoundQuestion).spokenWord;
       String selectedWord =
@@ -609,23 +618,23 @@ class _ExLeconOneState extends State<ExLeconOne> {
             setState(() {
               // Le document existe avec le code 'fr'
               // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-              // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+              // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-              // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+              // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
               FirebaseFirestore.instance
                   .collection('user_levels')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('courses')
                   .doc(courseSnapshot.docs[0].id)
                   .update({
-                'lecon1Bonjour': true,
+                'lecon${leconId}${chapter}': true,
               });
 
-              print('Champ lecon1Bonjour ajouté avec succès!');
+              print('Champ lecon${leconId}${chapter} ajouté avec succès!');
             });
           } else {
             // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-            print('Le champ lecon1Bonjour est déjà vrai!');
+            print('Le champ lecon${leconId}${chapter} est déjà vrai!');
           }
         }
       } else {
@@ -641,6 +650,10 @@ class _ExLeconOneState extends State<ExLeconOne> {
   }
 
   Future<bool> _nextPageForQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     bool isCorrect = ListEquality().equals(
       (questions[_currentPage] as Question).selectedOptions,
       (questions[_currentPage] as Question).correctOptions,
@@ -672,23 +685,23 @@ class _ExLeconOneState extends State<ExLeconOne> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon1Bonjour': true,
+              'lecon${leconId}${chapter}': true,
             });
 
-            print('Champ lecon1Bonjour ajouté avec succès!');
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon1Bonjour est déjà vrai!');
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
         }
       }
     } else {
@@ -784,6 +797,10 @@ class _ExLeconOneState extends State<ExLeconOne> {
   }
 
   Future<bool> _nextPageForTextQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     bool isCorrect = ListEquality().equals(
       (questions[_currentPage] as TextQuestion).selectedOptions,
       (questions[_currentPage] as TextQuestion).correctOptions,
@@ -815,23 +832,23 @@ class _ExLeconOneState extends State<ExLeconOne> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon6Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-            // Mettez à jour le champ 'lecon6Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon6Bonjour': true,
+              'lecon${leconId}${chapter}': true,
             });
 
-            print('Champ lecon6Bonjour ajouté avec succès!');
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon6Bonjour est déjà vrai!');
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
         }
       }
     } else {
@@ -843,6 +860,10 @@ class _ExLeconOneState extends State<ExLeconOne> {
   }
 
   Future<bool> _nextPageForTranslationQuestion(String userTranslation) async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     String correctTranslation =
         (questions[_currentPage] as TranslationQuestion).correctTranslation;
     bool isCorrect =
@@ -874,23 +895,23 @@ class _ExLeconOneState extends State<ExLeconOne> {
           setState(() {
             // Le document existe avec le code 'fr'
             // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon1Bonjour'
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
 
-            // Mettez à jour le champ 'lecon1Bonjour' car il n'est pas encore vrai
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
             FirebaseFirestore.instance
                 .collection('user_levels')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .collection('courses')
                 .doc(courseSnapshot.docs[0].id)
                 .update({
-              'lecon1Bonjour': true,
+              'lecon${leconId}${chapter}': true,
             });
 
-            print('Champ lecon1Bonjour ajouté avec succès!');
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
           });
         } else {
           // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon1Bonjour est déjà vrai!');
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
         }
       }
     } else {
