@@ -81,11 +81,32 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                 duration: const Duration(milliseconds: 0),
                 height: 70,
                 width: screenWidth,
-                child: Center(
-                  child: Text(
-                    course.id,
-                    style: TextStyle(color: Colors.white),
-                  ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Image.asset(
+                      course.id == 'bonjour'
+                          ? "assets/salutation.png"
+                          : course.id == 'je_parle'
+                              ? "assets/aq.png"
+                              : course.id == 'je_connais'
+                                  ? "assets/connaissance.png"
+                                  : "assets/bonjour.png",
+                      width: 50,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Center(
+                      child: Text(
+                        course.id.replaceAll('_', ' '),
+                        style: GoogleFonts.poppins(
+                            color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -130,7 +151,7 @@ class LessonListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(course.id),
+        title: Text(course.id.replaceAll('_', ' ')),
       ),
       body: FutureBuilder<List<int>>(
         future: getLessonIDs(course.id),
