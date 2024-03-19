@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
 import 'package:pfe_1/admin/add_lecon.dart';
 import 'package:pfe_1/admin/add_questions.dart';

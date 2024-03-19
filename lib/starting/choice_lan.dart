@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pfe_1/constant/language_const.dart';
 import 'package:pfe_1/constant/languages.dart';
 import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/main.dart';
@@ -31,8 +30,6 @@ class _ChoiceLState extends State<ChoiceL> {
 
     if (doc.exists && doc['selectedLanguage'] != null) {
       // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
-      String selectedLanguageCode = doc['selectedLanguage'];
-      Locale _locale = await setLocale(selectedLanguageCode);
 
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -76,7 +73,6 @@ class _ChoiceLState extends State<ChoiceL> {
                       .update({
                     'selectedLanguage': language!.languageCode,
                   });
-                  Locale _locale = await setLocale(language.languageCode);
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => HomeScreen()),
