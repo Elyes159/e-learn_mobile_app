@@ -17,10 +17,17 @@ class ExLeconOne extends StatefulWidget {
 
 class _ExLeconOneState extends State<ExLeconOne> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    importQuestionsFromFirestore();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Récupérer les arguments passés par le Navigator
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args?['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter =
+        args?['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
+
+    // Appeler la fonction d'importation avec les valeurs récupérées
+    importQuestionsFromFirestore(chapter, leconId);
   }
 
   PageController _pageController = PageController();
@@ -28,14 +35,14 @@ class _ExLeconOneState extends State<ExLeconOne> {
   double _progress = 0.0;
 
   List<dynamic> questions = [];
-  Future<void> importQuestionsFromFirestore() async {
+  Future<void> importQuestionsFromFirestore(String chapter, int leconId) async {
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
       CollectionReference questionsCollection = FirebaseFirestore.instance
           .collection('cours')
-          .doc('bonjour')
+          .doc(chapter)
           .collection('lecons')
-          .doc('lecon1')
+          .doc('lecon$leconId') // Utilisation de l'argument leconId
           .collection('questions');
 
       // Récupérez tous les documents de la collection "questions"
@@ -692,6 +699,149 @@ class _ExLeconOneState extends State<ExLeconOne> {
     return isCorrect;
   }
 
+  void _showBottomSheetForTextQuestion(bool isCorrect, TextQuestion question) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+              color: isCorrect ? Color(0xFFF5FFD8) : Color(0xFFFFDDD8),
+              borderRadius: BorderRadius.circular(20)),
+          height: 200.0,
+          width: 350,
+          // Adjust the height here
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect
+                        ? "That's right"
+                        : "Ups.. That's not quite right \n",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isCorrect ? "Amazing!" : "don't worry",
+                    style: GoogleFonts.poppins(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300,
+                      color: isCorrect ? Colors.green : Color(0xFFFF2442),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                    onPressed: () {
+                      // Add the code you want to execute when the button is pressed
+                      Navigator.pop(context); // Close the BottomSheet
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          isCorrect ? Color(0xFF99CC29) : Colors.red,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the borderRadius value
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal:
+                              120.0), // Adjust padding for height and width
+                      minimumSize: const Size(
+                          200.0, 40.0), // Set minimum size for height and width
+                    ),
+                    child: isCorrect
+                        ? const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : const Text(
+                            'Try Again',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<bool> _nextPageForTextQuestion() async {
+    bool isCorrect = ListEquality().equals(
+      (questions[_currentPage] as TextQuestion).selectedOptions,
+      (questions[_currentPage] as TextQuestion).correctOptions,
+    );
+
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+
+      if (_currentPage < questions.length - 1) {
+        setState(() {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon6Bonjour'
+
+            // Mettez à jour le champ 'lecon6Bonjour' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon6Bonjour': true,
+            });
+
+            print('Champ lecon6Bonjour ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon6Bonjour est déjà vrai!');
+        }
+      }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+    }
+
+    return isCorrect;
+  }
+
   Future<bool> _nextPageForTranslationQuestion(String userTranslation) async {
     String correctTranslation =
         (questions[_currentPage] as TranslationQuestion).correctTranslation;
@@ -900,8 +1050,14 @@ class _ExLeconOneState extends State<ExLeconOne> {
                       question: questions[index] as SoundQuestion,
                       onCorrectAnswer: _nextPageForSoundQuestion,
                     );
+                  } else if (questions[index] is TextQuestion) {
+                    return TextQuestionPage(
+                      question: questions[index]
+                          as TextQuestion, // Cast to TextQuestion
+                      onCorrectAnswer: _nextPageForTextQuestion,
+                    );
                   } else {
-                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion
+                    // Gérer le cas où le type de question n'est ni Question, ni TranslationQuestion, ni ScrambledWordsQuestion, ni SoundQuestion, ni TextQuestion
                     return Container(); // ou tout autre widget par défaut
                   }
                 },

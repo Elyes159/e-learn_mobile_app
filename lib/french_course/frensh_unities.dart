@@ -101,7 +101,10 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                             title: InkWell(
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushReplacementNamed("lecon$leconNumber");
+                                    .pushReplacementNamed("lecon1", arguments: {
+                                  'leconId': leconNumber,
+                                  'chapter': 'bonjour',
+                                });
                               },
                               child: Text(
                                 'Leçon $leconNumber',
@@ -170,7 +173,11 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                             title: InkWell(
                               onTap: () {
                                 Navigator.of(context).pushReplacementNamed(
-                                    "leconParle$leconNumber");
+                                    "leconParle1",
+                                    arguments: {
+                                      'leconId': leconNumber,
+                                      'chapter': 'je_parle',
+                                    });
                               },
                               child: Text(
                                 'Leçon $leconNumber',
@@ -238,7 +245,11 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                             title: InkWell(
                               onTap: () {
                                 Navigator.of(context).pushReplacementNamed(
-                                    "leconConnais$leconNumber");
+                                    "leconConnais1",
+                                    arguments: {
+                                      'leconId': leconNumber,
+                                      'chapter': 'je_connais',
+                                    });
                               },
                               child: Text(
                                 'Leçon $leconNumber',
