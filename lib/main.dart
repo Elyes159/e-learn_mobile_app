@@ -103,7 +103,8 @@ class _MyAppState extends State<MyApp> {
         Locale('en'),
         Locale('ar'),
         Locale('fr'),
-        Locale('hi'), // Ajoutez la nouvelle langue (hindi)
+        Locale('hi'),
+
         // autres langues supportées
       ],
       locale: _locale,
