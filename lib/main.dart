@@ -14,10 +14,10 @@ import 'package:pfe_1/english_course/english_main.dart';
 
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
-import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecon1.dart';
-import 'package:pfe_1/french_course/je_connais/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecons.dart';
+import 'package:pfe_1/french_course/je_connais/lecons/lecon1/lecons.dart';
 
-import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecon1.dart';
+import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecons.dart';
 
 import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';

@@ -9,9 +9,20 @@ class FrenchUnities extends StatefulWidget {
 }
 
 class _FrenchUnitiesState extends State<FrenchUnities> {
-  bool isExpanded = false;
-  bool isExpanded1 = false;
-  bool isExpanded2 = false;
+  late List<DocumentSnapshot> courses = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCourses();
+  }
+
+  Future<void> fetchCourses() async {
+    final snapshot = await FirebaseFirestore.instance.collection('cours').get();
+    setState(() {
+      courses = snapshot.docs;
+    });
+  }
 
   Future<bool> checkLeconExistence(int leconNumber, String chapter) async {
     try {
@@ -38,22 +49,6 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
     }
   }
 
-  Future<List<String>> getLeconsIDs(String chapter) async {
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('cours')
-          .doc(chapter)
-          .collection('lecons')
-          .get();
-
-      List<String> leconIDs = querySnapshot.docs.map((doc) => doc.id).toList();
-      return leconIDs;
-    } catch (e) {
-      print('Erreur lors de la récupération des IDs des leçons : $e');
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -66,227 +61,144 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-          GestureDetector(
+      body: ListView.builder(
+        itemCount: courses.length,
+        itemBuilder: (context, index) {
+          final course = courses[index];
+          return GestureDetector(
             onTap: () {
-              setState(() {
-                isExpanded = !isExpanded;
-              });
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return LessonListPage(course: course);
+              }));
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+              padding: const EdgeInsets.all(15.0),
               child: AnimatedContainer(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: const Color(0xFF3DB2FF),
                 ),
                 duration: const Duration(milliseconds: 0),
-                height: isExpanded ? 630 : 70,
+                height: 70,
                 width: screenWidth,
-                child: FutureBuilder<List<String>>(
-                  future: getLeconsIDs("bonjour"),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return SizedBox();
-                    } else if (snapshot.hasError) {
-                      return Text('Erreur : ${snapshot.error}');
-                    } else {
-                      List<String> leconIDs = snapshot.data ?? [];
-                      return ListView.builder(
-                        itemCount: leconIDs.length,
-                        itemBuilder: (context, index) {
-                          int leconNumber = index + 1;
-                          return ListTile(
-                            title: InkWell(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushReplacementNamed("lecon1", arguments: {
-                                  'leconId': leconNumber,
-                                  'chapter': 'bonjour',
-                                });
-                              },
-                              child: Text(
-                                'Leçon $leconNumber',
-                                style: GoogleFonts.poppins(color: Colors.white),
-                              ),
-                            ),
-                            trailing: FutureBuilder<bool>(
-                              future:
-                                  checkLeconExistence(leconNumber, "Bonjour"),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return SizedBox();
-                                } else if (snapshot.hasError) {
-                                  return Text('Erreur : ${snapshot.error}');
-                                } else {
-                                  bool leconExists = snapshot.data ?? false;
-                                  return leconExists
-                                      ? Image.asset(
-                                          "assets/verifie.png",
-                                          width: 30,
-                                        )
-                                      : SizedBox();
-                                }
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
+                child: Center(
+                  child: Text(
+                    course.id,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isExpanded1 = !isExpanded1;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-              child: AnimatedContainer(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFF3DB2FF),
-                ),
-                duration: const Duration(milliseconds: 0),
-                height: isExpanded1 ? 630 : 70,
-                width: screenWidth,
-                child: FutureBuilder<List<String>>(
-                  future: getLeconsIDs("je_parle"),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return SizedBox();
-                    } else if (snapshot.hasError) {
-                      return Text('Erreur : ${snapshot.error}');
-                    } else {
-                      List<String> leconIDs = snapshot.data ?? [];
-                      return ListView.builder(
-                        itemCount: leconIDs.length,
-                        itemBuilder: (context, index) {
-                          int leconNumber = index + 1;
-                          return ListTile(
-                            title: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushReplacementNamed(
-                                    "leconParle1",
-                                    arguments: {
-                                      'leconId': leconNumber,
-                                      'chapter': 'je_parle',
-                                    });
-                              },
-                              child: Text(
-                                'Leçon $leconNumber',
-                                style: GoogleFonts.poppins(color: Colors.white),
-                              ),
-                            ),
-                            trailing: FutureBuilder<bool>(
-                              future: checkLeconExistence(leconNumber, "Parle"),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return SizedBox();
-                                } else if (snapshot.hasError) {
-                                  return Text('Erreur : ${snapshot.error}');
-                                } else {
-                                  bool leconExists = snapshot.data ?? false;
-                                  return leconExists
-                                      ? Image.asset(
-                                          "assets/verifie.png",
-                                          width: 30,
-                                        )
-                                      : SizedBox();
-                                }
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isExpanded2 = !isExpanded2;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-              child: AnimatedContainer(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFF3DB2FF),
-                ),
-                duration: const Duration(milliseconds: 0),
-                height: isExpanded2 ? 800 : 70,
-                width: screenWidth,
-                child: FutureBuilder<List<String>>(
-                  future: getLeconsIDs("je_connais"),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return SizedBox();
-                    } else if (snapshot.hasError) {
-                      return Text('Erreur : ${snapshot.error}');
-                    } else {
-                      List<String> leconIDs = snapshot.data ?? [];
-                      return ListView.builder(
-                        itemCount: leconIDs.length,
-                        itemBuilder: (context, index) {
-                          int leconNumber = index + 1;
-                          return ListTile(
-                            title: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushReplacementNamed(
-                                    "leconConnais1",
-                                    arguments: {
-                                      'leconId': leconNumber,
-                                      'chapter': 'je_connais',
-                                    });
-                              },
-                              child: Text(
-                                'Leçon $leconNumber',
-                                style: GoogleFonts.poppins(color: Colors.white),
-                              ),
-                            ),
-                            trailing: FutureBuilder<bool>(
-                              future:
-                                  checkLeconExistence(leconNumber, "Connais"),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return SizedBox();
-                                } else if (snapshot.hasError) {
-                                  return Text('Erreur : ${snapshot.error}');
-                                } else {
-                                  bool leconExists = snapshot.data ?? false;
-                                  return leconExists
-                                      ? Image.asset(
-                                          "assets/verifie.png",
-                                          width: 30,
-                                        )
-                                      : SizedBox();
-                                }
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
+  }
+}
+
+class LessonListPage extends StatelessWidget {
+  final DocumentSnapshot course;
+
+  const LessonListPage({Key? key, required this.course}) : super(key: key);
+
+  Future<bool> checkLeconExistence(int leconNumber, String chapter) async {
+    try {
+      var courseSnapshot = await FirebaseFirestore.instance
+          .collection('user_levels')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('courses')
+          .where('code', isEqualTo: 'fr')
+          .get();
+
+      if (courseSnapshot.docs.isNotEmpty) {
+        bool lecon1BonjourExists =
+            courseSnapshot.docs[0].get('lecon${leconNumber}${chapter}') ??
+                false;
+
+        return lecon1BonjourExists;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(
+          'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
+      return false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(course.id),
+      ),
+      body: FutureBuilder<List<int>>(
+        future: getLessonIDs(course.id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Erreur : ${snapshot.error}'));
+          } else {
+            List<int> lessonIDs = snapshot.data ?? [];
+            return ListView.builder(
+              itemCount: lessonIDs.length,
+              itemBuilder: (context, index) {
+                int lessonNumber = lessonIDs[index];
+                return ListTile(
+                  title: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushReplacementNamed(
+                        course.id == 'bonjour'
+                            ? "lecon1"
+                            : course.id == 'je_parle'
+                                ? "leconParle1"
+                                : course.id == 'je_connais'
+                                    ? "leconConnais1"
+                                    : "lecon1",
+                        arguments: {
+                          'leconId': lessonNumber,
+                          'chapter': course.id,
+                        },
+                      );
+                    },
+                    child: Text('Leçon $lessonNumber'),
+                  ),
+                  // Ajoutez le code pour vérifier si la leçon existe ici
+                  trailing: FutureBuilder<bool>(
+                    future: checkLeconExistence(lessonNumber, course.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox();
+                      } else if (snapshot.hasError) {
+                        return Text('Erreur : ${snapshot.error}');
+                      } else {
+                        bool leconExists = snapshot.data ?? false;
+                        return leconExists
+                            ? Image.asset(
+                                "assets/verifie.png",
+                                width: 30,
+                              )
+                            : SizedBox();
+                      }
+                    },
+                  ),
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Future<List<int>> getLessonIDs(String courseId) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('cours')
+        .doc(courseId)
+        .collection('lecons')
+        .get();
+    final lessonCount = snapshot.docs.length;
+    return List<int>.generate(lessonCount, (index) => index + 1);
   }
 }
