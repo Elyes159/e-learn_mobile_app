@@ -15,185 +15,18 @@ class ExLeconEight extends StatefulWidget {
 }
 
 class _ExLeconEightState extends State<ExLeconEight> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    importQuestionsFromFirestore();
+  }
+
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
-  List<dynamic> questions = [
-    TranslationQuestion(
-      originalText: "I love girls",
-      correctTranslation: "j'aime les filles",
-      userTranslationn: '',
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "Yes , thank you very much",
-      questionText: "vous mangez une pomme",
-      additionalWords: [
-        'tommorow',
-        'ofcourse',
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "J'ai des livres",
-      questionText: "I have some books",
-      additionalWords: [
-        'robes',
-        'elles',
-        'si',
-        'as'
-      ], // Liste des mots supplémentaires
-    ),
-
-    Question(
-      'the bear',
-      [
-        Option1('le cheval', 'assets/cheval.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1("l'ourse", 'assets/ours.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "It's a meal",
-      questionText: "C'est un repas",
-      additionalWords: [
-        'winter',
-        'friend',
-        'more',
-        'now'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "No i'm sorry",
-      questionText: "Non , je suis désolé",
-      additionalWords: [
-        'thank',
-        'you',
-        'apple',
-        'the',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "they have a horse",
-      questionText: "Elles ont un cheval",
-      additionalWords: [
-        'listen',
-        'you',
-        'girl',
-        'good',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "I have a tomato and an apple",
-      questionText: "J'ai une tomate et une pomme",
-      additionalWords: [
-        'listen',
-        'you',
-        'girl',
-        'good',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "they are hot",
-      questionText: "Elles ont chaud",
-      additionalWords: [
-        'dress',
-        'family',
-        'gave',
-        'bye',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "It's a pancake",
-      questionText: "C'est une crêpe",
-      additionalWords: [
-        'strong',
-        'cake',
-        'he',
-        'begin',
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "J'ai un canard",
-      correctTranslation: "I have a duck",
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "tu as un chat",
-      correctTranslation: "You have a cat",
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "C'est un chat",
-      correctTranslation: "It's a cat",
-      userTranslationn: '',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "They are Paul and Wendy",
-      questionText: "Ce sont Paul et Wendy",
-      additionalWords: [
-        'strong',
-        'cake',
-        'he',
-        'begin',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "do you have vegetables",
-      questionText: "As-tu des légumes?",
-      additionalWords: [
-        'teenager',
-        'cake',
-        'she',
-        'end',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Ils ont un cheval",
-      questionText: "they have horse",
-      additionalWords: [
-        'rouges',
-        'cohcon',
-        'mouton',
-        'riches',
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "Ce sont des chiens",
-      correctTranslation: "they are dogs",
-      userTranslationn: '',
-    ),
-    Question(
-      'the strawberries',
-      [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("le fraises", 'assets/fraise.png'),
-        Option1("pomme", 'assets/pomme.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    Question(
-      'a bee',
-      [
-        Option1("l'homme", 'assets/homme.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('une abeille', 'assets/abeille.png'),
-        Option1('le cheval', 'assets/cheval.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
-
-    // Add more questions as needed
-  ];
+  List<dynamic> questions = [];
   void addQuestionsToFirestore() async {
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
@@ -273,7 +106,87 @@ class _ExLeconEightState extends State<ExLeconEight> {
     }
   }
 
-  void importQuestionsFromFirestore() async {
+  Future<void> importQuestionsFromFirestore() async {
+    try {
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc('bonjour')
+          .collection('lecons')
+          .doc('lecon8')
+          .collection('questions');
+
+      // Récupérez tous les documents de la collection "questions"
+      QuerySnapshot querySnapshot = await questionsCollection.get();
+
+      List<dynamic> importedQuestions = [];
+
+      // Parcourez les documents récupérés
+      querySnapshot.docs.forEach((doc) {
+        // Récupérez les données du document Firestore
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+        switch (data['type']) {
+          case 'Question':
+            importedQuestions.add(Question(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          case 'SoundQuestion':
+            importedQuestions.add(SoundQuestion(
+              questionText: data['questionText'],
+              options: List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              spokenWord: data['spokenWord'] ?? '',
+              selectedWord: data['selectedWord'] ?? '',
+            ));
+            break;
+          case 'ScrambledWordsQuestion':
+            importedQuestions.add(ScrambledWordsQuestion(
+              correctSentence: data['correctSentence'] ?? '',
+              questionText: data['questionText'] ?? '',
+              additionalWords: List<String>.from(data['additionalWords'] ?? []),
+            ));
+            break;
+          case 'TranslationQuestion':
+            importedQuestions.add(TranslationQuestion(
+              originalText: data['originalText'] ?? '',
+              correctTranslation: data['correctTranslation'] ?? '',
+              userTranslationn: data['userTranslationn'] ?? '',
+            ));
+            break;
+          case 'TextQuestion':
+            importedQuestions.add(TextQuestion(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          default:
+            print('Type de question non pris en charge : ${data['type']}');
+            break;
+        }
+      });
+
+      setState(() {
+        questions = importedQuestions;
+      });
+
+      print('Questions importées avec succès depuis Firestore');
+    } catch (e) {
+      print(
+          'Erreur lors de l\'importation des questions depuis Firestore : $e');
+    }
+  }
+
+  void importQuestionsFromFirestoreAdmin() async {
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
       CollectionReference adminCollection =

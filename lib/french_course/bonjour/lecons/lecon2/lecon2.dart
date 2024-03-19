@@ -15,169 +15,98 @@ class ExLecontwo extends StatefulWidget {
 }
 
 class _ExLecontwoState extends State<ExLecontwo> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    importQuestionsFromFirestore();
+  }
+
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
-  List<dynamic> questions = [
-    Question(
-      'the dog',
-      [
-        Option1('le cheval', 'assets/cheval.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1("l'homme", 'assets/homme.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a dog',
-      questionText: 'un chien',
-      additionalWords: [
-        'are',
-        "it's",
-        'boy',
-        'woman'
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'the horse',
-      [
-        Option1("l'homme", 'assets/homme.png'),
-        Option1('le chien', 'assets/chien.png'),
-        Option1('la femme', 'assets/mere.png'),
-        Option1('le cheval', 'assets/cheval.png'),
-      ],
-      [false, false, false, false],
-      [false, false, false, true],
-    ),
+  List<dynamic> questions = [];
+  Future<void> importQuestionsFromFirestore() async {
+    try {
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc('bonjour')
+          .collection('lecons')
+          .doc('lecon2')
+          .collection('questions');
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('tu', 'assets/chat.png'),
-        Option1('ta', 'assets/chat.png'),
-        Option1('te', 'assets/chat.png'),
-        Option1('ti', 'assets/chat.png'),
-      ],
-      spokenWord: 'tu', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('ca', 'assets/chat.png'),
-        Option1('pét', 'assets/chat.png'),
-        Option1('dat', 'assets/chat.png'),
-        Option1("c'est", 'assets/chat.png'),
-      ],
-      spokenWord: "c'est", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    TranslationQuestion(
-      originalText: "cheval",
-      correctTranslation: 'horse',
-      userTranslationn: '',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a horse',
-      questionText: 'Un cheval',
-      additionalWords: [
-        'I',
-        'woman',
-        'you',
-        "it's"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "it's a cat",
-      questionText: "c'est un chat",
-      additionalWords: [
-        'girl',
-        'boy',
-        'horse',
-        "you"
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Are you Paul",
-      questionText: "tu es paul ?",
-      additionalWords: [
-        'and',
-        'I',
-        'woman',
-        "it's"
-            "you"
-      ], // Liste des mots supplémentaires
-    ),
+      // Récupérez tous les documents de la collection "questions"
+      QuerySnapshot querySnapshot = await questionsCollection.get();
 
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('thé', 'assets/chat.png'),
-        Option1('tes', 'assets/chat.png'),
-        Option1('tu es', 'assets/chat.png'),
-        Option1("ces", 'assets/chat.png'),
-      ],
-      spokenWord: "tu es", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
+      List<dynamic> importedQuestions = [];
 
-    ScrambledWordsQuestion(
-      correctSentence: "it's a horse",
-      questionText: "c'est un cheval",
-      additionalWords: [
-        'are',
-        'woman',
-        'you',
-        'boy'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Are you Alice",
-      questionText: "Tu es Alice ?",
-      additionalWords: [
-        'and',
-        'woman',
-        'man',
-        'girl'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'I am a woman',
-      questionText: 'Je suis une femme',
-      additionalWords: [
-        'boy',
-        'and',
-        'hello',
-        'what'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Tu es Paul',
-      questionText: 'Are you Paul?',
-      additionalWords: [
-        'manges',
-        'orange',
-        'garçcon',
-        'fille'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "C' est un cheval",
-      questionText: "It's a horse",
-      additionalWords: [
-        'manges',
-        'cheval',
-        'femme',
-        'pizza',
-      ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
-  ];
+      // Parcourez les documents récupérés
+      querySnapshot.docs.forEach((doc) {
+        // Récupérez les données du document Firestore
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+        switch (data['type']) {
+          case 'Question':
+            importedQuestions.add(Question(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          case 'SoundQuestion':
+            importedQuestions.add(SoundQuestion(
+              questionText: data['questionText'],
+              options: List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              spokenWord: data['spokenWord'] ?? '',
+              selectedWord: data['selectedWord'] ?? '',
+            ));
+            break;
+          case 'ScrambledWordsQuestion':
+            importedQuestions.add(ScrambledWordsQuestion(
+              correctSentence: data['correctSentence'] ?? '',
+              questionText: data['questionText'] ?? '',
+              additionalWords: List<String>.from(data['additionalWords'] ?? []),
+            ));
+            break;
+          case 'TranslationQuestion':
+            importedQuestions.add(TranslationQuestion(
+              originalText: data['originalText'] ?? '',
+              correctTranslation: data['correctTranslation'] ?? '',
+              userTranslationn: data['userTranslationn'] ?? '',
+            ));
+            break;
+          case 'TextQuestion':
+            importedQuestions.add(TextQuestion(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          default:
+            print('Type de question non pris en charge : ${data['type']}');
+            break;
+        }
+      });
+
+      setState(() {
+        questions = importedQuestions;
+      });
+
+      print('Questions importées avec succès depuis Firestore');
+    } catch (e) {
+      print(
+          'Erreur lors de l\'importation des questions depuis Firestore : $e');
+    }
+  }
+
   void addQuestionsToFirestore() async {
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
@@ -244,7 +173,7 @@ class _ExLecontwoState extends State<ExLecontwo> {
     }
   }
 
-  void importQuestionsFromFirestore() async {
+  void importQuestionsFromFirestoreAdmin() async {
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
       CollectionReference adminCollection =

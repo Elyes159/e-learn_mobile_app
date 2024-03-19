@@ -15,194 +15,100 @@ class ExLeconthree extends StatefulWidget {
 }
 
 class _ExLeconthreeState extends State<ExLeconthree> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    importQuestionsFromFirestore();
+  }
+
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
   List<dynamic> questions = [
-    Question(
-      'the croissant',
-      [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("l'orange", 'assets/orange.png'),
-        Option1("pomme", 'assets/pomme.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a croissant',
-      questionText: 'un croissant',
-      additionalWords: [
-        'are',
-        "it's",
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'the orange',
-      [
-        Option1("l'orange", 'assets/orange.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("le croissant", 'assets/croissant.png'),
-        Option1("pomme", 'assets/pomme.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('a', 'assets/chat.png'),
-        Option1('ante', 'assets/chat.png'),
-        Option1('ant', 'assets/chat.png'),
-        Option1('anna', 'assets/chat.png'),
-      ],
-      spokenWord: 'ant', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    Question(
-      'the sandwich',
-      [
-        Option1('la cuisine', 'assets/cuisine.png'),
-        Option1('thé', 'assets/thé.png'),
-        Option1('le sandwich', 'assets/sandwich.png'),
-        Option1('Le gâteau', 'assets/gateau.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'an orange',
-      questionText: 'une orange',
-      additionalWords: [
-        'are',
-        'eating',
-        'boy',
-        "it"
-      ], // Liste des mots supplémentaires
-    ),
-    Question(
-      'the cheese',
-      [
-        Option1('la cuisine', 'assets/cuisine.png'),
-        Option1('le fromage', 'assets/fromage.png'),
-        Option1('le sandwich', 'assets/sandwich.png'),
-        Option1('Le gâteau', 'assets/gateau.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-    Question(
-      'the pizza',
-      [
-        Option1('le croissant', 'assets/croissant.png'),
-        Option1('la pizza', 'assets/pizza.png'),
-        Option1("l'orange", 'assets/orange.png'),
-        Option1("pomme", 'assets/pomme.png'),
-      ],
-      [false, false, false, false],
-      [false, true, false, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "a croissant and an orange",
-      questionText: "un croissant et une orange",
-      additionalWords: [
-        'pizza',
-        'man',
-        'horse',
-        "it"
-      ], // Liste des mots supplémentaires
-    ),
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('pissa', 'assets/chat.png'),
-        Option1('croissant', 'assets/chat.png'),
-        Option1('pizza', 'assets/chat.png'),
-        Option1('orange', 'assets/chat.png'),
-      ],
-      spokenWord: 'pizza', // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "It's an orange",
-      questionText: "C'est une orange",
-      additionalWords: [
-        'are',
-        'is',
-        'horse',
-        'man'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Marie is eating',
-      questionText: 'Marie mange',
-      additionalWords: [
-        'croissant',
-        'pizza',
-        'it',
-        'orange'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'You are eating a pizza',
-      questionText: 'Tu mange une pizza',
-      additionalWords: [
-        'girl',
-        "it's",
-        'woman',
-        'is'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Un chat mange un croissant",
-      questionText: "A cat is eating a croissant",
-      additionalWords: [
-        'homme',
-        'et',
-        'fille',
-        'farçon',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Tu manges une pizza",
-      questionText: "You are eating a pizza",
-      additionalWords: [
-        'homme',
-        'femme',
-        'orange',
-        'suis',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "A woman is eating an orange",
-      questionText: "Une femme mange une orange",
-      additionalWords: [
-        'horse',
-        "it's",
-        'girl',
-        'croissant',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "A girl and a dog",
-      questionText: "Une fille et un chien",
-      additionalWords: [
-        'horse',
-        "it's",
-        'you',
-        'are',
-      ], // Liste des mots supplémentaires
-    ), // Add more questions as needed
+    // Add more questions as needed
   ];
+  Future<void> importQuestionsFromFirestore() async {
+    try {
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc('bonjour')
+          .collection('lecons')
+          .doc('lecon3')
+          .collection('questions');
+
+      // Récupérez tous les documents de la collection "questions"
+      QuerySnapshot querySnapshot = await questionsCollection.get();
+
+      List<dynamic> importedQuestions = [];
+
+      // Parcourez les documents récupérés
+      querySnapshot.docs.forEach((doc) {
+        // Récupérez les données du document Firestore
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+        switch (data['type']) {
+          case 'Question':
+            importedQuestions.add(Question(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          case 'SoundQuestion':
+            importedQuestions.add(SoundQuestion(
+              questionText: data['questionText'],
+              options: List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              spokenWord: data['spokenWord'] ?? '',
+              selectedWord: data['selectedWord'] ?? '',
+            ));
+            break;
+          case 'ScrambledWordsQuestion':
+            importedQuestions.add(ScrambledWordsQuestion(
+              correctSentence: data['correctSentence'] ?? '',
+              questionText: data['questionText'] ?? '',
+              additionalWords: List<String>.from(data['additionalWords'] ?? []),
+            ));
+            break;
+          case 'TranslationQuestion':
+            importedQuestions.add(TranslationQuestion(
+              originalText: data['originalText'] ?? '',
+              correctTranslation: data['correctTranslation'] ?? '',
+              userTranslationn: data['userTranslationn'] ?? '',
+            ));
+            break;
+          case 'TextQuestion':
+            importedQuestions.add(TextQuestion(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          default:
+            print('Type de question non pris en charge : ${data['type']}');
+            break;
+        }
+      });
+
+      setState(() {
+        questions = importedQuestions;
+      });
+
+      print('Questions importées avec succès depuis Firestore');
+    } catch (e) {
+      print(
+          'Erreur lors de l\'importation des questions depuis Firestore : $e');
+    }
+  }
+
   void addQuestionsToFirestore() async {
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
@@ -269,7 +175,7 @@ class _ExLeconthreeState extends State<ExLeconthree> {
     }
   }
 
-  void importQuestionsFromFirestore() async {
+  void importQuestionsFromFirestoreAdmin() async {
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
       CollectionReference adminCollection =

@@ -118,17 +118,83 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
       ], // Liste des mots supplémentaires
     ), // Add more questions as needed
   ];
-  void addSoundQuestionToExConnaisLeconfive(String questionText,
-      List<Option1> options, String spokenWord, String selectedWord) {
-    SoundQuestion newSoundQuestion = SoundQuestion(
-      questionText: questionText,
-      options: options,
-      spokenWord: spokenWord,
-      selectedWord: selectedWord,
-    );
-    setState(() {
-      questions.add(newSoundQuestion);
-    });
+  void addQuestionsToFirestore() async {
+    try {
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc('je_connais')
+          .collection('lecons')
+          .doc('lecon1')
+          .collection('questions');
+
+      // Parcourez chaque question dans la liste et ajoutez-la à Firestore
+      for (int i = 0; i < questions.length; i++) {
+        var question = questions[i];
+        String questionDocumentName = 'question${i + 1}';
+
+        if (question is Question) {
+          await questionsCollection.doc(questionDocumentName).set({
+            'type': 'Question',
+            'questionText': question.questionText,
+            'options': question.options
+                .map((option) => {
+                      'text': option.text,
+                      'imagePath': option.imagePath,
+                    })
+                .toList(),
+            'selectedOptions': question.selectedOptions,
+            'correctOptions': question.correctOptions,
+          });
+        } else if (question is SoundQuestion) {
+          await questionsCollection.doc(questionDocumentName).set({
+            'type': 'SoundQuestion',
+            'questionText': question.questionText,
+            'options': question.options
+                .map((option) => {
+                      'text': option.text,
+                      'imagePath': option.imagePath,
+                    })
+                .toList(),
+            'spokenWord': question.spokenWord,
+            'selectedWord': question.selectedWord,
+          });
+        } else if (question is ScrambledWordsQuestion) {
+          await questionsCollection.doc(questionDocumentName).set({
+            'type': 'ScrambledWordsQuestion',
+            'questionText': question.questionText,
+            'correctSentence': question.correctSentence,
+            'selectedWords': question.selectedWords,
+            'selectedWordOrder': question.selectedWordOrder,
+            'additionalWords': question.additionalWords,
+          });
+        } else if (question is TranslationQuestion) {
+          await questionsCollection.doc(questionDocumentName).set({
+            'type': 'TranslationQuestion',
+            'originalText': question.originalText,
+            'correctTranslation': question.correctTranslation,
+            'userTranslationn': question.userTranslationn,
+          });
+        } else if (question is TextQuestion) {
+          await questionsCollection.doc(questionDocumentName).set({
+            'type': 'TextQuestion',
+            'questionText': question.questionText,
+            'options': question.options
+                .map((option) => {
+                      'text': option.text,
+                      'imagePath': option.imagePath,
+                    })
+                .toList(),
+            'selectedOptions': question.selectedOptions,
+            'correctOptions': question.correctOptions,
+          });
+        }
+      }
+
+      print('Toutes les questions ont été ajoutées à Firestore avec succès');
+    } catch (e) {
+      print('Erreur lors de l\'ajout des questions à Firestore : $e');
+    }
   }
 
   void importQuestionsFromFirestore() async {

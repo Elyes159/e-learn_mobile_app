@@ -15,121 +15,18 @@ class ExLeconSix extends StatefulWidget {
 }
 
 class _ExLeconSixState extends State<ExLeconSix> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    importQuestionsFromFirestore();
+  }
+
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
 
-  List<dynamic> questions = [
-    TextQuestion(
-      'Good Morning',
-      [
-        Option1('non', 'assets/chat.png'),
-        Option1('bonjour', 'assets/fille.png'),
-        Option1("merci", 'assets/mere.png'),
-        Option1('au revoir', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-
-    SoundQuestion(
-      questionText: 'What is the correctly pronounced word?',
-      options: [
-        Option1('oui', 'assets/chat.png'),
-        Option1('biensur', 'assets/chat.png'),
-        Option1("D'accord", 'assets/chat.png'),
-        Option1('non', 'assets/chat.png'),
-      ],
-      spokenWord: "D'accord", // Remplacez par le mot correctement prononcé
-      selectedWord:
-          '', // Laissez vide pour le moment, à remplir lors de la sélection par l'utilisateur
-    ),
-    TextQuestion(
-      'Good evening',
-      [
-        Option1('bonsoir', 'assets/chat.png'),
-        Option1('désolé', 'assets/fille.png'),
-        Option1("merci", 'assets/mere.png'),
-        Option1('elle', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [true, false, false, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "Thanks and goodbye",
-      questionText: "Merci et au revoir",
-      additionalWords: [
-        'please',
-        'paul',
-        'hello',
-        "ok"
-      ], // Liste des mots supplémentaires
-    ),
-    TextQuestion(
-      'It was nothing',
-      [
-        Option1('de rien', 'assets/chat.png'),
-        Option1('non', 'assets/fille.png'),
-        Option1("s'il te plaît", 'assets/mere.png'),
-        Option1('au revoir', 'assets/main.png'),
-      ],
-      [false, false, false, false],
-      [false, false, true, false],
-    ),
-
-    ScrambledWordsQuestion(
-      correctSentence: "Yes , thank you very much",
-      questionText: "Oui , merci beaucoup!",
-      additionalWords: [
-        'tommorow',
-        'ofcourse',
-        'boy',
-        'man'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'sorry',
-      questionText: 'désolé',
-      additionalWords: [
-        'how',
-        'and',
-        'no',
-        'now'
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "No i'm sorry",
-      questionText: "Non , je suis désolé",
-      additionalWords: [
-        'thank',
-        'you',
-        'apple',
-        'the',
-      ], // Liste des mots supplémentaires
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Please",
-      questionText: "S'il vous plaît",
-      additionalWords: [
-        'how',
-        'you',
-        'boy',
-        'good morning',
-      ], // Liste des mots supplémentaires
-    ),
-    TranslationQuestion(
-      originalText: "Good Morning",
-      correctTranslation: 'Bonjour',
-      userTranslationn: '',
-    ),
-    TranslationQuestion(
-      originalText: "Good night",
-      correctTranslation: 'Bonne nuit',
-      userTranslationn: '',
-    ),
-    // Add more questions as needed
-  ];
+  List<dynamic> questions = [];
   void addQuestionsToFirestore() async {
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
@@ -209,7 +106,87 @@ class _ExLeconSixState extends State<ExLeconSix> {
     }
   }
 
-  void importQuestionsFromFirestore() async {
+  Future<void> importQuestionsFromFirestore() async {
+    try {
+      // Obtenez une référence à la collection "questions" dans Firestore
+      CollectionReference questionsCollection = FirebaseFirestore.instance
+          .collection('cours')
+          .doc('bonjour')
+          .collection('lecons')
+          .doc('lecon6')
+          .collection('questions');
+
+      // Récupérez tous les documents de la collection "questions"
+      QuerySnapshot querySnapshot = await questionsCollection.get();
+
+      List<dynamic> importedQuestions = [];
+
+      // Parcourez les documents récupérés
+      querySnapshot.docs.forEach((doc) {
+        // Récupérez les données du document Firestore
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
+        switch (data['type']) {
+          case 'Question':
+            importedQuestions.add(Question(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          case 'SoundQuestion':
+            importedQuestions.add(SoundQuestion(
+              questionText: data['questionText'],
+              options: List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              spokenWord: data['spokenWord'] ?? '',
+              selectedWord: data['selectedWord'] ?? '',
+            ));
+            break;
+          case 'ScrambledWordsQuestion':
+            importedQuestions.add(ScrambledWordsQuestion(
+              correctSentence: data['correctSentence'] ?? '',
+              questionText: data['questionText'] ?? '',
+              additionalWords: List<String>.from(data['additionalWords'] ?? []),
+            ));
+            break;
+          case 'TranslationQuestion':
+            importedQuestions.add(TranslationQuestion(
+              originalText: data['originalText'] ?? '',
+              correctTranslation: data['correctTranslation'] ?? '',
+              userTranslationn: data['userTranslationn'] ?? '',
+            ));
+            break;
+          case 'TextQuestion':
+            importedQuestions.add(TextQuestion(
+              data['questionText'],
+              List<Option1>.from(data['options'].map(
+                  (option) => Option1(option['text'], option['imagePath']))),
+              List<bool>.from(data['selectedOptions'] ?? []),
+              List<bool>.from(data['correctOptions'] ?? []),
+            ));
+            break;
+          default:
+            print('Type de question non pris en charge : ${data['type']}');
+            break;
+        }
+      });
+
+      setState(() {
+        questions = importedQuestions;
+      });
+
+      print('Questions importées avec succès depuis Firestore');
+    } catch (e) {
+      print(
+          'Erreur lors de l\'importation des questions depuis Firestore : $e');
+    }
+  }
+
+  void importQuestionsFromFirestoreAdmin() async {
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
       CollectionReference adminCollection =
