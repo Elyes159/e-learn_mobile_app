@@ -8,14 +8,14 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../constant/question.dart';
 
-class ExConnaisLeconOne extends StatefulWidget {
-  const ExConnaisLeconOne({super.key});
+class ExLeconOne extends StatefulWidget {
+  const ExLeconOne({super.key});
 
   @override
-  _ExConnaisLeconOneState createState() => _ExConnaisLeconOneState();
+  _ExLeconOneState createState() => _ExLeconOneState();
 }
 
-class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
+class _ExLeconOneState extends State<ExLeconOne> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -115,86 +115,11 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
     }
   }
 
-  void addQuestionsToFirestore() async {
-    try {
-      // Obtenez une référence à la collection "questions" dans Firestore
-      CollectionReference questionsCollection = FirebaseFirestore.instance
-          .collection('cours')
-          .doc('je_connais')
-          .collection('lecons')
-          .doc('lecon1')
-          .collection('questions');
-
-      // Parcourez chaque question dans la liste et ajoutez-la à Firestore
-      for (int i = 0; i < questions.length; i++) {
-        var question = questions[i];
-        String questionDocumentName = 'question${i + 1}';
-
-        if (question is Question) {
-          await questionsCollection.doc(questionDocumentName).set({
-            'type': 'Question',
-            'questionText': question.questionText,
-            'options': question.options
-                .map((option) => {
-                      'text': option.text,
-                      'imagePath': option.imagePath,
-                    })
-                .toList(),
-            'selectedOptions': question.selectedOptions,
-            'correctOptions': question.correctOptions,
-          });
-        } else if (question is SoundQuestion) {
-          await questionsCollection.doc(questionDocumentName).set({
-            'type': 'SoundQuestion',
-            'questionText': question.questionText,
-            'options': question.options
-                .map((option) => {
-                      'text': option.text,
-                      'imagePath': option.imagePath,
-                    })
-                .toList(),
-            'spokenWord': question.spokenWord,
-            'selectedWord': question.selectedWord,
-          });
-        } else if (question is ScrambledWordsQuestion) {
-          await questionsCollection.doc(questionDocumentName).set({
-            'type': 'ScrambledWordsQuestion',
-            'questionText': question.questionText,
-            'correctSentence': question.correctSentence,
-            'selectedWords': question.selectedWords,
-            'selectedWordOrder': question.selectedWordOrder,
-            'additionalWords': question.additionalWords,
-          });
-        } else if (question is TranslationQuestion) {
-          await questionsCollection.doc(questionDocumentName).set({
-            'type': 'TranslationQuestion',
-            'originalText': question.originalText,
-            'correctTranslation': question.correctTranslation,
-            'userTranslationn': question.userTranslationn,
-          });
-        } else if (question is TextQuestion) {
-          await questionsCollection.doc(questionDocumentName).set({
-            'type': 'TextQuestion',
-            'questionText': question.questionText,
-            'options': question.options
-                .map((option) => {
-                      'text': option.text,
-                      'imagePath': option.imagePath,
-                    })
-                .toList(),
-            'selectedOptions': question.selectedOptions,
-            'correctOptions': question.correctOptions,
-          });
-        }
-      }
-
-      print('Toutes les questions ont été ajoutées à Firestore avec succès');
-    } catch (e) {
-      print('Erreur lors de l\'ajout des questions à Firestore : $e');
-    }
-  }
-
   void importQuestionsFromFirestoreAdmin() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
     try {
       // Obtenez une référence à la collection "admin" dans Firestore
       CollectionReference adminCollection =
@@ -204,7 +129,7 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
       QuerySnapshot querySnapshot = await adminCollection
           .doc("T3Ql5faOK93AQp390964")
           .collection("Question_added")
-          .where('chapitre_lecon', isEqualTo: 'je connais/lecon1')
+          .where('chapitre_lecon', isEqualTo: '${chapter}/lecon${leconId}')
           .get();
 
       // Parcourez les documents récupérés
@@ -590,7 +515,8 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
-    final String chapter = args['chapter'] ?? 'bonjour';
+    final String chapter =
+        args['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
     // Check if the current question is of type ScrambledWordsQuestion
     if (questions[_currentPage] is ScrambledWordsQuestion) {
       ScrambledWordsQuestion currentQuestion =
@@ -790,132 +716,6 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
     return isCorrect;
   }
 
-  Future<bool> _nextPageForTranslationQuestion(String userTranslation) async {
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
-    final String chapter = args['chapter'] ?? 'bonjour';
-    String correctTranslation =
-        (questions[_currentPage] as TranslationQuestion).correctTranslation;
-    bool isCorrect =
-        userTranslation.toLowerCase() == correctTranslation.toLowerCase();
-
-    if (isCorrect) {
-      // Show Bottom Sheet with "Correct" text
-      _showBottomSheetTranslation(isCorrect, questions[_currentPage]);
-
-      if (_currentPage < questions.length - 1) {
-        setState(() {
-          _currentPage++;
-          _progress = (_currentPage + 1) / questions.length;
-          _pageController.nextPage(
-            duration: Duration(milliseconds: 500),
-            curve: Curves.ease,
-          );
-        });
-      } else {
-        var courseSnapshot = await FirebaseFirestore.instance
-            .collection('user_levels')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('courses')
-            .where('code', isEqualTo: 'fr')
-            .get();
-        Navigator.of(context).pushReplacementNamed("frenshunities");
-
-        if (courseSnapshot.docs.isNotEmpty) {
-          setState(() {
-            // Le document existe avec le code 'fr'
-            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
-
-            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
-            FirebaseFirestore.instance
-                .collection('user_levels')
-                .doc(FirebaseAuth.instance.currentUser!.uid)
-                .collection('courses')
-                .doc(courseSnapshot.docs[0].id)
-                .update({
-              'lecon${leconId}${chapter}': true,
-            });
-
-            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
-          });
-        } else {
-          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
-        }
-      }
-    } else {
-      // Show Bottom Sheet with "Incorrect" text
-      _showBottomSheetTranslation(isCorrect, questions[_currentPage]);
-    }
-
-    return isCorrect;
-  }
-
-  Future<bool> _nextPageForTextQuestion() async {
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
-    final String chapter = args['chapter'] ?? 'bonjour';
-    bool isCorrect = ListEquality().equals(
-      (questions[_currentPage] as TextQuestion).selectedOptions,
-      (questions[_currentPage] as TextQuestion).correctOptions,
-    );
-
-    if (isCorrect) {
-      // Show Bottom Sheet with "Correct" text
-      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
-
-      if (_currentPage < questions.length - 1) {
-        setState(() {
-          _currentPage++;
-          _progress = (_currentPage + 1) / questions.length;
-          _pageController.nextPage(
-            duration: Duration(milliseconds: 500),
-            curve: Curves.ease,
-          );
-        });
-      } else {
-        var courseSnapshot = await FirebaseFirestore.instance
-            .collection('user_levels')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('courses')
-            .where('code', isEqualTo: 'fr')
-            .get();
-        Navigator.of(context).pushReplacementNamed("frenshunities");
-
-        if (courseSnapshot.docs.isNotEmpty) {
-          setState(() {
-            // Le document existe avec le code 'fr'
-            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
-            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
-
-            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
-            FirebaseFirestore.instance
-                .collection('user_levels')
-                .doc(FirebaseAuth.instance.currentUser!.uid)
-                .collection('courses')
-                .doc(courseSnapshot.docs[0].id)
-                .update({
-              'lecon${leconId}${chapter}': true,
-            });
-
-            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
-          });
-        } else {
-          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
-          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
-        }
-      }
-    } else {
-      // Show Bottom Sheet with "Incorrect" text
-      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
-    }
-
-    return isCorrect;
-  }
-
   void _showBottomSheetForTextQuestion(bool isCorrect, TextQuestion question) {
     showModalBottomSheet(
       context: context,
@@ -998,6 +798,132 @@ class _ExConnaisLeconOneState extends State<ExConnaisLeconOne> {
         );
       },
     );
+  }
+
+  Future<bool> _nextPageForTextQuestion() async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
+    bool isCorrect = ListEquality().equals(
+      (questions[_currentPage] as TextQuestion).selectedOptions,
+      (questions[_currentPage] as TextQuestion).correctOptions,
+    );
+
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+
+      if (_currentPage < questions.length - 1) {
+        setState(() {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
+
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon${leconId}${chapter}': true,
+            });
+
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
+        }
+      }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetForTextQuestion(isCorrect, questions[_currentPage]);
+    }
+
+    return isCorrect;
+  }
+
+  Future<bool> _nextPageForTranslationQuestion(String userTranslation) async {
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
+    final String chapter = args['chapter'] ?? 'bonjour';
+    String correctTranslation =
+        (questions[_currentPage] as TranslationQuestion).correctTranslation;
+    bool isCorrect =
+        userTranslation.toLowerCase() == correctTranslation.toLowerCase();
+
+    if (isCorrect) {
+      // Show Bottom Sheet with "Correct" text
+      _showBottomSheetTranslation(isCorrect, questions[_currentPage]);
+
+      if (_currentPage < questions.length - 1) {
+        setState(() {
+          _currentPage++;
+          _progress = (_currentPage + 1) / questions.length;
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        });
+      } else {
+        var courseSnapshot = await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .where('code', isEqualTo: 'fr')
+            .get();
+        Navigator.of(context).pushReplacementNamed("frenshunities");
+
+        if (courseSnapshot.docs.isNotEmpty) {
+          setState(() {
+            // Le document existe avec le code 'fr'
+            // Vous pouvez accéder aux données du premier document trouvé (courseSnapshot.docs[0])
+            // et vérifier la valeur actuelle du champ 'lecon${leconId}${chapter}'
+
+            // Mettez à jour le champ 'lecon${leconId}${chapter}' car il n'est pas encore vrai
+            FirebaseFirestore.instance
+                .collection('user_levels')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('courses')
+                .doc(courseSnapshot.docs[0].id)
+                .update({
+              'lecon${leconId}${chapter}': true,
+            });
+
+            print('Champ lecon${leconId}${chapter} ajouté avec succès!');
+          });
+        } else {
+          // La condition est déjà vraie, vous pouvez faire quelque chose ici si nécessaire
+          print('Le champ lecon${leconId}${chapter} est déjà vrai!');
+        }
+      }
+    } else {
+      // Show Bottom Sheet with "Incorrect" text
+      _showBottomSheetTranslation(isCorrect, questions[_currentPage]);
+    }
+
+    return isCorrect;
   }
 
   @override

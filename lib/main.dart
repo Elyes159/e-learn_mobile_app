@@ -14,10 +14,7 @@ import 'package:pfe_1/english_course/english_main.dart';
 
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
-import 'package:pfe_1/french_course/bonjour/lecons/lecon1/lecons.dart';
-import 'package:pfe_1/french_course/je_connais/lecons/lecon1/lecons.dart';
-
-import 'package:pfe_1/french_course/je_parle/lecons/lecon1/lecons.dart';
+import 'package:pfe_1/french_course/lecons/lecons.dart';
 
 import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';
@@ -85,9 +82,7 @@ class _MyAppState extends State<MyApp> {
       home: _getStartScreen(),
       routes: {
         'stages': (context) => StagesPage(),
-        'lecon1': (context) => ExLeconOne(),
-        'leconParle1': (context) => ExParleLeconOne(),
-        'leconConnais1': (context) => ExConnaisLeconOne(),
+        'lecons': (context) => ExLeconOne(),
         'frenshunities': (context) => FrenchUnities(),
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),

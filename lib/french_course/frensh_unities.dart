@@ -170,13 +170,7 @@ class LessonListPage extends StatelessWidget {
                   title: InkWell(
                     onTap: () {
                       Navigator.of(context).pushReplacementNamed(
-                        course.id == 'bonjour'
-                            ? "lecon1"
-                            : course.id == 'je_parle'
-                                ? "leconParle1"
-                                : course.id == 'je_connais'
-                                    ? "leconConnais1"
-                                    : "lecon1",
+                        "lecons",
                         arguments: {
                           'leconId': lessonNumber,
                           'chapter': course.id,
