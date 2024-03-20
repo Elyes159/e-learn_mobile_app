@@ -21,64 +21,8 @@ class _NewCourseFormState extends State<NewCourseForm> {
     super.dispose();
   }
 
-  void _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      String originalCourseId = 'francais'; // ID du cours de français
-      String newCourseName = _courseNameController.text;
-      String selectedLanguage = _selectedLanguage;
-
-      // Importez les questions du cours de français
-      await importAndTranslateQuestions(
-          originalCourseId, newCourseName, selectedLanguage);
-
-      // Réinitialiser le formulaire après soumission
-      _formKey.currentState!.reset();
-
-      // Affichez un message de succès ou effectuez d'autres actions
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Nouveau cours créé avec succès !'),
-        ),
-      );
-    }
-  }
-
-  Future<void> importAndTranslateQuestions(String originalCourseId,
-      String newCourseName, String selectedLanguage) async {
-    try {
-      // Obtenez une référence au document "chapter" dans Firestore
-      DocumentSnapshot chapterSnapshot =
-          await coursesCollection.doc(originalCourseId).get();
-      Map<String, dynamic> chapterData =
-          chapterSnapshot.data() as Map<String, dynamic>;
-
-      // Obtenez les IDs de toutes les leçons sous le document "chapter"
-      List<dynamic> leconIds = chapterData['lecons'];
-
-      // Parcourez chaque leçon pour importer et traduire les questions
-      await Future.forEach(leconIds, (leconId) async {
-        // Importez les questions de la leçon actuelle
-        List<dynamic> frenchQuestions =
-            await importQuestionsFromFirestore(originalCourseId, leconId);
-
-        // Traduisez les questions en fonction de la nouvelle langue
-        List<dynamic> translatedQuestions =
-            await translateQuestions(frenchQuestions, selectedLanguage);
-
-        // Enregistrez les questions traduites dans une nouvelle collection
-        await saveTranslatedCourse(newCourseName, translatedQuestions,
-            _selectedLanguage, originalCourseId, leconId);
-      });
-
-      print('Questions importées et traduites avec succès depuis Firestore');
-    } catch (e) {
-      print(
-          'Erreur lors de l\'importation et traduction des questions depuis Firestore : $e');
-    }
-  }
-
   Future<List<dynamic>> importQuestionsFromFirestore(
-      String chapter, int leconId) async {
+      String chapter, String leconId) async {
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
       CollectionReference questionsCollection = FirebaseFirestore.instance
@@ -152,7 +96,73 @@ class _NewCourseFormState extends State<NewCourseForm> {
     } catch (e) {
       print(
           'Erreur lors de l\'importation des questions depuis Firestore : $e');
-      return [];
+      return []; // Retournez une liste vide en cas d'erreur
+    }
+  }
+
+  Future<void> importAndTranslateQuestions(String originalCourseId,
+      String newCourseName, String selectedLanguage) async {
+    try {
+      QuerySnapshot chapters =
+          await FirebaseFirestore.instance.collection('cours').get();
+
+      for (QueryDocumentSnapshot chapterDoc in chapters.docs) {
+        String chapterId = chapterDoc.id;
+
+        // Accéder à la sous-collection "lecons" pour chaque document dans "cours"
+        QuerySnapshot lecons = await FirebaseFirestore.instance
+            .collection('cours')
+            .doc(chapterId)
+            .collection('lecons')
+            .get();
+
+        // Parcourir les documents de la sous-collection "lecons"
+        for (QueryDocumentSnapshot leconDoc in lecons.docs) {
+          String leconId = leconDoc.id; // Obtenez l'ID du document "lecon"
+          List<dynamic> frenchQuestions =
+              await importQuestionsFromFirestore(chapterId, leconId);
+
+          // Traduire les questions en fonction de la nouvelle langue
+          List<dynamic> translatedQuestions =
+              await translateQuestions(frenchQuestions, selectedLanguage);
+
+          // Enregistrer les questions traduites dans une nouvelle collection
+          await saveTranslatedQuestions(newCourseName, selectedLanguage,
+              chapterId, leconId, translatedQuestions);
+        }
+      }
+    } catch (e) {
+      print('Erreur lors de la récupération des leçons : $e');
+    }
+  }
+
+  Future<void> saveTranslatedQuestions(
+      String newCourseName,
+      String selectedLanguage,
+      String chapterId,
+      String leconId,
+      List<dynamic> translatedQuestions) async {
+    try {
+      // Créer un nouveau document pour chaque leçon dans la nouvelle collection
+      DocumentReference newCourseDoc = await FirebaseFirestore.instance
+          .collection('cours$selectedLanguage')
+          .doc(chapterId)
+          .collection('lecons')
+          .doc(leconId)
+          .collection('questions')
+          .add({'name': newCourseName});
+
+      // Collection de questions sous le document de leçon
+      CollectionReference newCourseQuestionsCollection =
+          newCourseDoc.collection('questions');
+      // Ajouter chaque question traduite à la collection
+      for (dynamic question in translatedQuestions) {
+        await newCourseQuestionsCollection.add(question);
+      }
+
+      print('Questions traduites enregistrées avec succès dans Firestore');
+    } catch (e) {
+      print('Erreur lors de l\'enregistrement des questions traduites : $e');
     }
   }
 
@@ -176,34 +186,32 @@ class _NewCourseFormState extends State<NewCourseForm> {
     return translatedQuestions;
   }
 
-  Future<void> saveTranslatedCourse(
-      String newCourseName,
-      List<dynamic> translatedQuestions,
-      String newLanguage,
-      String chapter,
-      int leconId) async {
-    try {
-      // Créez un nouveau document pour le nouveau cours dans la collection "cours"
-      DocumentReference newCourseDoc = await coursesCollection
-          .doc(
-              'cours$newLanguage') // Utiliser la nouvelle langue pour le nom de la collection
-          .collection(chapter)
-          .doc('$leconId')
-          .collection('questions')
-          .add({
-        'name': newCourseName,
-      });
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      String newCourseName = _courseNameController.text;
+      String selectedLanguage = _selectedLanguage;
 
-      // Enregistrez les questions traduites dans la nouvelle collection de cours
-      CollectionReference newCourseQuestionsCollection =
-          newCourseDoc.collection('questions');
-      await Future.forEach(translatedQuestions, (question) async {
-        await newCourseQuestionsCollection.add(question);
-      });
+      // Récupérer tous les documents sous la collection "cours"
+      QuerySnapshot querySnapshot = await coursesCollection.get();
 
-      print('Nouveau cours enregistré avec succès dans Firestore');
-    } catch (e) {
-      print('Erreur lors de l\'enregistrement du nouveau cours : $e');
+      // Parcourir tous les documents
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        String originalCourseId = doc.id;
+
+        // Importez et traduisez les questions pour chaque cours
+        await importAndTranslateQuestions(
+            originalCourseId, newCourseName, selectedLanguage);
+      }
+
+      // Réinitialiser le formulaire après soumission
+      _formKey.currentState!.reset();
+
+      // Affichez un message de succès ou effectuez d'autres actions
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Nouveaux cours créés avec succès !'),
+        ),
+      );
     }
   }
 
