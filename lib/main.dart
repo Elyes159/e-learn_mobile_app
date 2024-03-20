@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
+import 'package:pfe_1/admin/add_course.dart';
 import 'package:pfe_1/admin/add_lecon.dart';
 import 'package:pfe_1/admin/add_questions.dart';
 import 'package:pfe_1/admin/admin_page_main.dart';
@@ -97,6 +99,7 @@ class _MyAppState extends State<MyApp> {
         "mainAdminPage": (context) => Admin_main(),
         "usersPage": (context) => UserListPage(),
         "AddLeconFromAdmin": (context) => AddLessonForm(),
+        'AddCourseAdmin': (context) => NewCourseForm()
       },
     );
   }
@@ -105,7 +108,7 @@ class _MyAppState extends State<MyApp> {
     if (FirebaseAuth.instance.currentUser == null) {
       return Login();
     } else {
-      return HomeScreen();
+      return ImagePickerDemo();
     }
   }
 }

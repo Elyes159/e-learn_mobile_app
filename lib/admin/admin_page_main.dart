@@ -27,7 +27,12 @@ class _Admin_mainState extends State<Admin_main> {
                   Navigator.of(context)
                       .pushReplacementNamed("AddLeconFromAdmin");
                 },
-                child: Text("Ajouter des lecon   , cliquer ici"))
+                child: Text("Ajouter des lecon   , cliquer ici")),
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed("AddCourseAdmin");
+                },
+                child: Text("Ajouter des cours   , cliquer ici"))
           ],
         ),
       ),
