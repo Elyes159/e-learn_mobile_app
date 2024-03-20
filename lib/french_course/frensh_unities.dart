@@ -10,6 +10,7 @@ class FrenchUnities extends StatefulWidget {
 
 class _FrenchUnitiesState extends State<FrenchUnities> {
   late List<DocumentSnapshot> courses = [];
+  PageController _pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -51,17 +52,16 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "Cours",
-            style: GoogleFonts.poppins(),
-          ),
+        title: Text(
+          "Cours",
+          style: GoogleFonts.poppins(),
         ),
+        centerTitle: true,
       ),
-      body: ListView.builder(
+      body: PageView.builder(
+        controller: _pageController,
         itemCount: courses.length,
         itemBuilder: (context, index) {
           final course = courses[index];
@@ -79,13 +79,9 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                   color: const Color(0xFF3DB2FF),
                 ),
                 duration: const Duration(milliseconds: 0),
-                height: 70,
-                width: screenWidth,
                 child: Row(
                   children: [
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     Image.asset(
                       course.id == 'bonjour'
                           ? "assets/salutation.png"
@@ -96,14 +92,12 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                                   : "assets/bonjour.png",
                       width: 50,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Center(
-                      child: Text(
-                        course.id.replaceAll('_', ' '),
-                        style: GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 18),
+                    SizedBox(width: 20),
+                    Text(
+                      course.id.replaceAll('_', ' '),
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 18,
                       ),
                     ),
                   ],
@@ -122,6 +116,28 @@ class LessonListPage extends StatelessWidget {
 
   const LessonListPage({Key? key, required this.course}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(course.id.replaceAll('_', ' ')),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+              // Remplacez le widget suivant par celui que vous souhaitez afficher pour les leçons
+              return LessonListWidget(course: course);
+            }));
+          },
+          child: Text('Voir les leçons'),
+        ),
+      ),
+    );
+  }
+}
+
+class LessonListWidget extends StatelessWidget {
   Future<bool> checkLeconExistence(int leconNumber, String chapter) async {
     try {
       var courseSnapshot = await FirebaseFirestore.instance
@@ -146,6 +162,10 @@ class LessonListPage extends StatelessWidget {
       return false;
     }
   }
+
+  final DocumentSnapshot course;
+
+  const LessonListWidget({Key? key, required this.course}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../constant/question.dart';
+import '../../constant/question.dart';
 
 class ExLeconOne extends StatefulWidget {
   const ExLeconOne({super.key});
@@ -45,8 +45,9 @@ class _ExLeconOneState extends State<ExLeconOne> {
           .doc('lecon$leconId') // Utilisation de l'argument leconId
           .collection('questions');
 
-      // Récupérez tous les documents de la collection "questions"
-      QuerySnapshot querySnapshot = await questionsCollection.get();
+      // Récupérez tous les documents de la collection "questions" dans l'ordre croissant par leur nom
+      QuerySnapshot querySnapshot =
+          await questionsCollection.orderBy(FieldPath.documentId).get();
 
       List<dynamic> importedQuestions = [];
 
