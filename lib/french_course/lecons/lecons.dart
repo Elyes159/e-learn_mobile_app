@@ -81,6 +81,9 @@ class _ExLeconOneState extends State<ExLeconOne> {
               correctSentence: data['correctSentence'] ?? '',
               questionText: data['questionText'] ?? '',
               additionalWords: List<String>.from(data['additionalWords'] ?? []),
+              questionLanguage: data['questionLanguage'] ?? '',
+              selectedWordOrder:
+                  List<String>.from(data['selectedWordOrder'] ?? []),
             ));
             break;
           case 'TranslationQuestion':

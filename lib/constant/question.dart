@@ -20,15 +20,6 @@ class Question {
 
   Question(this.questionText, this.options, this.selectedOptions,
       this.correctOptions);
-
-  Map<String, dynamic> toMap() {
-    return {
-      'questionText': questionText,
-      'options': options.map((option) => option.toMap()).toList(),
-      'selectedOptions': selectedOptions,
-      'correctOptions': correctOptions,
-    };
-  }
 }
 
 class TranslationQuestion {
@@ -40,39 +31,25 @@ class TranslationQuestion {
       {required this.originalText,
       required this.correctTranslation,
       required this.userTranslationn});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'originalText': originalText,
-      'correctTranslation': correctTranslation,
-      'userTranslationn': userTranslationn,
-    };
-  }
 }
 
 class ScrambledWordsQuestion {
   final String questionText;
   final String correctSentence;
   List<String> selectedWords = [];
+  List<String> additionalWords = [];
   List<String> selectedWordOrder = [];
-  List<String> additionalWords = []; // Ajoutez cette ligne
+  final String questionLanguage; // Ajoutez cette ligne
+  // Ajoutez cette ligne
 
   ScrambledWordsQuestion({
     required this.correctSentence,
     required this.questionText,
-    required this.additionalWords, // Ajoutez cette ligne
+    required this.additionalWords,
+    required this.selectedWordOrder,
+    required this.questionLanguage, // Ajoutez cette ligne
   }) {
     selectedWordOrder = correctSentence.split(' ');
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'questionText': questionText,
-      'correctSentence': correctSentence,
-      'selectedWords': selectedWords,
-      'selectedWordOrder': selectedWordOrder,
-      'additionalWords': additionalWords,
-    };
   }
 }
 
@@ -87,15 +64,6 @@ class SoundQuestion {
       required this.options,
       required this.spokenWord,
       required this.selectedWord});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'questionText': questionText,
-      'options': options.map((option) => option.toMap()).toList(),
-      'spokenWord': spokenWord,
-      'selectedWord': selectedWord,
-    };
-  }
 }
 
 class TextQuestion {
@@ -106,13 +74,4 @@ class TextQuestion {
 
   TextQuestion(this.questionText, this.options, this.selectedOptions,
       this.correctOptions);
-
-  Map<String, dynamic> toMap() {
-    return {
-      'questionText': questionText,
-      'options': options.map((option) => option.toMap()).toList(),
-      'selectedOptions': selectedOptions,
-      'correctOptions': correctOptions,
-    };
-  }
 }

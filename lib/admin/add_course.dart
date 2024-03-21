@@ -69,6 +69,9 @@ class _NewCourseFormState extends State<NewCourseForm> {
               correctSentence: data['correctSentence'] ?? '',
               questionText: data['questionText'] ?? '',
               additionalWords: List<String>.from(data['additionalWords'] ?? []),
+              questionLanguage: data['questionLanguage'] ?? '',
+              selectedWordOrder:
+                  List<String>.from(data['selectedWordOrder'] ?? []),
             ));
             break;
           case 'TranslationQuestion':
@@ -218,105 +221,147 @@ class _NewCourseFormState extends State<NewCourseForm> {
   Future<List<dynamic>> translateQuestions(
       List<dynamic> questions, String targetLanguage) async {
     List<dynamic> translatedQuestions = [];
-    for (var question in questions) {
-      // Vérifiez le type de la question
-      if (question is String) {
-        // Si la question est une chaîne de caractères, traduisez-la
-        Translation translatedText = await GoogleTranslator().translate(
-          question,
-          to: targetLanguage,
-        );
-        translatedQuestions.add(translatedText);
-      } else if (question is Question) {
-        // Si la question est de type Question, traduisez le texte de la question
-        Translation translatedQuestionText = await GoogleTranslator().translate(
-          question.questionText,
-          to: targetLanguage,
-        );
-
-        // Traduisez les textes des options
-        List<Option1> translatedOptions = [];
-        for (var option in question.options) {
-          Translation translatedOptionText = await GoogleTranslator().translate(
-            option.text,
+    try {
+      for (var question in questions) {
+        if (question is Question) {
+          Translation translatedQuestionText =
+              await GoogleTranslator().translate(
+            question.questionText,
             to: targetLanguage,
           );
-          translatedOptions
-              .add(Option1(translatedOptionText.text, option.imagePath));
+          List<Option1> translatedOptions = [];
+          for (var option in question.options) {
+            Translation translatedOptionText =
+                await GoogleTranslator().translate(
+              option.text,
+              to: targetLanguage,
+            );
+            translatedOptions
+                .add(Option1(translatedOptionText.text, option.imagePath));
+          }
+          Question translatedQuestion = Question(
+            translatedQuestionText.text,
+            translatedOptions,
+            question.selectedOptions,
+            question.correctOptions,
+          );
+          translatedQuestions.add(translatedQuestion);
+        } else if (question is SoundQuestion) {
+          Translation translatedQuestionText =
+              await GoogleTranslator().translate(
+            question.questionText,
+            to: targetLanguage,
+          );
+          SoundQuestion translatedQuestion = SoundQuestion(
+            questionText: translatedQuestionText.text,
+            options: question.options,
+            spokenWord: question.spokenWord,
+            selectedWord: question.selectedWord,
+          );
+          translatedQuestions.add(translatedQuestion);
+        } else if (question is ScrambledWordsQuestion) {
+          if (question.questionText.contains('_')) {
+            Translation translatedQuestionText =
+                await GoogleTranslator().translate(
+              question.questionText,
+              to: targetLanguage,
+            );
+            Translation translatedCorrectSentence =
+                await GoogleTranslator().translate(
+              question.correctSentence,
+              to: targetLanguage,
+            );
+            List<String> translatedWords =
+                translatedCorrectSentence.text.split(' ');
+            List<String> selectedWordOrder = [];
+            for (var word in translatedWords) {
+              selectedWordOrder.add(word);
+            }
+            List<String> translatedAdditionalWords = [];
+            for (var word in question.additionalWords) {
+              Translation translatedWord = await GoogleTranslator().translate(
+                word,
+                to: targetLanguage,
+              );
+              translatedAdditionalWords.add(translatedWord.text);
+            }
+            ScrambledWordsQuestion translatedQuestion = ScrambledWordsQuestion(
+              correctSentence: translatedCorrectSentence.text,
+              questionText: translatedQuestionText.text,
+              selectedWordOrder: selectedWordOrder,
+              additionalWords: translatedAdditionalWords,
+              questionLanguage: question.questionLanguage,
+            );
+            translatedQuestions.add(translatedQuestion);
+          } else {
+            Translation translatedQuestionText;
+            if (question.questionLanguage == 'fr') {
+              translatedQuestionText = await GoogleTranslator().translate(
+                question.questionText,
+                to: targetLanguage,
+              );
+            } else {
+              translatedQuestionText = await GoogleTranslator().translate(
+                question.correctSentence,
+                to: targetLanguage,
+              );
+              List<String> translatedWords =
+                  translatedQuestionText.text.split(' ');
+              List<String> selectedWordOrder = [];
+              for (var word in translatedWords) {
+                selectedWordOrder.add(word);
+              }
+              List<String> translatedAdditionalWords = [];
+              for (var word in question.additionalWords) {
+                Translation translatedWord = await GoogleTranslator().translate(
+                  word,
+                  to: targetLanguage,
+                );
+                translatedAdditionalWords.add(translatedWord.text);
+              }
+              ScrambledWordsQuestion translatedQuestion =
+                  ScrambledWordsQuestion(
+                correctSentence: translatedQuestionText.text,
+                questionText: question.questionText,
+                selectedWordOrder: selectedWordOrder,
+                additionalWords: translatedAdditionalWords,
+                questionLanguage: '',
+              );
+              translatedQuestions.add(translatedQuestion);
+            }
+          }
+        } else if (question is TranslationQuestion) {
+          Translation translatedQuestionText =
+              await GoogleTranslator().translate(
+            question.originalText,
+            to: targetLanguage,
+          );
+          TranslationQuestion translatedQuestion = TranslationQuestion(
+            originalText: translatedQuestionText.text,
+            correctTranslation: question.correctTranslation,
+            userTranslationn: question.userTranslationn,
+          );
+          translatedQuestions.add(translatedQuestion);
+        } else if (question is TextQuestion) {
+          Translation translatedQuestionText =
+              await GoogleTranslator().translate(
+            question.questionText,
+            to: targetLanguage,
+          );
+          TextQuestion translatedQuestion = TextQuestion(
+            translatedQuestionText.text,
+            question.options,
+            question.selectedOptions,
+            question.correctOptions,
+          );
+          translatedQuestions.add(translatedQuestion);
+        } else {
+          translatedQuestions.add(question);
         }
-
-        // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
-        Question translatedQuestion = Question(
-          translatedQuestionText.text,
-          translatedOptions,
-          question.selectedOptions,
-          question.correctOptions,
-        );
-
-        // Ajoutez la nouvelle question traduite à la liste des questions traduites
-        translatedQuestions.add(translatedQuestion);
-      } else if (question is SoundQuestion) {
-        // Traitez de la même manière pour les autres types de questions
-        // Traduisez le texte de la question
-        Translation translatedQuestionText = await GoogleTranslator().translate(
-          question.questionText,
-          to: targetLanguage,
-        );
-        // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
-        SoundQuestion translatedQuestion = SoundQuestion(
-          questionText: translatedQuestionText.text,
-          options: question.options,
-          spokenWord: question.spokenWord,
-          selectedWord: question.selectedWord,
-        );
-        translatedQuestions.add(translatedQuestion);
-      } else if (question is ScrambledWordsQuestion) {
-        // Traitez de la même manière pour les autres types de questions
-        // Traduisez le texte de la question
-        Translation translatedQuestionText = await GoogleTranslator().translate(
-          question.questionText,
-          to: targetLanguage,
-        );
-        // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
-        ScrambledWordsQuestion translatedQuestion = ScrambledWordsQuestion(
-          correctSentence: question.correctSentence,
-          questionText: translatedQuestionText.text,
-          additionalWords: question.additionalWords,
-        );
-        translatedQuestions.add(translatedQuestion);
-      } else if (question is TranslationQuestion) {
-        // Traitez de la même manière pour les autres types de questions
-        // Traduisez le texte de la question
-        Translation translatedQuestionText = await GoogleTranslator().translate(
-          question.originalText,
-          to: targetLanguage,
-        );
-        // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
-        TranslationQuestion translatedQuestion = TranslationQuestion(
-          originalText: translatedQuestionText.text,
-          correctTranslation: question.correctTranslation,
-          userTranslationn: question.userTranslationn,
-        );
-        translatedQuestions.add(translatedQuestion);
-      } else if (question is TextQuestion) {
-        // Traitez de la même manière pour les autres types de questions
-        // Traduisez le texte de la question
-        Translation translatedQuestionText = await GoogleTranslator().translate(
-          question.questionText,
-          to: targetLanguage,
-        );
-        // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
-        TextQuestion translatedQuestion = TextQuestion(
-          translatedQuestionText.text,
-          question.options,
-          question.selectedOptions,
-          question.correctOptions,
-        );
-        translatedQuestions.add(translatedQuestion);
-      } else {
-        // Si le type de question n'est pas pris en charge, conservez-la telle quelle
-        translatedQuestions.add(question);
       }
+    } catch (e) {
+      print(
+          'Une erreur s\'est produite lors de la traduction des questions: $e');
     }
     return translatedQuestions;
   }
