@@ -233,13 +233,27 @@ class _NewCourseFormState extends State<NewCourseForm> {
           question.questionText,
           to: targetLanguage,
         );
+
+        // Traduisez les textes des options
+        List<Option1> translatedOptions = [];
+        for (var option in question.options) {
+          Translation translatedOptionText = await GoogleTranslator().translate(
+            option.text,
+            to: targetLanguage,
+          );
+          translatedOptions
+              .add(Option1(translatedOptionText.text, option.imagePath));
+        }
+
         // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
         Question translatedQuestion = Question(
           translatedQuestionText.text,
-          question.options,
+          translatedOptions,
           question.selectedOptions,
           question.correctOptions,
         );
+
+        // Ajoutez la nouvelle question traduite à la liste des questions traduites
         translatedQuestions.add(translatedQuestion);
       } else if (question is SoundQuestion) {
         // Traitez de la même manière pour les autres types de questions
@@ -257,12 +271,21 @@ class _NewCourseFormState extends State<NewCourseForm> {
         );
         translatedQuestions.add(translatedQuestion);
       } else if (question is ScrambledWordsQuestion) {
-        // Traitez de la même manière pour les autres types de questions
-        // Traduisez le texte de la question
-        Translation translatedQuestionText = await GoogleTranslator().translate(
-          question.questionText,
-          to: targetLanguage,
-        );
+        Translation translatedQuestionText;
+        if (question.questionTextLanguage == 'fr') {
+          // Si la langue de la question est le français, traduisez le texte de la question
+          translatedQuestionText = await GoogleTranslator().translate(
+            question.questionText,
+            to: targetLanguage,
+          );
+        } else {
+          // Sinon, traduisez les mots supplémentaires
+          translatedQuestionText = await GoogleTranslator().translate(
+            question.additionalWords.join(' '),
+            to: targetLanguage,
+          );
+        }
+
         // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
         ScrambledWordsQuestion translatedQuestion = ScrambledWordsQuestion(
           correctSentence: question.correctSentence,
