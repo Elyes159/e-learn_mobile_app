@@ -271,21 +271,12 @@ class _NewCourseFormState extends State<NewCourseForm> {
         );
         translatedQuestions.add(translatedQuestion);
       } else if (question is ScrambledWordsQuestion) {
-        Translation translatedQuestionText;
-        if (question.questionTextLanguage == 'fr') {
-          // Si la langue de la question est le français, traduisez le texte de la question
-          translatedQuestionText = await GoogleTranslator().translate(
-            question.questionText,
-            to: targetLanguage,
-          );
-        } else {
-          // Sinon, traduisez les mots supplémentaires
-          translatedQuestionText = await GoogleTranslator().translate(
-            question.additionalWords.join(' '),
-            to: targetLanguage,
-          );
-        }
-
+        // Traitez de la même manière pour les autres types de questions
+        // Traduisez le texte de la question
+        Translation translatedQuestionText = await GoogleTranslator().translate(
+          question.questionText,
+          to: targetLanguage,
+        );
         // Créez une nouvelle question traduite avec le texte traduit et les autres propriétés inchangées
         ScrambledWordsQuestion translatedQuestion = ScrambledWordsQuestion(
           correctSentence: question.correctSentence,
