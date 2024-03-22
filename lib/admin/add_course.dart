@@ -34,8 +34,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
           .collection('questions');
 
       // Récupérez tous les documents de la collection "questions" dans l'ordre croissant par leur nom
-      QuerySnapshot querySnapshot =
-          await questionsCollection.orderBy(FieldPath.documentId).get();
+      QuerySnapshot querySnapshot = await questionsCollection.get();
 
       List<dynamic> importedQuestions = [];
 
@@ -148,14 +147,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
       List<dynamic> translatedQuestions) async {
     try {
       // Créer un nouveau document pour chaque leçon dans la nouvelle collection
-      await FirebaseFirestore.instance
-          .collection('cours$selectedLanguage')
-          .doc(chapterId)
-          .collection('lecons')
-          .doc(leconId) // Utilisez l'ID de la leçon comme ID du document
-          .set({
-        'name': newCourseName
-      }); // Utilisez set() pour définir le document
+      // Utilisez set() pour définir le document
 
       // Collection de questions sous le document de leçon
       CollectionReference newCourseQuestionsCollection = FirebaseFirestore
@@ -221,8 +213,10 @@ class _NewCourseFormState extends State<NewCourseForm> {
   Future<List<dynamic>> translateQuestions(
       List<dynamic> questions, String targetLanguage) async {
     List<dynamic> translatedQuestions = [];
+    var currentQuestion;
     try {
       for (var question in questions) {
+        currentQuestion = question;
         if (question is Question) {
           Translation translatedQuestionText =
               await GoogleTranslator().translate(
@@ -362,6 +356,17 @@ class _NewCourseFormState extends State<NewCourseForm> {
     } catch (e) {
       print(
           'Une erreur s\'est produite lors de la traduction des questions: $e');
+      // Ajoutez ici le code pour afficher les attributs de la question qui a causé le problème
+      if (e.runtimeType.toString() == "NoSuchMethodError") {
+        print('Question causant l\'erreur: $e');
+        if (currentQuestion is ScrambledWordsQuestion) {
+          print('Attributs de la question:');
+          print('QuestionText: ${currentQuestion.questionText}');
+          print('CorrectSentence: ${currentQuestion.correctSentence}');
+          print('AdditionalWords: ${currentQuestion.additionalWords}');
+          // Ajoutez ici d'autres attributs spécifiques de la question ScrambledWordsQuestion
+        }
+      }
     }
     return translatedQuestions;
   }
