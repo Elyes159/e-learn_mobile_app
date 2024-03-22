@@ -49,10 +49,20 @@ class _ExLeconOneState extends State<ExLeconOne> {
       QuerySnapshot querySnapshot =
           await questionsCollection.orderBy(FieldPath.documentId).get();
 
+      // Trier les documents en fonction du nombre dans leur nom
+      List<QueryDocumentSnapshot> sortedDocs = querySnapshot.docs.toList()
+        ..sort((a, b) {
+          // Extraire les nombres des noms de documents
+          int numA = int.parse(a.id.replaceFirst('question', ''));
+          int numB = int.parse(b.id.replaceFirst('question', ''));
+          // Trier les documents en fonction des nombres extraits
+          return numA.compareTo(numB);
+        });
+
       List<dynamic> importedQuestions = [];
 
-      // Parcourez les documents récupérés
-      querySnapshot.docs.forEach((doc) {
+      // Parcourez les documents triés
+      sortedDocs.forEach((doc) {
         // Récupérez les données du document Firestore
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
@@ -108,6 +118,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
         }
       });
 
+      // Mettez à jour l'état des questions avec les questions importées
       setState(() {
         questions = importedQuestions;
       });
