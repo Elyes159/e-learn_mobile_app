@@ -5,7 +5,7 @@ import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
 import 'package:pfe_1/admin/add_course.dart';
 import 'package:pfe_1/admin/add_lecon.dart';
-import 'package:pfe_1/admin/add_questions.dart';
+import 'package:pfe_1/admin/Add_Questions/add_questions.dart';
 import 'package:pfe_1/admin/admin_page_main.dart';
 import 'package:pfe_1/admin/users.dart';
 import 'package:pfe_1/arabic_course/arabic_main.dart';
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
         "chatt": (context) => ChatScreen(),
         "signup1": (context) => Signup1(),
         "loginadmin": (context) => LoginPageAdmin(),
-        "addQuestionPage": (context) => AddSoundQuestionForm(),
+        "addQuestionPage": (context) => AddQuestionForm(),
         "mainAdminPage": (context) => Admin_main(),
         "usersPage": (context) => UserListPage(),
         "AddLeconFromAdmin": (context) => AddLessonForm(),
