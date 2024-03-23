@@ -72,17 +72,26 @@ class _TextQuestionFormState extends State<TextQuestionForm> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // Enregistrer la question dans la base de données
-                    // Utilisez les valeurs des contrôleurs _questionTextController, _option1Controller, _option2Controller, ...
-                    // Réinitialisez les contrôleurs après l'enregistrement réussi
                     final String chapter = _chapterController.text;
                     final String lesson = _lessonController.text;
                     final String questionText = _questionTextController.text;
-                    final List<String> options = [
-                      _option1Controller.text,
-                      _option2Controller.text,
-                      _option3Controller.text,
-                      _option4Controller.text,
+                    final List<Map<String, String>> options = [
+                      {
+                        'text': _option1Controller.text,
+                        'imagePath': 'assets/chien.png'
+                      },
+                      {
+                        'text': _option2Controller.text,
+                        'imagePath': 'assets/chien.png'
+                      },
+                      {
+                        'text': _option3Controller.text,
+                        'imagePath': 'assets/chien.png'
+                      },
+                      {
+                        'text': _option4Controller.text,
+                        'imagePath': 'assets/chien.png'
+                      },
                     ];
                     CollectionReference questionCollection = FirebaseFirestore
                         .instance

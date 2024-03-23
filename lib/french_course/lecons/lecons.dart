@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_final_fields
 
+import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -127,55 +128,6 @@ class _ExLeconOneState extends State<ExLeconOne> {
     } catch (e) {
       print(
           'Erreur lors de l\'importation des questions depuis Firestore : $e');
-    }
-  }
-
-  void importQuestionsFromFirestoreAdmin() async {
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
-    final String chapter = args['chapter'] ?? 'bonjour';
-    try {
-      // Obtenez une référence à la collection "admin" dans Firestore
-      CollectionReference adminCollection =
-          FirebaseFirestore.instance.collection('admin');
-
-      // Récupérez tous les documents de la sous-collection "Question_added"
-      QuerySnapshot querySnapshot = await adminCollection
-          .doc("T3Ql5faOK93AQp390964")
-          .collection("Question_added")
-          .where('chapitre_lecon', isEqualTo: '${chapter}/lecon${leconId}')
-          .get();
-
-      // Parcourez les documents récupérés
-      for (var doc in querySnapshot.docs) {
-        // Vérifiez si le document contient des données
-        if (doc.exists) {
-          // Récupérez les données du document Firestore
-          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-
-          // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
-          if (data.containsKey('spokenWord')) {
-            // Si le document est de type SoundQuestion
-            SoundQuestion soundQuestion = SoundQuestion(
-              questionText: data['questionText'],
-              options: (data['options'] as List<dynamic>)
-                  .map((option) => Option1(
-                        option['text'],
-                        option['imagePath'],
-                      ))
-                  .toList(),
-              spokenWord: data['spokenWord'],
-              selectedWord: '', // Initialiser selectedWord selon vos besoins
-            );
-            setState(() {
-              questions.add(soundQuestion);
-            });
-          }
-        }
-      }
-    } catch (e) {
-      print("Erreur lors de l'importation des questions depuis Firestore : $e");
     }
   }
 
@@ -1214,11 +1166,18 @@ class _ExercisePageState extends State<ExercisePage> {
                     ),
                     child: Column(
                       children: [
-                        Image.asset(
-                          widget.question.options[index].imagePath,
-                          width: 150,
-                          height: 100,
-                        ),
+                        widget.question.options[index].imagePath
+                                .startsWith('assets')
+                            ? Image.asset(
+                                widget.question.options[index].imagePath,
+                                width: 150,
+                                height: 100,
+                              )
+                            : Image.file(
+                                File(widget.question.options[index].imagePath),
+                                width: 150,
+                                height: 100,
+                              ),
                         SizedBox(height: 5),
                         Text(
                           widget.question.options[index].text,
