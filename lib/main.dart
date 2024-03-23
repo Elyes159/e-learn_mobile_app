@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pfe_1/ML/image_picker.dart';
+import 'package:pfe_1/addQuestiontoFirestore.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
 import 'package:pfe_1/admin/add_course.dart';
 import 'package:pfe_1/admin/add_lecon.dart';
@@ -99,7 +100,8 @@ class _MyAppState extends State<MyApp> {
         "mainAdminPage": (context) => Admin_main(),
         "usersPage": (context) => UserListPage(),
         "AddLeconFromAdmin": (context) => AddLessonForm(),
-        'AddCourseAdmin': (context) => NewCourseForm()
+        'AddCourseAdmin': (context) => NewCourseForm(),
+        "addQuestiontofirestore": (context) => SampleQuestionsWidget()
       },
     );
   }

@@ -246,6 +246,12 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
+                InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed("addQuestiontofirestore");
+                    },
+                    child: Text("Cliquer ici"))
               ],
             )
           ],
