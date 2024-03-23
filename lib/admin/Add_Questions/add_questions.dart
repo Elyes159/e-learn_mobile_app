@@ -1,5 +1,10 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AddQuestionForm extends StatefulWidget {
   @override
@@ -30,6 +35,25 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
     false
   ]; // Initialisation à false pour chaque option
   int _selectedOptionIndex = -1; // Index de l'option sélectionnée
+  Future<String> _moveImageToAssets(XFile imageFile) async {
+    Uint8List imageData = await imageFile.readAsBytes();
+    String imageName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+    String documentsDir = (await getApplicationDocumentsDirectory())
+        .path; // Récupérer le répertoire de documents de l'application
+    String imagePath =
+        '$documentsDir/$imageName'; // Chemin d'accès pour l'image dans le répertoire de documents
+    await File(imagePath).writeAsBytes(
+        imageData); // Écrire l'image dans le répertoire de documents
+
+    return imagePath;
+  }
+
+  List<Map<String, String>> _options = [
+    {'text': 'Option 1', 'imagePath': ''},
+    {'text': 'Option 2', 'imagePath': ''},
+    {'text': 'Option 3', 'imagePath': ''},
+    {'text': 'Option 4', 'imagePath': ''},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -128,17 +152,15 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
                         .collection('lecons')
                         .doc(lesson)
                         .collection('questions');
+                    QuerySnapshot questionSnapshot =
+                        await questionCollection.get();
+                    int numberOfQuestions = questionSnapshot.docs.length;
 
                     // Enregistrer la question dans la base de données
                     try {
                       await questionCollection.add({
                         'questionText': _questionTextController.text,
-                        'options': [
-                          _option1Controller.text,
-                          _option2Controller.text,
-                          _option3Controller.text,
-                          _option4Controller.text,
-                        ],
+                        'options': _options,
                         'correctOptions': _correctOptions,
                         'selectedOptions': _selectedOptions,
                       });
@@ -171,24 +193,51 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
 
   Widget _buildOptionTextField(
       TextEditingController controller, String labelText, int index) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(labelText: labelText),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Veuillez entrer une option';
-        }
-        return null;
-      },
-      onChanged: (value) {
-        setState(() {
-          // Mettre à jour correctOptions lorsque l'option est modifiée
-          _correctOptions[index] =
-              value.isNotEmpty; // true si l'option n'est pas vide, sinon false
-          // Mettre
-          _selectedOptions[index] = true; // Marquer l'option comme sélectionnée
-        });
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          controller: controller,
+          decoration: InputDecoration(labelText: labelText),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Veuillez entrer une option';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            setState(() {
+              // Mettre à jour correctOptions lorsque l'option est modifiée
+              _correctOptions[index] = value
+                  .isNotEmpty; // true si l'option n'est pas vide, sinon false
+              // Marquer l'option comme sélectionnée
+              _selectedOptions[index] = true;
+            });
+          },
+        ),
+        SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () async {
+            final ImagePicker _picker = ImagePicker();
+            final XFile? image =
+                await _picker.pickImage(source: ImageSource.gallery);
+
+            if (image != null) {
+              // L'image a été sélectionnée, maintenant vous pouvez la déplacer vers le dossier assets
+              // et obtenir son chemin d'accès
+              String imagePath = await _moveImageToAssets(image);
+              if (imagePath.isNotEmpty) {
+                // L'image a été déplacée avec succès, vous pouvez l'ajouter à la liste d'options
+                setState(() {
+                  _options[index]['imagePath'] = imagePath;
+                });
+              }
+            }
+          },
+          child: Text('Sélectionner une image'),
+        ),
+        SizedBox(height: 20),
+      ],
     );
   }
 

@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:pfe_1/admin/add_questionsMain.dart';
+import 'package:pfe_1/reading_image_from_firestore/read_image.dart';
 
 class Admin_main extends StatefulWidget {
   @override
@@ -16,8 +20,10 @@ class _Admin_mainState extends State<Admin_main> {
             children: [
               InkWell(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed("addQuestionPage");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainPage()),
+                    );
                   },
                   child: Text("ajouter des question , cliquer ici")),
               InkWell(
@@ -36,7 +42,7 @@ class _Admin_mainState extends State<Admin_main> {
                     Navigator.of(context)
                         .pushReplacementNamed("AddCourseAdmin");
                   },
-                  child: Text("Ajouter des cours   , cliquer ici"))
+                  child: Text("Ajouter des cours   , cliquer ici")),
             ],
           ),
         ),
