@@ -155,10 +155,12 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
                     QuerySnapshot questionSnapshot =
                         await questionCollection.get();
                     int numberOfQuestions = questionSnapshot.docs.length;
+                    String nextQuestionName =
+                        'question${numberOfQuestions + 1}';
 
                     // Enregistrer la question dans la base de données
                     try {
-                      await questionCollection.add({
+                      await questionCollection.doc(nextQuestionName).set({
                         'questionText': _questionTextController.text,
                         'options': _options,
                         'correctOptions': _correctOptions,
