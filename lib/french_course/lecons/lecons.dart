@@ -1253,6 +1253,7 @@ class _TextQuestionPageState extends State<TextQuestionPage> {
 
   @override
   void initState() {
+    //
     super.initState();
     flutterTts.setLanguage("fr-FR");
   }
