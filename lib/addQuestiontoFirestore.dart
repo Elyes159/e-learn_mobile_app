@@ -14,8 +14,10 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       [
         Option1("Paris", "assets/paris.jpg"),
         Option1("Londres", "assets/londres.jpg"),
+        Option1("Londres", "assets/londres.jpg"),
+        Option1("Londres", "assets/londres.jpg"),
       ], // Liste d'options avec leurs images
-      [true, false, false, false], // Liste d'options sélectionnées
+      [false, false, false, false], // Liste d'options sélectionnées
       [true, false, false, false], // Liste d'options correctes
     ),
     TranslationQuestion(
@@ -54,7 +56,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
         Option1("Paris", "assets/paris.jpg"),
         Option1("Paris", "assets/paris.jpg"),
       ], // Liste d'options avec leurs images
-      [true, false, false, false], // Liste d'options sélectionnées
+      [false, false, false, false], // Liste d'options sélectionnées
       [true, false, false, false], // Liste d'options correctes
     ),
   ];
@@ -67,6 +69,16 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
 
   void addQuestionsToFirestore(
       String cours, String chapter, String leconId) async {
+    CollectionReference questionsCollection = FirebaseFirestore.instance
+        .collection(cours)
+        .doc(chapter)
+        .collection('lecons')
+        .doc('lecon$leconId') // Utilisation de l'argument leconId
+        .collection('questions');
+
+    QuerySnapshot questionSnapshot = await questionsCollection.get();
+    int numberOfQuestions = questionSnapshot.docs.length;
+    String nextQuestionName = 'question${numberOfQuestions + 1}';
     try {
       // Obtenez une référence à la collection "questions" dans Firestore
       CollectionReference questionsCollection = FirebaseFirestore.instance
@@ -80,7 +92,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       for (var question in questions) {
         if (question is Question) {
           // Si la question est de type Question
-          await questionsCollection.add({
+          await questionsCollection.doc(nextQuestionName).set({
             'type': 'Question',
             'questionText': question.questionText,
             'options': question.options
@@ -94,7 +106,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
           });
         } else if (question is SoundQuestion) {
           // Si la question est de type SoundQuestion
-          await questionsCollection.add({
+          await questionsCollection.doc(nextQuestionName).set({
             'type': 'SoundQuestion',
             'questionText': question.questionText,
             'options': question.options
@@ -108,7 +120,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
           });
         } else if (question is ScrambledWordsQuestion) {
           // Si la question est de type ScrambledWordsQuestion
-          await questionsCollection.add({
+          await questionsCollection.doc(nextQuestionName).set({
             'type': 'ScrambledWordsQuestion',
             'questionText': question.questionText,
             'correctSentence': question.correctSentence,
@@ -118,13 +130,30 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
           });
         } else if (question is TranslationQuestion) {
           // Si la question est de type TranslationQuestion
-          await questionsCollection.add({
+          await questionsCollection.doc(nextQuestionName).set({
             'type': 'TranslationQuestion',
             'originalText': question.originalText,
             'correctTranslation': question.correctTranslation,
             'userTranslationn': question.userTranslationn,
           });
+        } else if (question is TextQuestion) {
+          // Si la question est de type TextQuestion
+          await questionsCollection.doc(nextQuestionName).set({
+            'type': 'TextQuestion',
+            'questionText': question.questionText,
+            'options': question.options
+                .map((option) => {
+                      'text': option.text,
+                      'imagePath': option.imagePath,
+                    })
+                .toList(),
+            'selectedOptions': question.selectedOptions,
+            'correctOptions': question.correctOptions,
+          });
         }
+        numberOfQuestions++; // Incrémente le nombre de questions ajoutées
+        nextQuestionName =
+            'question${numberOfQuestions}'; // Met à jour le nom de la prochaine question
       }
 
       print('Toutes les questions ont été ajoutées à Firestore avec succès');
