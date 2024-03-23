@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pfe_1/admin/add_questionsMain.dart';
-import 'package:pfe_1/reading_image_from_firestore/read_image.dart';
 
 class Admin_main extends StatefulWidget {
   @override
