@@ -9,62 +9,131 @@ class SampleQuestionsWidget extends StatefulWidget {
 
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
+    ScrambledWordsQuestion(
+      correctSentence: 'We don\'t wake up before eight o \'clock',
+      questionText: 'Nous ne nous réveillons pas avant huit heures',
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'We have to get ready to go to work',
+      questionText: 'Nous devons nous préparer pour aller au travail',
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+    ),
+    TranslationQuestion(
+        originalText: "réveillez",
+        correctTranslation: "to wake up",
+        userTranslationn: ""),
+    TextQuestion(
+      "Les enfants doivent se _____ tôt",
+      [
+        Option1("couchent", "assets/paris.jpg"),
+        Option1("couchez", "assets/paris.jpg"),
+        Option1("coucher", "assets/paris.jpg"),
+        Option1("couchons", "assets/paris.jpg"),
+      ], // Liste d'options avec leurs images
+      [false, false, false, false], // Liste d'options sélectionnées
+      [false, false, true, false], // Liste d'options correctes
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "We read always before sleeping",
+      questionText: "Nous lisons toujours avant de dormir",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+    ),
     Question(
       "Quelle est la capitale de la France?",
       [
-        Option1("Paris", "assets/paris.jpg"),
-        Option1("Londres", "assets/londres.jpg"),
-        Option1("Londres", "assets/londres.jpg"),
-        Option1("Londres", "assets/londres.jpg"),
+        Option1("la soleil", "assets/soleil.png"),
+        Option1("les dents", "assets/dentier.png"),
+        Option1("l'alarme", "assets/alarme.png"),
+        Option1("Le train", "assets/train.png"),
       ], // Liste d'options avec leurs images
       [false, false, false, false], // Liste d'options sélectionnées
-      [true, false, false, false], // Liste d'options correctes
-    ),
-    TranslationQuestion(
-      originalText: 'Bonjour',
-      correctTranslation: 'Hello',
-      userTranslationn: '',
+      [false, true, false, false], // Liste d'options correctes
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'The quick brown fox jumps over the lazy dog',
-      questionText: 'Arrange the words to form a sentence:',
-      additionalWords: [
-        'The',
-        'quick',
-        'brown',
-        'jumps',
-      ],
+      correctSentence: "Do you always get up at six o'clock in the morning?",
+      questionText: "Vous vous levez toujours à six heures du matin?",
+      additionalWords: [],
       selectedWordOrder: [],
-      questionLanguage: 'English',
+      questionLanguage: 'fr',
     ),
-    SoundQuestion(
-      questionText: 'What is the sound of a cat?',
-      options: [
-        Option1('Meow', 'assets/cat_sound.png'),
-        Option1('Woof', 'assets/dog_sound.png'),
-        Option1('Moo', 'assets/cow_sound.png'),
-        Option1('Oink', 'assets/pig_sound.png'),
-      ],
-      spokenWord: 'Meow',
-      selectedWord: '',
+    ScrambledWordsQuestion(
+      correctSentence: "Do they read a lot?",
+      questionText: "Est-ce qu'ils lisent beaucoup ?",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
     ),
-    TextQuestion(
-      "Quelle est la capitale de la France?",
-      [
-        Option1("Paris", "assets/paris.jpg"),
-        Option1("Paris", "assets/paris.jpg"),
-        Option1("Paris", "assets/paris.jpg"),
-        Option1("Paris", "assets/paris.jpg"),
-      ], // Liste d'options avec leurs images
-      [false, false, false, false], // Liste d'options sélectionnées
-      [true, false, false, false], // Liste d'options correctes
+    ScrambledWordsQuestion(
+      correctSentence: "What is she doing today?",
+      questionText: "Qu'est-ce qu'elle fait ajourd'hui?",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
     ),
+    ScrambledWordsQuestion(
+      correctSentence: "What do they read",
+      questionText: "Qu'est-ce qu'ils lisent?",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "We take a walk together every day",
+      questionText: "Nous nous promenons ensemble tous les jours",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Do you always take walks here?",
+      questionText: "Vous vous promenez toujours ici ?",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Do you often take walks in this park',
+      questionText: "Vous vous promenez souvent dans ce parc ?",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+    ),
+
+    // SoundQuestion(
+    //   questionText: 'What is the sound of a cat?',
+    //   options: [
+    //     Option1('Meow', 'assets/cat_sound.png'),
+    //     Option1('Woof', 'assets/dog_sound.png'),
+    //     Option1('Moo', 'assets/cow_sound.png'),
+    //     Option1('Oink', 'assets/pig_sound.png'),
+    //   ],
+    //   spokenWord: 'Meow',
+    //   selectedWord: '',
+    // ),
+    // TextQuestion(
+    //   "Quelle est la capitale de la France?",
+    //   [
+    //     Option1("Paris", "assets/paris.jpg"),
+    //     Option1("Paris", "assets/paris.jpg"),
+    //     Option1("Paris", "assets/paris.jpg"),
+    //     Option1("Paris", "assets/paris.jpg"),
+    //   ], // Liste d'options avec leurs images
+    //   [false, false, false, false], // Liste d'options sélectionnées
+    //   [true, false, false, false], // Liste d'options correctes
+    // ),
   ];
 
   @override
   void initState() {
     super.initState();
-    addQuestionsToFirestore('cours', 'bonjour', '1');
+    addQuestionsToFirestore('cours', 'je_connais', '6');
   }
 
   void addQuestionsToFirestore(
@@ -127,6 +196,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
             'selectedWords': question.selectedWords,
             'selectedWordOrder': question.selectedWordOrder,
             'additionalWords': question.additionalWords,
+            'questionLanguage': question.questionLanguage,
           });
         } else if (question is TranslationQuestion) {
           // Si la question est de type TranslationQuestion
@@ -153,7 +223,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
         }
         numberOfQuestions++; // Incrémente le nombre de questions ajoutées
         nextQuestionName =
-            'question${numberOfQuestions}'; // Met à jour le nom de la prochaine question
+            'question${numberOfQuestions + 1}'; // Met à jour le nom de la prochaine question
       }
 
       print('Toutes les questions ont été ajoutées à Firestore avec succès');
