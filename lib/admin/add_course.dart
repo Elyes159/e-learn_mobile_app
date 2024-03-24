@@ -85,6 +85,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
               questionLanguage: data['questionLanguage'] ?? '',
               selectedWordOrder:
                   List<String>.from(data['selectedWordOrder'] ?? []),
+              ImagePath: '',
             ));
             break;
           case 'TranslationQuestion':
@@ -286,8 +287,9 @@ class _NewCourseFormState extends State<NewCourseForm> {
                 .selectedWordOrder, // Vous pouvez conserver la liste vide pour l'ordre des mots sélectionnés
             additionalWords: question
                 .additionalWords, // Conservez les mots supplémentaires sans traduction
-            questionLanguage:
-                '', // Vous pouvez conserver la langue vide ou définir une valeur par défaut
+            questionLanguage: '',
+            ImagePath: question
+                .ImagePath, // Vous pouvez conserver la langue vide ou définir une valeur par défaut
           );
 
           translatedQuestions.add(translatedQuestion);

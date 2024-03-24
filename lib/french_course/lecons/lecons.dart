@@ -95,6 +95,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
               questionLanguage: data['questionLanguage'] ?? '',
               selectedWordOrder:
                   List<String>.from(data['selectedWordOrder'] ?? []),
+              ImagePath: '',
             ));
             break;
           case 'TranslationQuestion':

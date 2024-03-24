@@ -39,15 +39,16 @@ class ScrambledWordsQuestion {
   List<String> selectedWords = [];
   List<String> additionalWords = [];
   List<String> selectedWordOrder = [];
-  final String questionLanguage; // Ajoutez cette ligne
-  // Ajoutez cette ligne
+  final String questionLanguage;
+  final String ImagePath;
 
   ScrambledWordsQuestion({
     required this.correctSentence,
     required this.questionText,
     required this.additionalWords,
     required this.selectedWordOrder,
-    required this.questionLanguage, // Ajoutez cette ligne
+    required this.questionLanguage,
+    required this.ImagePath, // Ajoutez cette ligne
   }) {
     selectedWordOrder = correctSentence.split(' ');
   }
