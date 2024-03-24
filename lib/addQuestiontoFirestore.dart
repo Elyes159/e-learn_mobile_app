@@ -9,134 +9,89 @@ class SampleQuestionsWidget extends StatefulWidget {
 
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
-    // ScrambledWordsQuestion(
-    //   correctSentence: 'We don\'t wake up before eight o \'clock',
-    //   questionText: 'Nous ne nous réveillons pas avant huit heures',
-    //   additionalWords: [],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: 'We have to get ready to go to work',
-    //   questionText: 'Nous devons nous préparer pour aller au travail',
-    //   additionalWords: [],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-    // TranslationQuestion(
-    //     originalText: "réveillez",
-    //     correctTranslation: "to wake up",
-    //     userTranslationn: ""),
-    // TextQuestion(
-    //   "Les enfants doivent se _____ tôt",
-    //   [
-    //     Option1("couchent", "assets/paris.jpg"),
-    //     Option1("couchez", "assets/paris.jpg"),
-    //     Option1("coucher", "assets/paris.jpg"),
-    //     Option1("couchons", "assets/paris.jpg"),
-    //   ], // Liste d'options avec leurs images
-    //   [false, false, false, false], // Liste d'options sélectionnées
-    //   [false, false, true, false], // Liste d'options correctes
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: "We read always before sleeping",
-    //   questionText: "Nous lisons toujours avant de dormir",
-    //   additionalWords: [],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-    // Question(
-    //   "Quelle est la capitale de la France?",
-    //   [
-    //     Option1("la soleil", "assets/soleil.png"),
-    //     Option1("les dents", "assets/dentier.png"),
-    //     Option1("l'alarme", "assets/alarme.png"),
-    //     Option1("Le train", "assets/train.png"),
-    //   ], // Liste d'options avec leurs images
-    //   [false, false, false, false], // Liste d'options sélectionnées
-    //   [false, true, false, false], // Liste d'options correctes
-    // ),
-    // TextQuestion(
-    //   "Les enfants doivent se _____ les dents",
-    //   [
-    //     Option1("brosse", "assets/paris.jpg"),
-    //     Option1("brossent", "assets/paris.jpg"),
-    //     Option1("brosser", "assets/paris.jpg"),
-    //   ], // Liste d'options avec leurs images
-    //   [false, false, false], // Liste d'options sélectionnées
-    //   [false, false, true], // Liste d'options correctes
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: "it's two o'clock",
-    //   questionText: "Il est deux heures",
-    //   additionalWords: ["hello"],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: "Je ne me léve pas aprés dix heures",
-    //   questionText: "I don't get up after ten o'clock",
-    //   additionalWords: [],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'en',
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: "I wake up at a quarter to nine.",
-    //   questionText: "je me réveille à neuf heures moins le quart",
-    //   additionalWords: [],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: "He does n't wake up before eleven o 'clock",
-    //   questionText: "il ne se révéille pas avant onze heures",
-    //   additionalWords: [],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: "brosser",
-    //   questionText: "to brush",
-    //   additionalWords: ["qu'est-ce que", "les courses"],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-    // ScrambledWordsQuestion(
-    //   correctSentence: "You 're not getting up",
-    //   questionText: "Tu ne te lèves pas",
-    //   additionalWords: [],
-    //   selectedWordOrder: [],
-    //   questionLanguage: 'fr',
-    // ),
-
-    // SoundQuestion(
-    //   questionText: 'What is the sound of a cat?',
-    //   options: [
-    //     Option1('Meow', 'assets/cat_sound.png'),
-    //     Option1('Woof', 'assets/dog_sound.png'),
-    //     Option1('Moo', 'assets/cow_sound.png'),
-    //     Option1('Oink', 'assets/pig_sound.png'),
-    //   ],
-    //   spokenWord: 'Meow',
-    //   selectedWord: '',
-    // ),
-    // TextQuestion(
-    //   "Quelle est la capitale de la France?",
-    //   [
-    //     Option1("Paris", "assets/paris.jpg"),
-    //     Option1("Paris", "assets/paris.jpg"),
-    //     Option1("Paris", "assets/paris.jpg"),
-    //     Option1("Paris", "assets/paris.jpg"),
-    //   ], // Liste d'options avec leurs images
-    //   [false, false, false, false], // Liste d'options sélectionnées
-    //   [true, false, false, false], // Liste d'options correctes
-    // ),
+    ScrambledWordsQuestion(
+      correctSentence: 'inviter',
+      questionText: 'to invite',
+      additionalWords: ["football", "how are you"],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'assets/invite.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'There is a party',
+      questionText: 'Il y a une fête',
+      additionalWords: ["travailler", "dormir"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/fete.png',
+    ),
+    Question(
+      "guitar",
+      [
+        Option1("la soleil", "assets/soleil.png"),
+        Option1("les dents", "assets/dentier.png"),
+        Option1("l'alarme", "assets/alarme.png"),
+        Option1("guitare", "assets/guitare.png"),
+      ], // Liste d'options avec leurs images
+      [false, false, false, false], // Liste d'options sélectionnées
+      [false, false, false, true], // Liste d'options correctes
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'jamais',
+      questionText: 'never',
+      additionalWords: ["brosser", "adulte"],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: '',
+    ),
+    ScrambledWordsQuestion(
+        correctSentence: "We want to see a football game",
+        questionText: "Nous voulons voir un match de football américain",
+        additionalWords: [],
+        selectedWordOrder: [],
+        questionLanguage: 'fr',
+        ImagePath: "assets/foota.png"),
+    TranslationQuestion(
+        originalText: "adulte",
+        correctTranslation: "adult",
+        userTranslationn: ""),
+    ScrambledWordsQuestion(
+        correctSentence: "Do you like football",
+        questionText: "Tu aimes le football américain ?",
+        additionalWords: [],
+        selectedWordOrder: [],
+        questionLanguage: 'fr',
+        ImagePath: "assets/foota.png"),
+    ScrambledWordsQuestion(
+      correctSentence: "I play tennis with my husband",
+      questionText: "Je joue au tennis avec mon mari",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/tennis.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Now i'm busy",
+      questionText: "Maintenant, je suis occupé",
+      additionalWords: ["to brush", "japan", "football"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/occupe.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: "Do you know how to draw",
+      questionText: "Tu sais dessiner",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/dessin.png',
+    ),
   ];
 
   @override
   void initState() {
     super.initState();
-    // addQuestionsToFirestore('cours', 'je_connais', '7');
+    addQuestionsToFirestore('cours', 'je_connais', '8');
     // importAndTranslateQuestions();
   }
 
@@ -260,6 +215,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
             'selectedWordOrder': question.selectedWordOrder,
             'additionalWords': question.additionalWords,
             'questionLanguage': question.questionLanguage,
+            'ImagePath': question.ImagePath,
           });
         } else if (question is TranslationQuestion) {
           // Si la question est de type TranslationQuestion

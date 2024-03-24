@@ -27,7 +27,6 @@ class _ExLeconOneState extends State<ExLeconOne> {
     final String chapter =
         args['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
 
-    // Appeler la fonction d'importation avec les valeurs récupérées
     importQuestionsFromFirestore(chapter, leconId);
   }
 
@@ -95,7 +94,9 @@ class _ExLeconOneState extends State<ExLeconOne> {
               questionLanguage: data['questionLanguage'] ?? '',
               selectedWordOrder:
                   List<String>.from(data['selectedWordOrder'] ?? []),
-              ImagePath: '',
+              ImagePath: data['ImagePath'] == "your_image_path_here"
+                  ? ""
+                  : data['ImagePath'],
             ));
             break;
           case 'TranslationQuestion':
@@ -1587,6 +1588,7 @@ class _ScrambledWordsQuestionWidgetState
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -1595,12 +1597,38 @@ class _ScrambledWordsQuestionWidgetState
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Write this in French : \n ${widget.question.questionText}",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Translate this sentence : \n",
+                  style: GoogleFonts.poppins(
+                      fontSize: 23.0, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Row(
+                children: [
+                  widget.question.ImagePath == ""
+                      ? SizedBox()
+                      : Image.asset(
+                          widget.question.ImagePath,
+                          width: 80,
+                        ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "${widget.question.questionText}",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18.0, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         SizedBox(height: 16.0),
@@ -1608,6 +1636,7 @@ class _ScrambledWordsQuestionWidgetState
           padding: EdgeInsets.all(8.0),
           child: Container(
             height: 200,
+            width: screenWidth,
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xFF3DB2FF)),
               borderRadius: BorderRadius.circular(8.0),
@@ -1632,7 +1661,7 @@ class _ScrambledWordsQuestionWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Selected Words:",
+                    "",
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
@@ -1654,7 +1683,7 @@ class _ScrambledWordsQuestionWidgetState
                           ),
                           child: Text(
                             word,
-                            style: const TextStyle(fontSize: 16.0),
+                            style: GoogleFonts.poppins(fontSize: 16.0),
                           ),
                         );
                       }).toList(),
@@ -1694,7 +1723,7 @@ class _ScrambledWordsQuestionWidgetState
                       ),
                       child: Text(
                         word,
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -1734,7 +1763,11 @@ class _ScrambledWordsQuestionWidgetState
                 borderRadius: BorderRadius.circular(20.0),
               ),
             ),
-            child: Text("CHECK"),
+            child: Text(
+              "CHECK",
+              style: GoogleFonts.aBeeZee(
+                  fontSize: 20, fontWeight: FontWeight.w700),
+            ),
           ),
         ),
       ],
