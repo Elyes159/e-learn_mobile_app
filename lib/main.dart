@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> {
     if (FirebaseAuth.instance.currentUser == null) {
       return Login();
     } else {
-      return HomeScreen();
+      return ImagePickerDemo();
     }
   }
 }

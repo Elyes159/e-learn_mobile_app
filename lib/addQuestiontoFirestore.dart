@@ -7,91 +7,111 @@ class SampleQuestionsWidget extends StatefulWidget {
   _SampleQuestionsWidgetState createState() => _SampleQuestionsWidgetState();
 }
 
+//your_image_path_here
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
     ScrambledWordsQuestion(
-      correctSentence: 'inviter',
-      questionText: 'to invite',
-      additionalWords: ["football", "how are you"],
+      correctSentence: 'I like this girl',
+      questionText: "J'aime bien cette fille",
+      additionalWords: ["to", "woman"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Allemagne',
+      questionText: 'Germany',
+      additionalWords: ["plus", "désolé"],
       selectedWordOrder: [],
       questionLanguage: 'en',
-      ImagePath: 'assets/invite.png',
+      ImagePath: 'assets/allemagne.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'There is a party',
-      questionText: 'Il y a une fête',
-      additionalWords: ["travailler", "dormir"],
+      correctSentence: 'He sees his girlfriend every day',
+      questionText: "Il voit sa petite amie tous les jours",
+      additionalWords: ["tea", "New", "'re"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/fete.png',
-    ),
-    Question(
-      "guitar",
-      [
-        Option1("la soleil", "assets/soleil.png"),
-        Option1("les dents", "assets/dentier.png"),
-        Option1("l'alarme", "assets/alarme.png"),
-        Option1("guitare", "assets/guitare.png"),
-      ], // Liste d'options avec leurs images
-      [false, false, false, false], // Liste d'options sélectionnées
-      [false, false, false, true], // Liste d'options correctes
+      ImagePath: 'your_image_path_here',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'jamais',
-      questionText: 'never',
-      additionalWords: ["brosser", "adulte"],
+      correctSentence: 'Saturday is my birthday',
+      questionText: "Samedi, c'est mon anniversaire",
+      additionalWords: ["how", "adult"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/annif.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'We know you well.',
+      questionText: "On te connaît bien",
+      additionalWords: ["student", "usually"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/annif.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'où',
+      questionText: "Marc ne sait pas ___ sont ses lunettes",
+      additionalWords: ["pourquoi", "si"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/chercher.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Come with your friends',
+      questionText: "Viens avec tes amis",
+      additionalWords: ["to", "journalist", "boyfriend"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'On déteste le café',
+      questionText: "We hate coffee",
+      additionalWords: ["thé", "voiture", "nouvelle"],
       selectedWordOrder: [],
       questionLanguage: 'en',
-      ImagePath: '',
+      ImagePath: 'assets/nocafe.png',
     ),
     ScrambledWordsQuestion(
-        correctSentence: "We want to see a football game",
-        questionText: "Nous voulons voir un match de football américain",
-        additionalWords: [],
-        selectedWordOrder: [],
-        questionLanguage: 'fr',
-        ImagePath: "assets/foota.png"),
-    TranslationQuestion(
-        originalText: "adulte",
-        correctTranslation: "adult",
-        userTranslationn: ""),
-    ScrambledWordsQuestion(
-        correctSentence: "Do you like football",
-        questionText: "Tu aimes le football américain ?",
-        additionalWords: [],
-        selectedWordOrder: [],
-        questionLanguage: 'fr',
-        ImagePath: "assets/foota.png"),
-    ScrambledWordsQuestion(
-      correctSentence: "I play tennis with my husband",
-      questionText: "Je joue au tennis avec mon mari",
-      additionalWords: [],
+      correctSentence: 'Are you seeing your friends this weekend',
+      questionText: "Vous voyez vos copines ce week-end?",
+      additionalWords: ["they", "January", "the", "ready"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/tennis.png',
+      ImagePath: 'your_image_path_here',
     ),
     ScrambledWordsQuestion(
-      correctSentence: "Now i'm busy",
-      questionText: "Maintenant, je suis occupé",
-      additionalWords: ["to brush", "japan", "football"],
+      correctSentence: 'Do you understand me?',
+      questionText: "Vous me comprenez?",
+      additionalWords: ["boyfriend", "English", "he", "week"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/occupe.png',
+      ImagePath: 'your_image_path_here',
     ),
     ScrambledWordsQuestion(
-      correctSentence: "Do you know how to draw",
-      questionText: "Tu sais dessiner",
-      additionalWords: [],
+      correctSentence: 'My parents know that i\'m here',
+      questionText: "Mes parents savent que je suis ici.",
+      additionalWords: ["speaks", "they", "what", "tall"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/dessin.png',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'They are inviting me to their party',
+      questionText: "Ils m'invitent à leur fête",
+      additionalWords: ["speaks", "Australia", "calls", "tall"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
     ),
   ];
 
   @override
   void initState() {
     super.initState();
-    addQuestionsToFirestore('cours', 'je_connais', '8');
+    addQuestionsToFirestore('cours', 'je_connais', '10');
     // importAndTranslateQuestions();
   }
 
