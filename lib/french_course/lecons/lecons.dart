@@ -1620,10 +1620,14 @@ class _ScrambledWordsQuestionWidgetState
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${widget.question.questionText}",
-                      style: GoogleFonts.poppins(
-                          fontSize: 18.0, fontWeight: FontWeight.w600),
+                    child: Container(
+                      width: screenWidth - 116,
+                      child: Text(
+                        "${widget.question.questionText}",
+                        style: GoogleFonts.poppins(
+                            fontSize: 18.0, fontWeight: FontWeight.w600),
+                        softWrap: true,
+                      ),
                     ),
                   ),
                 ],
