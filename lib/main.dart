@@ -23,7 +23,6 @@ import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/services/firebase_options.dart';
 import 'package:pfe_1/starting/signin.dart';
 import 'package:pfe_1/starting/signup.dart';
-import 'package:pfe_1/stages/stages.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pfe_1/starting/welcome_signup.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +83,6 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       home: _getStartScreen(),
       routes: {
-        'stages': (context) => StagesPage(),
         'lecons': (context) => ExLeconOne(),
         'frenshunities': (context) => FrenchUnities(),
         'home': (context) => HomeScreen(),

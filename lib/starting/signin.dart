@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pfe_1/constant/custombutton.dart';
 import 'package:pfe_1/constant/customlogo.dart';
 import 'package:pfe_1/constant/textformfield.dart';
-import 'package:pfe_1/stages/stages.dart';
+import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/starting/choice_lan.dart';
 import 'package:pfe_1/starting/welcome_signup.dart';
 
@@ -34,7 +34,7 @@ class _LoginState extends State<Login> {
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (BuildContext context) => StagesPage()),
+      MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
       (route) => false,
     );
   }
