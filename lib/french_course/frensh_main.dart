@@ -62,7 +62,7 @@ class _FrenchCourseState extends State<FrenchCourse> {
         children: [
           Center(
             child: Image.asset(
-              "assets/les_francais.png",
+              "assets/eiffel.png",
               width: 150,
               height: 150,
             ),
@@ -73,8 +73,10 @@ class _FrenchCourseState extends State<FrenchCourse> {
           Center(
             child: Text(
               "Learn Frensh",
-              style:
-                  GoogleFonts.poppins(fontSize: 25, color: Color(0xFF43463F)),
+              style: GoogleFonts.poppins(
+                  fontSize: 25,
+                  color: Color(0xFF43463F),
+                  fontWeight: FontWeight.w700),
             ),
           ),
           Column(

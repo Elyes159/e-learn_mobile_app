@@ -111,7 +111,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   @override
   void initState() {
     super.initState();
-    addQuestionsToFirestore('cours', 'je_connais', '10');
+    // addQuestionsToFirestore('cours', 'je_connais', '10');
     // importAndTranslateQuestions();
   }
 
