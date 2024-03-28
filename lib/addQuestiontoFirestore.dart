@@ -23,6 +23,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       questionText: 'Germany',
       additionalWords: ["plus", "désolé"],
       selectedWordOrder: [],
+      
       questionLanguage: 'en',
       ImagePath: 'assets/allemagne.png',
     ),
