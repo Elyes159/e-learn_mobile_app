@@ -15,7 +15,7 @@ class Customlogo extends StatelessWidget {
         ),
         child: Image.asset(
           "images/logo.png",
-          height: 50,
+          height: 80,
           //fit: BoxFit.fill,
         ),
       ),
