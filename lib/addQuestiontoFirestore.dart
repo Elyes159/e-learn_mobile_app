@@ -10,30 +10,32 @@ class SampleQuestionsWidget extends StatefulWidget {
 //your_image_path_here
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
-    ScrambledWordsQuestion(
-      correctSentence: 'entendre',
-      questionText: "to hear",
-      additionalWords: ["attendre", "ennuyeux"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/wa9t.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'I am replying to my friends',
-      questionText: "Je réponds à mes amis",
-      additionalWords: ["to reply"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'répondre',
-      questionText: "to reply",
-      additionalWords: ["montre", "ennuyeux"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'your_image_path_here',
-    ),
+    TextQuestion(
+        "_'ai densé avec mon ami",
+        [Option1("il", "assets/gateau.png"), Option1("j", "assets/gateau.png")],
+        [false, false],
+        [false, true]),
+    TextQuestion("Tu ___ avec Paul et Marie?", [
+      Option1("as joué", "assets/gateau.png"),
+      Option1("a joué", "assets/gateau.png")
+    ], [
+      false,
+      false
+    ], [
+      true,
+      false
+    ]),
+    TextQuestion("il/elle ____", [
+      Option1("a parlé", "assets/gateau.png"),
+      Option1("ai parlé", "assets/gateau.png")
+    ], [
+      false,
+      false
+    ], [
+      true,
+      false
+    ]),
+    // houni wsolt
     ScrambledWordsQuestion(
       correctSentence: 'I had a good time with you',
       questionText: "J'ai passé un bon moment avec vous",
@@ -87,26 +89,34 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       questionLanguage: 'fr',
       ImagePath: 'assets/lacg.png',
     ),
-    Question("lake", [
+    Question("the bridge", [
       Option1("lac", "assets/lac.png"),
       Option1("les montagnes", "assets/montagne.png"),
-      Option1("voiture", "assets/voiture.png"),
-      Option1("une femme", "assets/mere.png")
+      Option1("le pont", "assets/pont.png"),
+      Option1("banane", "assets/banane.png")
     ], [
       false,
       false,
       false,
       false
     ], [
+      false,
+      false,
       true,
-      false,
-      false,
       false
     ]),
-    Question("the mountains", [
+    ScrambledWordsQuestion(
+      correctSentence: 'Nous avons marché le long de la mer.',
+      questionText: "We walked along the sea",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'assets/chatt.png',
+    ),
+    Question("the beach", [
       Option1("lac", "assets/lac.png"),
       Option1("les montagnes", "assets/montagne.png"),
-      Option1("voiture", "assets/voiture.png"),
+      Option1("la plage", "assets/chatt.png"),
       Option1("une femme", "assets/mere.png")
     ], [
       false,
@@ -120,44 +130,29 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       false
     ]),
     //
-    ScrambledWordsQuestion(
-      correctSentence: 'There are a lot of lakes in these mountains',
-      questionText: "Il ya beaucoup de lacs dans ces montagnes",
-      additionalWords: ["midnight"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/lacm.png',
-    ),
-    Question("sea", [
-      Option1("mer", "assets/vague.png"),
-      Option1("lac", "assets/lac.png"),
+
+    Question("the stairs", [
+      Option1("pizza", "assets/pizza.png"),
+      Option1("les escaliers", "assets/escaliers.png"),
       Option1("les montagnes", "assets/montagne.png"),
-      Option1("une femme", "assets/mere.png")
+      Option1("la gare", "assets/gare.png")
     ], [
       false,
       false,
       false,
       false
     ], [
-      true,
       false,
+      true,
       false,
       false
     ]),
-    ScrambledWordsQuestion(
-      correctSentence: 'You don\'t answer immediately',
-      questionText: "Vous ne répondez pas immédiatement",
-      additionalWords: ["not", "nothing at all"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/non.png',
-    ),
   ];
 
   @override
   void initState() {
     super.initState();
-    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '1');
+    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '2');
     // importAndTranslateQuestions();
     // sortDocuments();
   }
