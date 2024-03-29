@@ -13,7 +13,6 @@ import 'package:pfe_1/arabic_course/arabic_main.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/LanguageProvider.dart';
 import 'package:pfe_1/constant/language_const.dart';
-import 'package:pfe_1/english_course/english_main.dart';
 
 import 'package:pfe_1/french_course/frensh_main.dart';
 import 'package:pfe_1/french_course/frensh_unities.dart';
@@ -88,7 +87,6 @@ class _MyAppState extends State<MyApp> {
         'home': (context) => HomeScreen(),
         'arabicCourse': (context) => ArabicCourse(),
         'frenchCourse': (context) => FrenchCourse(),
-        'englishCourse': (context) => EnglishCourse(),
         "signup": (context) => const Signup(),
         "login": (context) => Login(),
         "chatt": (context) => ChatScreen(),

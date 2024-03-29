@@ -121,13 +121,13 @@ class _NewCourseFormState extends State<NewCourseForm> {
   Future<void> importAndTranslateQuestions(String originalCourseId,
       String newCourseName, String selectedLanguage) async {
     try {
+      int counter = 0;
       QuerySnapshot chapters =
           await FirebaseFirestore.instance.collection('cours').get();
-
       for (QueryDocumentSnapshot chapterDoc in chapters.docs) {
         String chapterId = chapterDoc.id;
+        counter++;
 
-        // Accéder à la sous-collection "lecons" pour chaque document dans "cours"
         QuerySnapshot lecons = await FirebaseFirestore.instance
             .collection('cours')
             .doc(chapterId)
@@ -146,7 +146,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
 
           // Enregistrer les questions traduites dans une nouvelle collection
           await saveTranslatedQuestions(newCourseName, selectedLanguage,
-              chapterId, leconId, translatedQuestions);
+              chapterId, leconId, translatedQuestions, counter);
           print(frenchQuestions);
         }
       }
@@ -161,6 +161,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
     String chapterId,
     String leconId,
     List<dynamic> translatedQuestions,
+    int counter,
   ) async {
     try {
       // Collection de questions sous le document de leçon
@@ -171,6 +172,11 @@ class _NewCourseFormState extends State<NewCourseForm> {
           .collection('lecons')
           .doc(leconId)
           .collection('questions');
+
+      await FirebaseFirestore.instance
+          .collection('cours$selectedLanguage')
+          .doc(chapterId)
+          .set({'numCh': counter});
 
       // Ajouter chaque question traduite à la collection
       for (int i = 0; i < translatedQuestions.length; i++) {

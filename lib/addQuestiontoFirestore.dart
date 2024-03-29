@@ -11,109 +11,154 @@ class SampleQuestionsWidget extends StatefulWidget {
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
     ScrambledWordsQuestion(
-      correctSentence: 'I like this girl',
-      questionText: "J'aime bien cette fille",
-      additionalWords: ["to", "woman"],
+      correctSentence: 'what are you selling',
+      questionText: "Tu vends quoi?",
+      additionalWords: ["how", "knew"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/commerce.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Are you selling everything',
+      questionText: "Tu vends tout?",
+      additionalWords: ["why", "no"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
       ImagePath: 'your_image_path_here',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Allemagne',
-      questionText: 'Germany',
-      additionalWords: ["plus", "désolé"],
-      selectedWordOrder: [],
-      
-      questionLanguage: 'en',
-      ImagePath: 'assets/allemagne.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'He sees his girlfriend every day',
-      questionText: "Il voit sa petite amie tous les jours",
-      additionalWords: ["tea", "New", "'re"],
+      correctSentence: 'Do you hear that',
+      questionText: "Tu endents ça?",
+      additionalWords: [],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
+      ImagePath: 'assets/ann.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Saturday is my birthday',
-      questionText: "Samedi, c'est mon anniversaire",
-      additionalWords: ["how", "adult"],
+      correctSentence: 'One must wait',
+      questionText: "Il faut attendre",
+      additionalWords: [],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/annif.png',
+      ImagePath: 'assets/attend.png',
     ),
+    // TranslationQuestion(
+    //     originalText: "je le connais",
+    //     correctTranslation: "i know him",
+    //     userTranslationn: ""),
     ScrambledWordsQuestion(
-      correctSentence: 'We know you well.',
-      questionText: "On te connaît bien",
-      additionalWords: ["student", "usually"],
+      correctSentence: 'Can you wait a minute',
+      questionText: "Tu peux attendre une minute?",
+      additionalWords: ["something", "these"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/annif.png',
+      ImagePath: 'assets/30-minutes.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'où',
-      questionText: "Marc ne sait pas ___ sont ses lunettes",
-      additionalWords: ["pourquoi", "si"],
+      correctSentence: 'What are you waiting for',
+      questionText: "Tu attends quoi ?",
+      additionalWords: ["Can", "your"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/chercher.png',
+      ImagePath: 'assets/attend.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Come with your friends',
-      questionText: "Viens avec tes amis",
-      additionalWords: ["to", "journalist", "boyfriend"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'On déteste le café',
-      questionText: "We hate coffee",
-      additionalWords: ["thé", "voiture", "nouvelle"],
+      correctSentence: 'longtemps',
+      questionText: "En général, je n'attends pas ____",
+      additionalWords: ["possible", "femme", "non"],
       selectedWordOrder: [],
       questionLanguage: 'en',
-      ImagePath: 'assets/nocafe.png',
+      ImagePath: 'assets/attendre.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Are you seeing your friends this weekend',
-      questionText: "Vous voyez vos copines ce week-end?",
-      additionalWords: ["they", "January", "the", "ready"],
+      correctSentence: 'I am selling my house',
+      questionText: "Je vends ma maison",
+      additionalWords: ["man", "please", "something"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
+      ImagePath: 'assets/a-vendre.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Do you understand me?',
-      questionText: "Vous me comprenez?",
-      additionalWords: ["boyfriend", "English", "he", "week"],
+      correctSentence: 'vendre',
+      questionText: "to sell",
+      additionalWords: ["entendre", "copain"],
       selectedWordOrder: [],
-      questionLanguage: 'fr',
+      questionLanguage: 'en',
       ImagePath: 'your_image_path_here',
     ),
+    Question("lake", [
+      Option1("lac", "assets/lac.png"),
+      Option1("les montagnes", "assets/montagne.png"),
+      Option1("voiture", "assets/voiture.png"),
+      Option1("une femme", "assets/mere.png")
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      true,
+      false,
+      false,
+      false
+    ]),
+    Question("the mountains", [
+      Option1("lac", "assets/lac.png"),
+      Option1("les montagnes", "assets/montagne.png"),
+      Option1("voiture", "assets/voiture.png"),
+      Option1("une femme", "assets/mere.png")
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      false,
+      true,
+      false,
+      false
+    ]),
+    //
     ScrambledWordsQuestion(
-      correctSentence: 'My parents know that i\'m here',
-      questionText: "Mes parents savent que je suis ici.",
-      additionalWords: ["speaks", "they", "what", "tall"],
+      correctSentence: 'There are a lot of lakes in these mountains',
+      questionText: "Il ya beaucoup de lacs dans ces montagnes",
+      additionalWords: ["midnight"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
+      ImagePath: 'assets/lacm.png',
     ),
+    Question("sea", [
+      Option1("mer", "assets/vague.png"),
+      Option1("lac", "assets/lac.png"),
+      Option1("les montagnes", "assets/montagne.png"),
+      Option1("une femme", "assets/mere.png")
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      true,
+      false,
+      false,
+      false
+    ]),
     ScrambledWordsQuestion(
-      correctSentence: 'They are inviting me to their party',
-      questionText: "Ils m'invitent à leur fête",
-      additionalWords: ["speaks", "Australia", "calls", "tall"],
+      correctSentence: 'You don\'t answer immediately',
+      questionText: "Vous ne répondez pas immédiatement",
+      additionalWords: ["not", "nothing at all"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
+      ImagePath: 'assets/non.png',
     ),
   ];
 
   @override
   void initState() {
     super.initState();
-    // addQuestionsToFirestore('cours', 'je_connais', '10');
+    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '1');
     // importAndTranslateQuestions();
+    // sortDocuments();
   }
 
   Future<void> importAndTranslateQuestions() async {
