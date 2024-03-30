@@ -56,12 +56,12 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       false,
       false,
       false,
-      false
+      false,
     ], [
       false,
       false,
       true,
-      false
+      false,
     ]),
     //
     TextQuestion("Ce sont des collègues ____", [
