@@ -35,124 +35,93 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       true,
       false
     ]),
-    // houni wsolt
-    ScrambledWordsQuestion(
-      correctSentence: 'I had a good time with you',
-      questionText: "J'ai passé un bon moment avec vous",
-      additionalWords: [],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/attend.png',
-    ),
+    TextQuestion("j' ____", [
+      Option1("a parlé", "assets/gateau.png"),
+      Option1("ai parlé", "assets/gateau.png")
+    ], [
+      false,
+      false
+    ], [
+      false,
+      true
+    ]),
     // TranslationQuestion(
     //     originalText: "je le connais",
     //     correctTranslation: "i know him",
     //     userTranslationn: ""),
+    TextQuestion("Il ____ trouvé son chat", [
+      Option1("a", "assets/gateau.png"),
+      Option1("ai ", "assets/gateau.png")
+    ], [
+      false,
+      false
+    ], [
+      true,
+      false
+    ]),
+    //
     ScrambledWordsQuestion(
-      correctSentence: 'I am here',
-      questionText: "Je suis là",
-      additionalWords: ["something", "these"],
+      correctSentence: 'é',
+      questionText: "Tu as gagn",
+      additionalWords: ["er"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
       ImagePath: 'your_image_path_here',
     ),
-    //
     ScrambledWordsQuestion(
-      correctSentence: 'We are waiting for plane',
-      questionText: "Nous attendons l'avion",
-      additionalWords: ["Can", "your"],
+      correctSentence: 'préparé',
+      questionText: "j'ai ____ le dîner",
+      additionalWords: ["préparer"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/aeroport.png',
+      ImagePath: 'your_image_path_here',
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'I had a very quiet day',
-      questionText: "j'ai passé une jounée trés tranquille",
-      additionalWords: ["her", "study", "cartoon"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/pensees.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Mon fils a étudié pendant tout le week-end.',
-      questionText: "My son studied all weekend",
-      additionalWords: [],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/etude.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Vous avez marché autour de grand lac?',
-      questionText: "Did you walk around the big lake?",
-      additionalWords: [],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/lacg.png',
-    ),
-    Question("the bridge", [
-      Option1("lac", "assets/lac.png"),
-      Option1("les montagnes", "assets/montagne.png"),
-      Option1("le pont", "assets/pont.png"),
-      Option1("banane", "assets/banane.png")
+    TextQuestion(
+        "Tu ___ mangé",
+        [Option1("as", "assets/gateau.png"), Option1("a", "assets/gateau.png")],
+        [false, false],
+        [true, false]),
+    TextQuestion("Elle ___ hier", [
+      Option1("as chanté", "assets/gateau.png"),
+      Option1("a chanté", "assets/gateau.png")
     ], [
-      false,
-      false,
       false,
       false
     ], [
       false,
-      false,
-      true,
-      false
+      true
     ]),
+    TextQuestion(
+        "___-tu demandé quelque chose?",
+        [Option1("As", "assets/gateau.png"), Option1("A", "assets/gateau.png")],
+        [false, false],
+        [true, false]),
+    TextQuestion(
+        "___-tu demandé quelque chose?",
+        [Option1("As", "assets/gateau.png"), Option1("A", "assets/gateau.png")],
+        [false, false],
+        [true, false]),
     ScrambledWordsQuestion(
-      correctSentence: 'Nous avons marché le long de la mer.',
-      questionText: "We walked along the sea",
-      additionalWords: [],
+      correctSentence: 'J\'ai regardé la télé',
+      questionText: "I watched TV",
+      additionalWords: ["as", "a"],
       selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/chatt.png',
+      questionLanguage: 'fr',
+      ImagePath: 'assets/regarde-tele.png',
     ),
-    Question("the beach", [
-      Option1("lac", "assets/lac.png"),
-      Option1("les montagnes", "assets/montagne.png"),
-      Option1("la plage", "assets/chatt.png"),
-      Option1("une femme", "assets/mere.png")
-    ], [
-      false,
-      false,
-      false,
-      false
-    ], [
-      false,
-      true,
-      false,
-      false
-    ]),
     //
 
-    Question("the stairs", [
-      Option1("pizza", "assets/pizza.png"),
-      Option1("les escaliers", "assets/escaliers.png"),
-      Option1("les montagnes", "assets/montagne.png"),
-      Option1("la gare", "assets/gare.png")
-    ], [
-      false,
-      false,
-      false,
-      false
-    ], [
-      false,
-      true,
-      false,
-      false
-    ]),
+    TextQuestion(
+        "Hier, ma mére___ acheté une maison",
+        [Option1("ai", "assets/gateau.png"), Option1("a", "assets/gateau.png")],
+        [false, false],
+        [false, true]),
   ];
 
   @override
   void initState() {
     super.initState();
-    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '2');
+    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '3');
     // importAndTranslateQuestions();
     // sortDocuments();
   }
