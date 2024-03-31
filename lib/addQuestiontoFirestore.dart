@@ -11,145 +11,112 @@ class SampleQuestionsWidget extends StatefulWidget {
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
     ScrambledWordsQuestion(
-      correctSentence: 'ils sont des ingenieurs français',
-      questionText: "They are Frensh engineers",
-      additionalWords: ["Ce", "c'est un"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/ingenieur.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'There are opera houses in New York',
-      questionText: "Il y a des opéras à New York",
-      additionalWords: ["work", "cooks"],
+      correctSentence: 'it\'s thanks to you',
+      questionText: "C'est grâce à toi",
+      additionalWords: ["going"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/hommes.png',
+      ImagePath: 'your_image_path_here',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Il est fantastique',
-      questionText: "He is fantastic",
-      additionalWords: ["non", "pour"],
+      correctSentence: 'I take this book',
+      questionText: "Je prends ce livre",
+      additionalWords: ["Should", "him", "chemistry"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/super-heros.png',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Am I taking all my books?',
+      questionText: "Est-ce que je prends tous mes livres?",
+      additionalWords: ["should", "happy"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
     ),
     ////////houni iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
     ScrambledWordsQuestion(
-      correctSentence: 'he is shy',
-      questionText: "il est timide",
+      correctSentence: 'I want to understand this',
+      questionText: "Je veux comprendre ça!",
       additionalWords: ["arround", "stairs"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/timide.png',
+      ImagePath: 'your_image_path_here',
     ),
     // TranslationQuestion(
     //     originalText: "je le connais",
     //     correctTranslation: "i know him",
     //     userTranslationn: ""),
-    TextQuestion("Ils sont ____", [
-      Option1("répond", "assets/gateau.png"),
-      Option1("ai ", "assets/gateau.png"),
-      Option1("tunisiens ", "assets/gateau.png"),
-      Option1("sont ", "assets/gateau.png")
-    ], [
-      false,
-      false,
-      false,
-      false,
-    ], [
-      false,
-      false,
-      true,
-      false,
-    ]),
-    //
-    TextQuestion("Ce sont des collègues ____", [
-      Option1("responsable ", "assets/gateau.png"),
-      Option1("responsables ", "assets/gateau.png"),
-    ], [
-      false,
-      false,
-    ], [
-      false,
-      true,
-    ]),
     ScrambledWordsQuestion(
-      correctSentence: 'They are lazy students',
-      questionText: "Ce sont des étudiantes paresseuses",
-      additionalWords: ["and", "teachers", 'friends'],
+      correctSentence: 'comprendre',
+      questionText: "To understand",
+      additionalWords: ["escalier", "autour"],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'your_image_path_here',
+    ),
+    //
+    ScrambledWordsQuestion(
+      correctSentence: 'He has to learn everything',
+      questionText: "Il doit tout apprendre",
+      additionalWords: ["school", "this"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/la-paresse.png',
+      ImagePath: 'your_image_path_here',
     ),
-    TextQuestion("C'est ma _____ amie", [
-      Option1("meilleur", "assets/gateau.png"),
-      Option1("meilleure ", "assets/gateau.png"),
-      Option1("tunisiens ", "assets/gateau.png"),
-      Option1("sont ", "assets/gateau.png")
-    ], [
-      false,
-      false,
-      false,
-      false
-    ], [
-      false,
-      true,
-      false,
-      false
-    ]),
-    TextQuestion("Il est ___ et il parle le français", [
-      Option1("tunisienne", "assets/gateau.png"),
-      Option1("tunisien ", "assets/gateau.png"),
-      Option1("sérieuse ", "assets/gateau.png"),
-    ], [
-      false,
-      false,
-      false,
-    ], [
-      false,
-      true,
-      false,
-    ]),
-    Question("newspaper", [
-      Option1("livre", "assets/livre.png"),
-      Option1("journal ", "assets/un-journal.png"),
-      Option1("indiennne ", "assets/indien.png"),
-      Option1("pomme ", "assets/pomme.png")
-    ], [
-      false,
-      false,
-      false,
-      false
-    ], [
-      false,
-      true,
-      false,
-      false
-    ]),
-    TextQuestion("Elles sont ____", [
-      Option1("timides ", "assets/gateau.png"),
-      Option1("timide ", "assets/gateau.png"),
-    ], [
-      false,
-      false,
-    ], [
-      true,
-      false,
-    ]),
-
     ScrambledWordsQuestion(
-      correctSentence: 'Il est sérieux et agréable',
-      questionText: "He is serious and pleasant",
-      additionalWords: ["grand"],
+      correctSentence: 'apprendre',
+      questionText: "To learn",
+      additionalWords: ["tranquille", "descendre"],
       selectedWordOrder: [],
       questionLanguage: 'en',
       ImagePath: 'your_image_path_here',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'C\'est un grand chanteur',
-      questionText: "He is a singer",
-      additionalWords: ["paresseuse"],
+      correctSentence: 'I want to learn a lot of things',
+      questionText: "Je veux apprendre beaucoup de choses",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'I hate grammar',
+      questionText: "Je déteste la grammaire",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Grammar is difficult',
+      questionText: "la grammaire c'est difficile",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'You don\'t understand well.',
+      questionText: "Tu ne comprends pas bien",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+
+    ScrambledWordsQuestion(
+      correctSentence: 'I love math',
+      questionText: "j'adore les mathématiques",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/etudem.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Do you know a good math teacher',
+      questionText: "Tu connais un bon professeur de mathématiques?",
+      additionalWords: [],
       selectedWordOrder: [],
       questionLanguage: 'en',
       ImagePath: 'your_image_path_here',
@@ -159,7 +126,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   @override
   void initState() {
     super.initState();
-    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '4');
+    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '5');
     // importAndTranslateQuestions();
     // sortDocuments();
   }
