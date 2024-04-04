@@ -78,10 +78,10 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
     ),
 
     Question("guidebook", [
-      Option1("place", "assets/bijou.png"),
-      Option1("chanteur", "assets/tv.png"),
-      Option1("musicien", "assets/vache.png"),
-      Option1("musicien", "assets/vache.png"),
+      Option1("place", "assets/place.png"),
+      Option1("chanteur", "assets/chanteur.png"),
+      Option1("guide", "assets/guide.png"),
+      Option1("danseur", "assets/danseur.png"),
     ], [
       false,
       false,
