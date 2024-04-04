@@ -93,7 +93,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       true,
       false,
     ]),
-    Question("guidebook", [
+    Question("Shoes", [
       Option1("sweat-shirt", "assets/sweat-shirt.png"),
       Option1("Chaussures", "assets/chaussures.png"),
       Option1("alarme", "assets/alarme.png"),
@@ -105,8 +105,8 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       false
     ], [
       false,
-      false,
       true,
+      false,
       false,
     ]),
     ScrambledWordsQuestion(
@@ -131,22 +131,29 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       false,
       true,
     ]),
-    ScrambledWordsQuestion(
-      correctSentence: 'Nous venons dimanche',
-      questionText: "We are coming on Sunday",
-      additionalWords: ["bijoux", "soir"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/amis.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'prenez',
-      questionText: "take",
-      additionalWords: ["immédiatement", "oui"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/vieux.png',
-    ),
+    TextQuestion("C'est un ____ célèbre.", [
+      Option1("monuments", "assets/place.png"),
+      Option1("monument", "assets/chanteur.png"),
+    ], [
+      false,
+      false,
+    ], [
+      false,
+      true,
+    ]),
+    TextQuestion("Ce sont des chaussures ____.", [
+      Option1("neuve", "assets/place.png"),
+      Option1("neuves", "assets/chanteur.png"),
+      Option1("nouveau", "assets/chanteur.png"),
+    ], [
+      false,
+      false,
+      false
+    ], [
+      false,
+      true,
+      false
+    ]),
     ScrambledWordsQuestion(
       correctSentence: 'petits-enfants',
       questionText: "grandchildren",
