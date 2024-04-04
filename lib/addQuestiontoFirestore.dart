@@ -199,6 +199,14 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       questionLanguage: 'en',
       ImagePath: 'assets/short.png',
     ),
+    ScrambledWordsQuestion(
+      correctSentence: 'There are how many districts in Paris',
+      questionText: "Il y a combien d'arrondissements à Paris ?",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/rond-point.png',
+    ),
   ];
 
   @override
