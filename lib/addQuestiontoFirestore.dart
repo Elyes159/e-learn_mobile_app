@@ -191,6 +191,14 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       true,
       false
     ]),
+    ScrambledWordsQuestion(
+      correctSentence: 'C\'est l\'été et je peux porter un short',
+      questionText: "it's summer, and i can wear shorts",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'assets/short.png',
+    ),
   ];
 
   @override
