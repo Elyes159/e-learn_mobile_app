@@ -23,7 +23,7 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       questionText: "Elle apprend ses leçons à la maison",
       additionalWords: ["with", "am"],
       selectedWordOrder: [],
-      questionLanguage: 'fr',
+      questionLanguage: 'fr', //
       ImagePath: 'assets/maison-work.png',
     ),
     ScrambledWordsQuestion(
@@ -154,9 +154,8 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   @override
   void initState() {
     super.initState();
-    addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '7');
+    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '7');
     // importAndTranslateQuestions();
-    // sortDocuments();
   }
 
   Future<void> importAndTranslateQuestions() async {
