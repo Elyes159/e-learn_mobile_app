@@ -93,6 +93,22 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       true,
       false,
     ]),
+    Question("guidebook", [
+      Option1("sweat-shirt", "assets/sweat-shirt.png"),
+      Option1("Chaussures", "assets/chaussures.png"),
+      Option1("alarme", "assets/alarme.png"),
+      Option1("danseur", "assets/danseur.png"),
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      false,
+      false,
+      true,
+      false,
+    ]),
     ScrambledWordsQuestion(
       correctSentence: 'THis sweatshirt is too expensive',
       questionText: "Ce sweat-shirt est trop cher",
@@ -101,14 +117,20 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       questionLanguage: 'fr',
       ImagePath: 'assets/trop-cher.png',
     ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Les adolescents sont sympas',
-      questionText: "The teenagers are nice",
-      additionalWords: ["mangent", "filles"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/amis.png',
-    ),
+
+    TextQuestion("Le ____ de chaussures est sur place de la République", [
+      Option1("manuel", "assets/place.png"),
+      Option1("tunisien", "assets/chanteur.png"),
+      Option1("magasin", "assets/guide.png"),
+    ], [
+      false,
+      false,
+      false,
+    ], [
+      false,
+      false,
+      true,
+    ]),
     ScrambledWordsQuestion(
       correctSentence: 'Nous venons dimanche',
       questionText: "We are coming on Sunday",
