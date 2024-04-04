@@ -154,36 +154,43 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       true,
       false
     ]),
-    ScrambledWordsQuestion(
-      correctSentence: 'petits-enfants',
-      questionText: "grandchildren",
-      additionalWords: ["papi", "pâtes"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'your_image_path_here',
-    ),
-    TextQuestion("Ils ____ de vacnaces", [
-      Option1("revenir", "assets/colisee.png"),
-      Option1("reviennent", "assets/geo.png"),
-      Option1("revenez", "assets/atome.png"),
+    TextQuestion(
+        "Excusez-moi, pouvez-vous me dire ______ est le musée du Louvre ?", [
+      Option1("quand", "assets/place.png"),
+      Option1("où", "assets/chanteur.png"),
+      Option1("qui", "assets/chanteur.png"),
     ], [
       false,
       false,
-      false,
+      false
     ], [
       false,
       true,
       false
     ]),
-
     ScrambledWordsQuestion(
-      correctSentence: 'They have just left',
-      questionText: "Ils viennent de partir",
-      additionalWords: ["adults", "remember"],
+      correctSentence: 'I\'m not wearing a gold ring',
+      questionText: "Je ne porte pas de bague en or",
+      additionalWords: [],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
+      ImagePath: 'assets/bague.png',
     ),
+
+    Question("wardrobe", [
+      Option1("chaussures", "assets/chaussures.png"),
+      Option1("armoire", "assets/armoire.png"),
+      Option1("timbre", "assets/timbre.png"),
+      Option1("visage", "assets/visage.png"),
+    ], [
+      false,
+      false,
+      false
+    ], [
+      false,
+      true,
+      false
+    ]),
   ];
 
   @override
