@@ -7,90 +7,96 @@ class SampleQuestionsWidget extends StatefulWidget {
   _SampleQuestionsWidgetState createState() => _SampleQuestionsWidgetState();
 }
 
+// TextQuestion("Ils viennent ___ partir.", [
+//   Option1("à", "assets/bijou.png"),
+//   Option1("vers", "assets/tv.png"),
+//   Option1("de", "assets/vache.png"),
+// ], [
+//   false,
+//   false,
+//   false
+// ], [
+//   false,
+//   false,
+//   true,
+// ]),
+// TranslationQuestion(
+//     originalText: "je le connais",
+//     correctTranslation: "i know him",
+//     userTranslationn: ""),
 //your_image_path_here
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
     ScrambledWordsQuestion(
-      correctSentence: 'My granddaughter is very pretty',
-      questionText: "Ma petite-fille est trés jolie",
-      additionalWords: ["we", "eleven"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/filee.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'She is studying her lessons at home',
-      questionText: "Elle apprend ses leçons à la maison",
-      additionalWords: ["with", "am"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr', //
-      ImagePath: 'assets/maison-work.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'You become sad when you look at these photos',
-      questionText: "Vous devenez tristes quand vous regardez ces photos",
-      additionalWords: ["grandpa", "Germany"],
+      correctSentence: 'timbre',
+      questionText: "stamp",
+      additionalWords: ["nord", "bijoux"],
       selectedWordOrder: [],
       questionLanguage: 'en',
-      ImagePath: 'assets/pleurer.png',
+      ImagePath: 'assets/timbre.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'My uncle',
-      questionText: "mon oncle",
-      additionalWords: ["how", "many", "chemistry"],
+      correctSentence: 'This store is on Marie Curie Avenue',
+      questionText: "Ce magasin est sur l'avenue de Marie Curie",
+      additionalWords: ["de", "it's"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr', //
+      ImagePath: 'assets/avenue.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'en_promotion',
+      questionText: "on sale",
+      additionalWords: ["malheureusement", "en promotion"],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'assets/promotion.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'My skirts are blue',
+      questionText: "Mes jupes sont bleu",
+      additionalWords: ["pants", "have", "What"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
       ImagePath: 'your_image_path_here',
     ),
     //
-    TextQuestion("Grâce à ce professeur, les ____ vont tout comprendre.", [
-      Option1("étudiants", "assets/bijou.png"),
-      Option1("escaliers", "assets/tv.png"),
-      Option1("poissons", "assets/vache.png"),
-    ], [
-      false,
-      false,
-      false
-    ], [
-      true,
-      false,
-      false,
-    ]),
-    TextQuestion("Ils viennent ___ partir.", [
-      Option1("à", "assets/bijou.png"),
-      Option1("vers", "assets/tv.png"),
-      Option1("de", "assets/vache.png"),
-    ], [
-      false,
-      false,
-      false
-    ], [
-      false,
-      false,
-      true,
-    ]),
-    // TranslationQuestion(
-    //     originalText: "je le connais",
-    //     correctTranslation: "i know him",
-    //     userTranslationn: ""),
-    TextQuestion("J'ai deux ___", [
-      Option1("frére", "assets/bijou.png"),
-      Option1("pére", "assets/tv.png"),
-      Option1("oncles", "assets/vache.png"),
-    ], [
-      false,
-      false,
-      false
-    ], [
-      false,
-      false,
-      true,
-    ]),
-    //
     ScrambledWordsQuestion(
-      correctSentence: 'C\'est le début de l\'année',
-      questionText: "It's the beginning pf the year",
-      additionalWords: ["des dîner", "les professeurs"],
+      correctSentence: 'argent',
+      questionText: "silver",
+      additionalWords: ["devenir", "comprennent"],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Where is my swimsuit',
+      questionText: "Où est mon maillot de bain ?",
+      additionalWords: ["devenir", "comprennent"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/maillots-de-bain.png',
+    ),
+
+    Question("guidebook", [
+      Option1("place", "assets/bijou.png"),
+      Option1("chanteur", "assets/tv.png"),
+      Option1("musicien", "assets/vache.png"),
+      Option1("musicien", "assets/vache.png"),
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      false,
+      false,
+      true,
+      true,
+    ]),
+    ScrambledWordsQuestion(
+      correctSentence: 'guide',
+      questionText: "guidebook",
+      additionalWords: ["place", "chanteur"],
       selectedWordOrder: [],
       questionLanguage: 'en',
       ImagePath: 'assets/annee.png',
