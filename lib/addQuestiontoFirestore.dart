@@ -28,99 +28,94 @@ class SampleQuestionsWidget extends StatefulWidget {
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
     ScrambledWordsQuestion(
-      correctSentence: 'sortir',
-      questionText: "to go out",
-      additionalWords: ["personnel", "gui"],
+      correctSentence: 'Londres',
+      questionText: "London",
+      additionalWords: ["casquette", "couverture"],
       selectedWordOrder: [],
       questionLanguage: 'en',
-      ImagePath: 'assets/sort.png',
+      ImagePath: 'assets/grand-ben.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'We take a lot of breaks',
-      questionText: "Nous faisons beaucoup de pauses",
-      additionalWords: ["meeting", "on"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/pause-cafe.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'montrer',
-      questionText: "to show",
-      additionalWords: ["dossier", "deux fois"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'your_image_path_here',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'These customers are leaving tomorrow',
-      questionText: "Ces clientes partent demain",
-      additionalWords: ["rich", "year"],
+      correctSentence: 'We were young in the sixties',
+      questionText: "Nous étions jeunes dans les années soixante",
+      additionalWords: ["big sister", "ninety"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
       ImagePath: 'your_image_path_here',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'partir',
-      questionText: "to leave",
+      correctSentence: 'époque',
+      questionText: "era",
+      additionalWords: ["hall", "ceinture"],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'You were students in the eighties',
+      questionText: "Vous étiez étudiants dans les années quatre-vingt",
+      additionalWords: ["computer", "be", "emails", "owl"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'machine à laver',
+      questionText: "washing machine",
+      additionalWords: ["naissance", "drôle"],
+      selectedWordOrder: [],
+      questionLanguage: 'en',
+      ImagePath: 'assets/ml.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'Your daughter is very cute',
+      questionText: "Votre fille est trés mignonne",
       additionalWords: ["pendant", "partir"],
       selectedWordOrder: [],
       questionLanguage: 'en',
-      ImagePath: 'your_image_path_here',
+      ImagePath: 'assets/fillec.png',
     ),
-    ScrambledWordsQuestion(
-      correctSentence: "We' re explaining to them how the printer works",
-      questionText: "Nous leur expliquons comment marche l'imprimante",
-      additionalWords: [],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/impr.png',
-    ),
-    TextQuestion("Le mercredi, nous allons ____ pour emprunter des ____ .", [
-      Option1("à la bibliothéque ... livres", "assets/bijou.png"),
-      Option1("au marché ... légumes", "assets/tv.png"),
-      Option1("à la gare ... trains", "assets/vache.png"),
+    Question("wallet", [
+      Option1("toilette", "assets/toilette.png"),
+      Option1("robe", "assets/robe.png"),
+      Option1("pull", "assets/pull.png"),
+      Option1("portefeuille", "assets/portefeuille.png"),
     ], [
+      false,
       false,
       false,
       false
     ], [
+      false,
+      false,
+      false,
       true,
-      false,
-      false,
     ]),
-    ScrambledWordsQuestion(
-      correctSentence: "He loves reading because his book is funny",
-      questionText: "Il adore lire parce que son livre est amusant",
-      additionalWords: [],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/lire.png',
-    ),
-    TextQuestion("Elle n'a jamais lu ce livre", [
-      Option1("lu", "assets/bijou.png"),
-      Option1("grandi", "assets/tv.png"),
-      Option1("attendu", "assets/vache.png"),
+    TextQuestion("Tu as des ____ de dix euros ?", [
+      Option1("portefeuille", "assets/bijou.png"),
+      Option1("billets", "assets/tv.png"),
+      Option1("billet", "assets/vache.png"),
     ], [
       false,
       false,
-      false
-    ], [
-      true,
       false,
+    ], [
+      false,
+      true,
       false,
     ]),
     ScrambledWordsQuestion(
-      correctSentence: "populaire",
-      questionText: "Tout le monde adore cette chanteuse : elle est trés ____",
-      additionalWords: ["en retard", "méchante"],
+      correctSentence: "You tried",
+      questionText: "Tu as essayé?",
+      additionalWords: ["blue", "he", "on", "lot"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/popularite.png',
+      ImagePath: 'assets/poste-de-travail.png',
     ),
-    TextQuestion("J'ai vraiment ____ ce film", [
-      Option1("détestée", "assets/bijou.png"),
-      Option1("détesté", "assets/tv.png"),
-      Option1("déteste", "assets/vache.png"),
+    TextQuestion("Elle a cinq colliers et j'en ai ____ deux.", [
+      Option1("lentement", "assets/bijou.png"),
+      Option1("seulement", "assets/tv.png"),
+      Option1("tellement", "assets/vache.png"),
     ], [
       false,
       false,
@@ -130,44 +125,97 @@ class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
       true,
       false,
     ]),
+    Question("flower", [
+      Option1("nombres", "assets/nombres.png"),
+      Option1("lac", "assets/lac.png"),
+      Option1("fleur", "assets/fleur.png"),
+      Option1("casquette", "assets/casquette.png"),
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      false,
+      false,
+      true,
+      false,
+    ]),
     ScrambledWordsQuestion(
-      correctSentence: 'film cinéma',
-      questionText: "Linda va voir un ____ au ___ ce soir",
-      additionalWords: ["livre", "magasin"],
+      correctSentence: "sait collier",
+      questionText: "Elle ne ___ pas que je lui offre un ____",
+      additionalWords: ["vérifie", "dossier"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'assets/film.png',
+      ImagePath: 'assets/cadeau.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'She doesn\'t like order books online',
-      questionText: "Elle n'aime pas commander des livres sur internet",
-      additionalWords: [],
+      correctSentence: "paire or",
+      questionText:
+          "Ma tante porte un magnifique collier et une ____ de voucles d'oreilles en ____",
+      additionalWords: ["sucre", "partie", "tristes"],
       selectedWordOrder: [],
       questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
+      ImagePath: 'assets/femme.png',
     ),
     ScrambledWordsQuestion(
-      correctSentence: 'Those decorations are beautiful',
-      questionText: "Ces décorations sont belles",
-      additionalWords: ["légumes", "ils"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: "Je l'ai lu une fois",
-      questionText: "I've read it once",
-      additionalWords: ["épisodes", "auteur"],
+      correctSentence: "J'en veux une autre",
+      questionText: "I want another one",
+      additionalWords: ["purées", "huile", "à", "saucisse"],
       selectedWordOrder: [],
       questionLanguage: 'en',
       ImagePath: 'your_image_path_here',
     ),
+    ScrambledWordsQuestion(
+      correctSentence: 'You had fifty-six of them',
+      questionText: "Tu en avais cinquante six",
+      additionalWords: ["essayer", "gant"],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'your_image_path_here',
+    ),
+    Question("the suit", [
+      Option1("dix", "assets/10.png"),
+      Option1("le costume", "assets/costume.png"),
+      Option1("fleur", "assets/fleur.png"),
+      Option1("casquette", "assets/casquette.png"),
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      false,
+      true,
+      false,
+      false,
+    ]),
+    Question("the tie", [
+      Option1("dix", "assets/10.png"),
+      Option1("le costume", "assets/costume.png"),
+      Option1("fleur", "assets/fleur.png"),
+      Option1("la cravate", "assets/cravate.png"),
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      false,
+      false,
+      false,
+      true,
+    ]),
+    TranslationQuestion(
+        originalText: "two wallets",
+        correctTranslation: "deux portefeuilles",
+        userTranslationn: ""),
   ];
 
   @override
   void initState() {
     super.initState();
-    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '10');
+    // addQuestionsToFirestore('cours', 'je_parle_un_peu_avec_des_gens', '12');
     // importAndTranslateQuestions();
   }
 
