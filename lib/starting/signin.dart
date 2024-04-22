@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,6 +38,24 @@ class _LoginState extends State<Login> {
       MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
       (route) => false,
     );
+  }
+
+  Future<void> checkLanguageSelection() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    String? _uid = user!.uid;
+
+    DocumentSnapshot doc =
+        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+
+    final data = doc.data() as Map<String,
+        dynamic>?; // Spécifiez le type de data comme Map<String, dynamic>
+
+    if (doc.exists && data != null && data.containsKey('selectedLanguage')) {
+      // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
   }
 
   @override
@@ -156,11 +175,33 @@ class _LoginState extends State<Login> {
                             password: password.text,
                           );
                           if (credential.user!.emailVerified) {
-                            Navigator.of(context).push(PageRouteBuilder(
-                                transitionDuration: Duration.zero,
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) =>
-                                        ChoiceL()));
+                            final User? user =
+                                FirebaseAuth.instance.currentUser;
+                            String? _uid = user!.uid;
+
+                            DocumentSnapshot doc = await FirebaseFirestore
+                                .instance
+                                .collection('users')
+                                .doc(_uid)
+                                .get();
+
+                            final data = doc.data() as Map<String,
+                                dynamic>?; // Spécifiez le type de data comme Map<String, dynamic>
+
+                            if (doc.exists &&
+                                data != null &&
+                                data.containsKey('selectedLanguage')) {
+                              // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()),
+                              );
+                            } else {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => ChoiceL()),
+                              );
+                            }
                           } else {
                             // ignore: use_build_context_synchronously
                             showDialog(
@@ -198,7 +239,7 @@ class _LoginState extends State<Login> {
                     SizedBox(width: 10),
                     SizedBox(
                       height: 80,
-                      width: 200,
+                      width: 160,
                       child: MaterialButton(
                         onPressed: () {
                           signInWithGoogle();
@@ -211,10 +252,14 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(width: 0),
+                    Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset("assets/social.png"))
                   ],
                 ),
-                //SizedBox(height: 10),
+
                 InkWell(
                   onLongPress: () {
                     Navigator.of(context).pushReplacementNamed("loginadmin");
@@ -238,7 +283,7 @@ class _LoginState extends State<Login> {
                             text: " Register",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF7885ff),
+                              color: Color(0xFF3DB2FF),
                             ),
                           ),
                         ],
@@ -246,12 +291,6 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                InkWell(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed("addQuestiontofirestore");
-                    },
-                    child: Text("Cliquer ici"))
               ],
             )
           ],

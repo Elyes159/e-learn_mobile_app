@@ -11,17 +11,13 @@ class Signup1 extends StatelessWidget {
         children: [
           Stack(
             children: [
-              // Partie haute de la page avec la couleur spécifiée
-              Container(
+              // Partie haute de la page avec l'image en arrière-plan
+              Image.asset(
+                "assets/blue.png", // Remplacez "votre_image.jpg" par le chemin de votre image
                 height: MediaQuery.of(context).size.height * 0.65,
-                width: MediaQuery.of(context).size.width * 10,
-                decoration: BoxDecoration(
-                  color: Color(0xFF7885ff),
-                  borderRadius: BorderRadius.vertical(
-                    bottom:
-                        Radius.circular(MediaQuery.of(context).size.width * 1),
-                  ),
-                ),
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit
+                    .cover, // Assurez-vous que l'image couvre tout l'espace disponible
               ),
 
               // Footer de la partie haute (en cercle)
@@ -29,14 +25,7 @@ class Signup1 extends StatelessWidget {
                 bottom: 50,
                 left: 10,
                 right: 10,
-                child: Container(
-                  width: 500, // Ajustez la largeur du cercle selon vos besoins
-                  height: 500, // Ajustez la hauteur du cercle selon vos besoins
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFF7885ff), // Couleur du cercle
-                  ),
-                ),
+                child: Image.asset("assets/tofla.png"),
               ),
             ],
           ),
@@ -111,7 +100,7 @@ class Signup1 extends StatelessWidget {
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF7885ff),
+                      color: Color(0xFF3DB2FF),
                     ),
                   ),
                 ),
@@ -129,7 +118,7 @@ class Signup1 extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 100.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFF7885ff),
+                      color: Color(0xFF3DB2FF),
                       borderRadius: BorderRadius.circular(
                           8.0), // Ajustez le rayon selon vos besoins
                     ),

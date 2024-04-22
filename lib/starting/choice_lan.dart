@@ -28,9 +28,11 @@ class _ChoiceLState extends State<ChoiceL> {
     DocumentSnapshot doc =
         await FirebaseFirestore.instance.collection('users').doc(_uid).get();
 
-    if (doc.exists && doc['selectedLanguage'] != null) {
-      // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
+    final data = doc.data() as Map<String,
+        dynamic>?; // Spécifiez le type de data comme Map<String, dynamic>
 
+    if (doc.exists && data != null && data.containsKey('selectedLanguage')) {
+      // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
@@ -45,7 +47,7 @@ class _ChoiceLState extends State<ChoiceL> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Language?",
+              "Quelle langue parles-tu?",
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w500,
                 fontSize: 25,
@@ -56,7 +58,7 @@ class _ChoiceLState extends State<ChoiceL> {
               width: 200, // Set the width of the dropdown container
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color(0xFF7885ff),
+                  color: Color(0xFF3DB2FF),
                   width: 2.0,
                 ),
                 borderRadius: BorderRadius.circular(20),

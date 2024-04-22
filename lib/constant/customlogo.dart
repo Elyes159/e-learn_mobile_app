@@ -6,16 +6,16 @@ class Customlogo extends StatelessWidget {
     return Center(
       child: Container(
         alignment: Alignment.center,
-        width: 80,
-        height: 80,
+        width: 100,
+        height: 100,
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          // color: Colors.white,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Image.asset(
           "images/logo.png",
-          height: 80,
+          height: 100,
           //fit: BoxFit.fill,
         ),
       ),

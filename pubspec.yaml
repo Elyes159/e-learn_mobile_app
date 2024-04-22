@@ -54,6 +54,7 @@ dependencies:
   flutter_tts: ^3.8.5
   easy_localization: ^3.0.5
   provider: ^6.1.2
+  firebase_performance: ^0.9.4+2
 
 
 dev_dependencies:

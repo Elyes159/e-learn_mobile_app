@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
       ),
       onPressed: onPressed,
-      color: Color(0xFF7885ff),
+      color: Color(0xFF3DB2FF),
       child: Text(
         title,
         style: GoogleFonts.poppins(

@@ -10,7 +10,6 @@ class Language {
       Language(1, "🇹🇳", "arabe", "ar"),
       Language(2, "🇺🇸", "anglais", "en"),
       Language(3, "🇫🇷", "Français", "fr"),
-      Language(5, '🇮🇳', "hindi", "hi"),
     ];
   }
 }

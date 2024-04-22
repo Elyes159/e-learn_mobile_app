@@ -31,7 +31,7 @@ class _SignupState extends State<Signup> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (_currentPage > 0)
+              if (_currentPage >= 0)
                 Padding(
                   padding: const EdgeInsets.only(left: 16, top: 16),
                   child: IconButton(
@@ -196,7 +196,7 @@ class _SignupState extends State<Signup> {
           child: CustomButton(
             title: "Signup",
             onPressed: () {
-              _registerUser();
+              _registerUser(ScaffoldMessenger.of(context));
             },
           ),
         ),
@@ -204,7 +204,7 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  void _registerUser() async {
+  void _registerUser(ScaffoldMessengerState scaffoldMessenger) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -218,7 +218,6 @@ class _SignupState extends State<Signup> {
           .doc(credential.user!.uid)
           .set({
         'username': username.text,
-        'selectedLanguage': "en",
         'email': email.text,
         'age': age.text,
         'progressValue': 0.0,
@@ -251,6 +250,11 @@ class _SignupState extends State<Signup> {
 
       // Envoyez un e-mail de vérification à l'utilisateur
       FirebaseAuth.instance.currentUser!.sendEmailVerification();
+
+      // Affichez le message à l'utilisateur
+      scaffoldMessenger.showSnackBar(SnackBar(
+        content: Text('Check your email to verify your account'),
+      ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

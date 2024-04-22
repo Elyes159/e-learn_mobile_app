@@ -27,105 +27,82 @@ class SampleQuestionsWidget extends StatefulWidget {
 //your_image_path_here
 class _SampleQuestionsWidgetState extends State<SampleQuestionsWidget> {
   final List<dynamic> questions = [
+    Question("shark", [
+      Option1("requin", "assets/requin.png"),
+      Option1("lapin", "assets/lapin.png"),
+      Option1("cheval", "assets/cheval.png"),
+      Option1("chien", "assets/chien.png"),
+    ], [
+      false,
+      false,
+      false,
+      false
+    ], [
+      true,
+      false,
+      false,
+      false
+    ]),
     ScrambledWordsQuestion(
-      correctSentence: 'correcte',
-      questionText: "Vous devrez donner la réponse ___",
-      additionalWords: [
-        "correct",
-        "corrects",
-      ],
+      correctSentence: 'He likes raw fish and rare meat.',
+      questionText: "Il aime le poisson cru et la viande saignante",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/sushi.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence: 'My piece of fish is very big.',
+      questionText: "Mon morceau de poisson est trés gros",
+      additionalWords: [],
+      selectedWordOrder: [],
+      questionLanguage: 'fr',
+      ImagePath: 'assets/cuisson.png',
+    ),
+    ScrambledWordsQuestion(
+      correctSentence:
+          'There\'s a big price difference between these two restaurants',
+      questionText:
+          "Il y a une grande différence de prix entre ces deux restaurants.",
+      additionalWords: [],
       selectedWordOrder: [],
       questionLanguage: 'fr',
       ImagePath: 'your_image_path_here',
     ),
+    TranslationQuestion(
+        originalText: "morceau",
+        correctTranslation: "piece",
+        userTranslationn: ""),
+    TranslationQuestion(
+        originalText: "faux",
+        correctTranslation: "false",
+        userTranslationn: ""),
+    TranslationQuestion(
+        originalText: "retard",
+        correctTranslation: "delay",
+        userTranslationn: ""),
+    TranslationQuestion(
+        originalText: "peu",
+        correctTranslation: "little",
+        userTranslationn: ""),
     ScrambledWordsQuestion(
-      correctSentence: 'indiennes',
-      questionText: "Elles sont ____",
-      additionalWords: ["indiens", "indienne"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'your_image_path_here',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'diplômée',
-      questionText: "Nous espérons qu'elle sera bientôt ____",
-      additionalWords: ["diplôme", "diplômés"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/diplome.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'She is great actress',
-      questionText: "C'est une bonne actrice",
-      additionalWords: ["he", "good"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/actrice.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'They are sorry',
-      questionText: "Elles sont désolées",
-      additionalWords: ["ok", "year"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/desole.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Notre-Dame est un monument français',
-      questionText: "Notre-Dame is a French monument",
-      additionalWords: ["anglais", "américain"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/notredame.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'a Spanish girl',
-      questionText: "une fille espagnole",
-      additionalWords: ["boy", "French"],
-      selectedWordOrder: [],
-      questionLanguage: 'fr',
-      ImagePath: 'assets/fillees.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Je préfère le pain français',
-      questionText: "I prefer the French bread",
-      additionalWords: ["de sucre", "restaurant"],
-      selectedWordOrder: [],
-      questionLanguage: 'en',
-      ImagePath: 'assets/painf.png',
-    ),
-    ScrambledWordsQuestion(
-      correctSentence: 'Elle est étudiante',
-      questionText: "She is a student",
+      correctSentence: 'He\'s very thin',
+      questionText: "il est trés mince",
       additionalWords: ["espagnole", "travailles", "américain", "m'apelle"],
       selectedWordOrder: [],
       questionLanguage: 'en',
       ImagePath: 'assets/painf.png',
     ),
-    TextQuestion("Tu devras être sûre que ta réponse est ____", [
-      Option1("correcte", "assets/bijou.png"),
-      Option1("correct", "assets/tv.png"),
-    ], [
-      false,
-      false,
-    ], [
-      true,
-      false,
-    ]),
-    TextQuestion("C'est une ____ actrice", [
-      Option1("grande", "assets/bijou.png"),
-      Option1("grands", "assets/tv.png"),
-      Option1("grandes", "assets/tv.png"),
-    ], [
-      false,
-      false,
-      false,
-    ], [
-      true,
-      false,
-      false,
-    ]),
+    TranslationQuestion(
+        originalText: "mince",
+        correctTranslation: "thin",
+        userTranslationn: ""),
+    TranslationQuestion(
+        originalText: "carte",
+        correctTranslation: "menu",
+        userTranslationn: ""),
   ];
+//sobbhom 8odwa
 
   @override
   void initState() {

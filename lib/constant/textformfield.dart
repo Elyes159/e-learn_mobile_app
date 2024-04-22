@@ -28,13 +28,13 @@ class CustomTextForm extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
           borderSide: BorderSide(
-            color: Color(0xFF7885ff),
+            color: Color(0xFF3DB2FF),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
           borderSide: BorderSide(
-            color: Color(0xFF7885ff),
+            color: Color(0xFF3DB2FF),
             width: 2.0,
           ),
         ),
