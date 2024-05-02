@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/constant/courses.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void navigateToObjectTranslation() {
-    Navigator.of(context).pushReplacementNamed("arabicCourse");
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => ImagePickerDemo()),
+    );
   }
 
   void navigateToAchievement() {
@@ -301,7 +304,11 @@ class _HomeScreenState extends State<HomeScreen> {
         coursesList.map((Courses course) {
       return DropdownMenuItem<Courses>(
         value: course,
-        child: Text(course.name),
+        child: Row(
+          children: [
+            Text(course.name),
+          ],
+        ),
       );
     }).toList();
 
@@ -499,7 +506,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       int numberOfCourses = snapshot.data ?? 0;
 
                       return ListView.builder(
-                        // Change scroll direction to vertical
                         scrollDirection: Axis.vertical,
                         itemCount: numberOfCourses,
                         itemBuilder: (context, index) {

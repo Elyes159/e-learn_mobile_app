@@ -24,15 +24,12 @@ class _ChoiceLState extends State<ChoiceL> {
   Future<void> checkLanguageSelection() async {
     final User? user = FirebaseAuth.instance.currentUser;
     String? _uid = user!.uid;
-
     DocumentSnapshot doc =
         await FirebaseFirestore.instance.collection('users').doc(_uid).get();
 
-    final data = doc.data() as Map<String,
-        dynamic>?; // Spécifiez le type de data comme Map<String, dynamic>
+    final data = doc.data() as Map<String, dynamic>?;
 
     if (doc.exists && data != null && data.containsKey('selectedLanguage')) {
-      // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
@@ -87,8 +84,6 @@ class _ChoiceLState extends State<ChoiceL> {
                     MyApp.setLocale(context, const Locale('fr'));
                   } else if (selectedLanguage?.languageCode == 'en') {
                     MyApp.setLocale(context, const Locale('en'));
-                  } else if (selectedLanguage?.languageCode == 'hi') {
-                    MyApp.setLocale(context, const Locale('hi'));
                   }
                 },
                 items: languageList.map((Language language) {

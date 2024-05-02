@@ -40,24 +40,6 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<void> checkLanguageSelection() async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    String? _uid = user!.uid;
-
-    DocumentSnapshot doc =
-        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
-
-    final data = doc.data() as Map<String,
-        dynamic>?; // Spécifiez le type de data comme Map<String, dynamic>
-
-    if (doc.exists && data != null && data.containsKey('selectedLanguage')) {
-      // L'utilisateur a déjà sélectionné une langue, naviguez vers l'écran d'accueil
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -186,7 +168,7 @@ class _LoginState extends State<Login> {
                                 .get();
 
                             final data = doc.data() as Map<String,
-                                dynamic>?; // Spécifiez le type de data comme Map<String, dynamic>
+                                dynamic>?; //  Spécifiez le type de data comme Map<String, dynamic>
 
                             if (doc.exists &&
                                 data != null &&

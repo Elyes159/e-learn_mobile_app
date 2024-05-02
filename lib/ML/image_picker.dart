@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/constant/LanguageProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:translator/translator.dart';
@@ -239,59 +240,113 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     print("Inference took ${endTime - startTime}ms");
   }
 
+  // IconButton(
+  //           onPressed: () async {
+  //             await FirebaseAuth.instance.signOut();
+  //             Navigator.of(context)
+  //                 .pushNamedAndRemoveUntil("login", (route) => false);
+  //           },
+  //           icon: const Icon(Icons.exit_to_app_rounded),
+  //         )
+  String removeNumbers(String text) {
+    return text.replaceAll(RegExp(r'\d'), '');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter TFlite'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil("login", (route) => false);
-            },
-            icon: const Icon(Icons.exit_to_app_rounded),
-          )
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height *
+                    0.4, // Modifier la hauteur selon vos besoins
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset("assets/Background.png", fit: BoxFit.cover),
+              ),
+              Positioned(
+                top: 110, // Modifier la position verticale selon vos besoins
+                left: 130, // Modifier la position horizontale selon vos besoins
+                child: Image.asset(
+                  "assets/ia.png",
+                  width: 100,
+                  height: 100,
+                ),
+              ),
+            ],
+          ),
+
+          // Contenu en dessous de l'image de fond
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  if (_image != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          20.0), // Ajustez le rayon selon vos préférences
+                      child: Image.file(
+                        File(_image!.path),
+                        height: 200,
+                        width: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  else
+                    Text(
+                      'No image selected',
+                      style: GoogleFonts.poppins(),
+                    ),
+                  SizedBox(height: 20),
+                  Text(
+                    translation(context).imagee,
+                    style: GoogleFonts.poppins(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _takePhoto,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          Color(0xFF3DB2FF), // Couleur du texte du bouton
+                      padding: EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 30), // Rembourrage interne du bouton
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50), // Rayon des bords du bouton
+                      ),
+                    ),
+                    child: Text(
+                      'Pick Image from Gallery',
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight:
+                              FontWeight.w700), // Style du texte du bouton
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'This object maybe it\'s : ',
+                    style: GoogleFonts.poppins(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    removeNumbers(v),
+                    style: GoogleFonts.poppins(fontSize: 16),
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
         ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (_image != null)
-              Image.file(
-                File(_image!.path),
-                height: 200,
-                width: 200,
-                fit: BoxFit.cover,
-              )
-            else
-              Text('No'),
-            Text(
-              translation(context).imagee,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _takePhoto,
-              child: Text('Pick Image from Gallery'),
-            ),
-            SizedBox(height: 20),
-            Text(v),
-            MaterialButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "stages");
-              },
-              child: Text("cliquer ici pour aller au stage "),
-            ),
-            MaterialButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "chatt");
-              },
-              child: Text("cliquer ici pour aller au chatt"),
-            )
-          ],
-        ),
       ),
     );
   }
