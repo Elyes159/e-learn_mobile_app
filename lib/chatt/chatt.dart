@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:pfe_1/constant/messageC.dart';
 import 'dart:convert';
 import 'package:translator/translator.dart';
 
@@ -68,15 +68,19 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat'),
+        title: Text(
+          'Chat',
+          style: GoogleFonts.poppins(),
+        ),
+        backgroundColor: Color(0xFF3DB2FF), // Couleur de l'application
         actions: [
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () async {
-              await _auth.signOut();
-              Navigator.pop(context);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.exit_to_app),
+          //   // onPressed: () async {
+          //   //   await _auth.signOut();
+          //   //   Navigator.pop(context);
+          //   // },
+          // ),
         ],
       ),
       body: Column(
@@ -86,9 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
               stream: _firestore.collection('messages').snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return SizedBox();
                 }
                 var messages = snapshot.data?.docs.reversed;
                 return ListView.builder(
@@ -135,8 +137,9 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          Container(
+            color: Color(0xFF3DB2FF), // Couleur de l'application
+            padding: EdgeInsets.all(8.0),
             child: Row(
               children: [
                 Expanded(
@@ -144,28 +147,78 @@ class _ChatScreenState extends State<ChatScreen> {
                     controller: _messageController,
                     decoration: InputDecoration(
                       hintText: 'Entrez votre message...',
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () async {
-                    final User? user1 = FirebaseAuth.instance.currentUser;
-                    String? username = await _getUserUsername(user1!.uid);
-                    // ignore: unnecessary_null_comparison
-                    if (user1 != null) {
-                      await _firestore.collection('messages').add({
-                        'text': _messageController.text,
-                        'sender': username,
-                        'timestamp': FieldValue.serverTimestamp(),
-                        'language': await _getUserSelectedLanguage(user1.uid),
-                        'email': user1.email,
-                      });
-                      _messageController.clear();
-                    }
-                  },
+                SizedBox(width: 8.0),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () async {
+                      final User? user1 = FirebaseAuth.instance.currentUser;
+                      String? username = await _getUserUsername(user1!.uid);
+                      // ignore: unnecessary_null_comparison
+                      if (user1 != null) {
+                        await _firestore.collection('messages').add({
+                          'text': _messageController.text,
+                          'sender': username,
+                          'timestamp': FieldValue.serverTimestamp(),
+                          'language': await _getUserSelectedLanguage(user1.uid),
+                          'email': user1.email,
+                        });
+                        _messageController.clear();
+                      }
+                    },
+                  ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MessageWidget extends StatelessWidget {
+  final String sender;
+  final String message;
+
+  MessageWidget(this.sender, this.message);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            sender,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[700],
+            ),
+          ),
+          SizedBox(height: 4.0),
+          Container(
+            padding: EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Text(
+              message,
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
         ],

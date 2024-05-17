@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/ML/image_picker.dart';
+import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/courses.dart';
+import 'package:pfe_1/profile/profile.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,11 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void navigateToAchievement() {
-    Navigator.of(context).pushReplacementNamed("arabicCourse");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChatScreen()),
+    );
   }
 
   void navigateToProfile() {
-    Navigator.of(context).pushReplacementNamed("arabicCourse");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Profile()),
+    );
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getCourseDataByIndex(
@@ -665,7 +673,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/robot.png', // Replace with your image path
+                'assets/ia.png', // Replace with your image path
                 width: 25.0,
                 height: 25.0,
                 color: _currentIndex == 1 ? Color(0xFF3DB2FF) : null,
@@ -674,12 +682,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/Trophy.png', // Replace with your image path
+                'assets/boite.png', // Replace with your image path
                 width: 24.0,
                 height: 24.0,
                 color: _currentIndex == 2 ? Color(0xFF3DB2FF) : null,
               ),
-              label: 'Achievement',
+              label: 'chat',
             ),
             BottomNavigationBarItem(
               icon: Image.asset(

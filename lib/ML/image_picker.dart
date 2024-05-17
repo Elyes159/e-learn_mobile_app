@@ -278,7 +278,6 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
             ],
           ),
 
-          // Contenu en dessous de l'image de fond
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.all(5.0),

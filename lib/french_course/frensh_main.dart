@@ -420,35 +420,40 @@ class _FrenchCourseState extends State<FrenchCourse> {
               SizedBox(
                 height: 45,
               ),
-              Container(
-                height: 70,
-                width: 236,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF3DB2FF)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 60.0),
-                        child: Text(
-                          "Learn Now",
-                          style: GoogleFonts.poppins(
-                              fontSize: 20, color: Colors.white),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed("frenshunities");
+                },
+                child: Container(
+                  height: 70,
+                  width: 236,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Color(0xFF3DB2FF)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 60.0),
+                          child: Text(
+                            "Learn Now",
+                            style: GoogleFonts.poppins(
+                                fontSize: 20, color: Colors.white),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed("frenshunities");
-                          },
-                          child: Image.asset("assets/Button - Next.png")),
-                    )
-                  ],
+                      // Padding(
+                      //   padding: const EdgeInsets.only(right: 15.0),
+                      //   child: InkWell(
+                      //       onTap: () {
+                      //         Navigator.of(context)
+                      //             .pushReplacementNamed("frenshunities");
+                      //       },
+                      //       child: Image.asset("assets/Button - Next.png")),
+                      // )
+                    ],
+                  ),
                 ),
               )
             ],
