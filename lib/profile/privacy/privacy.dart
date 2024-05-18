@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfe_1/ML/image_picker.dart';
+import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/profile/profile.dart';
 
 class Privacy extends StatefulWidget {
@@ -193,6 +195,113 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
     return null;
   }
 
+  void _showPasswordUpdateDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Update Password',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Champs de texte pour le mot de passe actuel, le nouveau mot de passe et la confirmation
+              TextFormField(
+                controller: currentPasswordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Current Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  hintText: 'Enter current password',
+                ),
+              ),
+              SizedBox(height: 12),
+              TextFormField(
+                controller: newPasswordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'New Password',
+                  hintText: 'Enter new password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12),
+              TextFormField(
+                controller: confirmPasswordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  hintText: 'Confirm new password',
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: _updatePassword,
+              child: Text('Update'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFF3DB2FF),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  int _currentIndex = 0;
+  void navigateToLearn() {
+    Navigator.of(context).pushReplacementNamed("arabicCourse");
+  }
+
+  void navigateToObjectTranslation() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => ImagePickerDemo()),
+    );
+  }
+
+  void navigateToAchievement() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChatScreen()),
+    );
+  }
+
+  void navigateToProfile() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Profile()),
+    );
+  }
+
   TextEditingController currentPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -228,148 +337,256 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF3DB2FF),
-        toolbarHeight: 100,
-        leading: IconButton(
-          icon: Image.asset(
-            "assets/Back_Button.png",
-            height: 80.0,
-            width: 80.0,
-            fit: BoxFit.cover,
+        appBar: AppBar(
+          backgroundColor: Color(0xFF3DB2FF),
+          toolbarHeight: 100,
+          leading: IconButton(
+            icon: Image.asset(
+              "assets/Back_Button.png",
+              height: 80.0,
+              width: 80.0,
+              fit: BoxFit.cover,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Profile()),
+              );
+            },
+            iconSize: 100.0,
           ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Profile()),
-            );
-          },
-          iconSize: 100.0,
-        ),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 50.0, right: 30),
-          child: Center(
-            child: Text(
-              "My Privacy",
-              style: GoogleFonts.poppins(
-                color: Color.fromARGB(255, 245, 243, 243),
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 50.0, right: 30),
+            child: Center(
+              child: Text(
+                "My Privacy",
+                style: GoogleFonts.poppins(
+                  color: Color.fromARGB(255, 245, 243, 243),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
         ),
-      ),
-      body: Stack(
-        children: [
-          Image.asset(
-            'assets/Vector.png',
-            fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 600,
-          ),
-          SizedBox(height: 50),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: SizedBox(
-                  height: 115,
-                  width: 115,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    clipBehavior: Clip.none,
-                    children: [
-                      FutureBuilder<String?>(
-                        future: getImageURL(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else {
-                            String? imageURL = snapshot.data;
-                            if (imageURL != null) {
-                              return CircleAvatar(
-                                backgroundImage: NetworkImage(imageURL),
-                              );
+        body: Stack(
+          children: [
+            Image.asset(
+              'assets/Vector.png',
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 600,
+            ),
+            SizedBox(height: 50),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(50.0),
+                  child: SizedBox(
+                    height: 115,
+                    width: 115,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      clipBehavior: Clip.none,
+                      children: [
+                        FutureBuilder<String?>(
+                          future: getImageURL(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
                             } else {
-                              return const Icon(Icons.person);
+                              String? imageURL = snapshot.data;
+                              if (imageURL != null) {
+                                return CircleAvatar(
+                                  backgroundImage: NetworkImage(imageURL),
+                                );
+                              } else {
+                                return const Icon(Icons.person);
+                              }
                             }
-                          }
-                        },
-                      ),
-                      Positioned(
-                        right: -16,
-                        bottom: 0,
-                        child: SizedBox(
-                          height: 46,
-                          width: 46,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              backgroundColor: const Color(0xFFF5F6F9),
-                              shape: CircleBorder(),
-                            ),
-                            onPressed: _takePhoto,
-                            child: const Icon(
-                              Icons.camera_alt,
-                              color: Colors.black,
-                              size: 24,
+                          },
+                        ),
+                        Positioned(
+                          right: -16,
+                          bottom: 0,
+                          child: SizedBox(
+                            height: 46,
+                            width: 46,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                backgroundColor: const Color(0xFFF5F6F9),
+                                shape: CircleBorder(),
+                              ),
+                              onPressed: _takePhoto,
+                              child: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.black,
+                                size: 24,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    FutureBuilder<String?>(
-                      future: getUserName(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return SizedBox();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          String? username = snapshot.data;
-                          return Text(
-                            'Username: $username',
-                            style: GoogleFonts.poppins(),
-                          );
-                        }
-                      },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          FutureBuilder<String?>(
+                            future: getUserName(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return SizedBox();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                String? username = snapshot.data;
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: Text(
+                                    'Username: $username',
+                                    style: GoogleFonts.poppins(),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          FutureBuilder<String?>(
+                            future: getUserEmail(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return SizedBox();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                String? email = snapshot.data;
+                                return Text(
+                                  'Email: $email',
+                                  style: GoogleFonts.poppins(),
+                                );
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20.0),
+                            child: ElevatedButton(
+                              onPressed: _showPasswordUpdateDialog,
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Color(
+                                    0xFF3DB2FF), // Couleur du texte du bouton
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical:
+                                        12), // Espacement intérieur du bouton
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      8), // Bord arrondi du bouton
+                                ),
+                              ),
+                              child: Text(
+                                'Update Password',
+                                style: TextStyle(
+                                  fontSize:
+                                      16, // Taille de la police du texte du bouton
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    FutureBuilder<String?>(
-                      future: getUserEmail(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return SizedBox();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          String? email = snapshot.data;
-                          return Text(
-                            'Email: $email',
-                            style: GoogleFonts.poppins(),
-                          );
-                        }
-                      },
-                    ),
-                  ],
+                  ),
                 ),
+              ],
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+            switch (index) {
+              case 0:
+                navigateToLearn();
+                break;
+              case 1:
+                navigateToObjectTranslation();
+                break;
+              case 2:
+                navigateToAchievement();
+                break;
+              case 3:
+                navigateToProfile();
+                break;
+              default:
+                break;
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/BookOpenText.png', // Replace with your image path
+                width: 24.0,
+                height: 24.0,
+                color: _currentIndex == 0 ? Color(0xFF3DB2FF) : null,
               ),
-            ],
-          ),
-        ],
-      ),
-    );
+              label: "Learn",
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/model1.png', // Replace with your image path
+                width: 35.0,
+                height: 35.0,
+                color: _currentIndex == 1 ? Color(0xFF3DB2FF) : null,
+              ),
+              label: 'Object-Translation',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/Chat1.png', // Replace with your image path
+                width: 24.0,
+                height: 24.0,
+                color: _currentIndex == 2 ? Color(0xFF3DB2FF) : null,
+              ),
+              label: 'chat',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/UserCircle.png', // Replace with your image path
+                width: 24.0,
+                height: 24.0,
+                color: _currentIndex == 3 ? Color(0xFF3DB2FF) : null,
+              ),
+              label: 'Profile',
+            ),
+          ],
+          selectedLabelStyle: GoogleFonts.poppins(),
+          unselectedLabelStyle: GoogleFonts.poppins(),
+          selectedItemColor: Color(0xFF3DB2FF),
+        ));
   }
 }
