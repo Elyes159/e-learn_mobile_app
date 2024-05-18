@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfe_1/profile/privacy/privacy.dart';
 import 'package:pfe_1/profile/settings/settings.dart';
-import 'package:pfe_1/starting/signin.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -201,6 +201,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
           ),
         ),
       ),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Stack(
         children: [
           Image.asset(
@@ -446,8 +447,26 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                   Text(
                                     "     privacy",
                                     style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600),
-                                  )
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Spacer(), // Ajouter un espace flexible pour pousser les éléments à droite
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Privacy()),
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              10.0), // Ajouter un padding à droite pour l'image
+                                      child:
+                                          Image.asset("assets/CaretRight.png"),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -482,13 +501,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                               Row(
                                 children: [
                                   IconButton(
-                                    onPressed: () async {
-                                      await FirebaseAuth.instance.signOut();
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) => Login()),
-                                      );
-                                    },
+                                    onPressed: () {},
                                     icon: Icon(Icons.logout_outlined),
                                   ),
                                   Text(
