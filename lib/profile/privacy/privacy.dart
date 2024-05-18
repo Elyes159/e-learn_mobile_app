@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -215,12 +216,24 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
                 controller: currentPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Current Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  hintText: 'Enter current password',
-                ),
+                    labelText: 'Current Password',
+                    labelStyle: GoogleFonts.poppins(color: Color(0xFF3DB2FF)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      borderSide: BorderSide(
+                          color: Colors
+                              .grey), // Bordure lorsqu'il n'est pas focalisé
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      borderSide: BorderSide(
+                          color: Colors.blue), // Bordure lorsqu'il est focalisé
+                    ),
+                    hintText: 'Enter current password',
+                    hintStyle: GoogleFonts.poppins(color: Color(0xFF3DB2FF))),
               ),
               SizedBox(height: 12),
               TextFormField(
@@ -232,6 +245,20 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50.0),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                    borderSide: BorderSide(
+                        color: Colors
+                            .grey), // Bordure lorsqu'il n'est pas focalisé
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                    borderSide: BorderSide(
+                        color: Color(
+                            0xFF3DB2FF)), // Bordure lorsqu'il est focalisé
+                  ),
+                  labelStyle: GoogleFonts.poppins(color: Color(0xFF3DB2FF)),
+                  hintStyle: GoogleFonts.poppins(color: Color(0xFF3DB2FF)),
                 ),
               ),
               SizedBox(height: 12),
@@ -242,8 +269,22 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
                   labelText: 'Confirm Password',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50.0),
+                    borderSide: BorderSide(color: Color(0xFF3DB2FF)),
                   ),
                   hintText: 'Confirm new password',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                    borderSide: BorderSide(
+                        color: Colors
+                            .grey), // Bordure lorsqu'il n'est pas focalisé
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                    borderSide: BorderSide(
+                        color: Colors.blue), // Bordure lorsqu'il est focalisé
+                  ),
+                  labelStyle: GoogleFonts.poppins(color: Color(0xFF3DB2FF)),
+                  hintStyle: GoogleFonts.poppins(color: Color(0xFF3DB2FF)),
                 ),
               ),
             ],
@@ -379,7 +420,7 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
               height: MediaQuery.of(context).size.height - 600,
             ),
             SizedBox(height: 50),
-            Column(
+            ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(50.0),
