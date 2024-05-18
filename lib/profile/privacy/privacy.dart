@@ -608,7 +608,7 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/Chat1.png', // Replace with your image path
+                'assets/Chat1.png', 
                 width: 24.0,
                 height: 24.0,
                 color: _currentIndex == 2 ? Color(0xFF3DB2FF) : null,
