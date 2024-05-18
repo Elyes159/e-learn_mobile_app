@@ -49,10 +49,12 @@ class _ChoiceLState extends State<ChoiceL> {
                 fontWeight: FontWeight.w500,
                 fontSize: 25,
               ),
+              textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20), // Add spacing between text and dropdown
+            SizedBox(height: 20),
             Container(
-              width: 200, // Set the width of the dropdown container
+              width: 300, // Increased width for better UI
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Color(0xFF3DB2FF),
@@ -60,45 +62,53 @@ class _ChoiceLState extends State<ChoiceL> {
                 ),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: DropdownButton<Language>(
-                value: selectedLanguage,
-                onChanged: (Language? language) async {
-                  final User? user1 = FirebaseAuth.instance.currentUser;
-                  String? _uid = user1!.uid;
-                  selectedLanguage = language;
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(_uid)
-                      .update({
-                    'selectedLanguage': language!.languageCode,
-                  });
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<Language>(
+                  isExpanded: true, // Makes the dropdown take the full width
+                  value: selectedLanguage,
+                  onChanged: (Language? language) async {
+                    final User? user1 = FirebaseAuth.instance.currentUser;
+                    String? _uid = user1!.uid;
+                    selectedLanguage = language;
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(_uid)
+                        .update({
+                      'selectedLanguage': language!.languageCode,
+                    });
 
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    );
 
-                  print('Langue sélectionnée : ${language.languageCode}');
-                  if (selectedLanguage?.languageCode == "ar") {
-                    MyApp.setLocale(context, const Locale('ar'));
-                  } else if (selectedLanguage?.languageCode == 'fr') {
-                    MyApp.setLocale(context, const Locale('fr'));
-                  } else if (selectedLanguage?.languageCode == 'en') {
-                    MyApp.setLocale(context, const Locale('en'));
-                  }
-                },
-                items: languageList.map((Language language) {
-                  return DropdownMenuItem<Language>(
-                    value: language,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(language.flag, style: TextStyle(fontSize: 20)),
-                        SizedBox(width: 8),
-                        Text(language.name),
-                      ],
-                    ),
-                  );
-                }).toList(),
+                    print('Langue sélectionnée : ${language.languageCode}');
+                    if (selectedLanguage?.languageCode == "ar") {
+                      MyApp.setLocale(context, const Locale('ar'));
+                    } else if (selectedLanguage?.languageCode == 'fr') {
+                      MyApp.setLocale(context, const Locale('fr'));
+                    } else if (selectedLanguage?.languageCode == 'en') {
+                      MyApp.setLocale(context, const Locale('en'));
+                    }
+                  },
+                  dropdownColor: Colors.white,
+                  icon: Icon(Icons.arrow_drop_down, color: Color(0xFF3DB2FF)),
+                  items: languageList.map((Language language) {
+                    return DropdownMenuItem<Language>(
+                      value: language,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Row(
+                          children: [
+                            Text(language.flag, style: TextStyle(fontSize: 20)),
+                            SizedBox(width: 8),
+                            Text(language.name, style: GoogleFonts.poppins()),
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ],

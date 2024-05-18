@@ -80,9 +80,9 @@ class _SignupState extends State<Signup> {
         Text(
           "How old are you?",
           style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 25,
-          ),
+              fontWeight: FontWeight.w500,
+              fontSize: 25,
+              color: Color(0xFF273958)),
         ),
         const SizedBox(height: 40),
         NumericTextForm(
@@ -113,9 +113,9 @@ class _SignupState extends State<Signup> {
         Text(
           "What is your name?",
           style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 25,
-          ),
+              fontWeight: FontWeight.w500,
+              fontSize: 25,
+              color: Color(0xFF273958)),
         ),
         const SizedBox(height: 40),
         CustomTextForm(
@@ -146,9 +146,9 @@ class _SignupState extends State<Signup> {
         Text(
           "What is your email?",
           style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 25,
-          ),
+              fontWeight: FontWeight.w500,
+              fontSize: 25,
+              color: Color(0xFF273958)),
         ),
         const SizedBox(height: 40),
         CustomTextForm(
@@ -179,9 +179,9 @@ class _SignupState extends State<Signup> {
         Text(
           "Set up your password",
           style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-            fontSize: 25,
-          ),
+              fontWeight: FontWeight.w500,
+              fontSize: 25,
+              color: Color(0xFF273958)),
         ),
         const SizedBox(height: 40),
         CustomTextForm(

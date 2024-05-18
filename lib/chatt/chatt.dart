@@ -40,13 +40,16 @@ class _ChatScreenState extends State<ChatScreen> {
       for (var match in matches) {
         final offset = match['offset'];
         final length = match['length'];
-        final replacement = match['replacements'][0];
+        final replacements = match['replacements'];
 
-        correctedText = correctedText.replaceRange(
-          offset,
-          offset + length,
-          replacement,
-        );
+        if (replacements != null && replacements.isNotEmpty) {
+          final replacement = replacements[0]['value'];
+          correctedText = correctedText.replaceRange(
+            offset,
+            offset + length,
+            replacement,
+          );
+        }
       }
 
       return correctedText;
@@ -71,41 +74,42 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
         child: Padding(
-            padding: EdgeInsets.only(top: 5),
-            child: AppBar(
-              backgroundColor: Colors.white,
-              leadingWidth: 30,
-              title: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.zero,
-                    child: Image.asset(
-                      'assets/Chat1.png',
-                      height: 45,
-                      width: 40,
-                    ),
+          padding: EdgeInsets.only(top: 5),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            leadingWidth: 30,
+            title: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.zero,
+                  child: Image.asset(
+                    'assets/Chat1.png',
+                    height: 45,
+                    width: 40,
                   ),
-                  Padding(padding: EdgeInsets.only(left: 20)),
-                  Text(
-                    "Chat Page",
-                    style: GoogleFonts.poppins(),
-                  )
-                ],
-              ),
-              actions: [
-                IconButton(
-                  icon: Icon(
-                    Icons.exit_to_app,
-                    color: Color(0xff3DB2FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    await _auth.signOut();
-                    Navigator.pop(context);
-                  },
                 ),
+                Padding(padding: EdgeInsets.only(left: 20)),
+                Text(
+                  "Chat Page",
+                  style: GoogleFonts.poppins(),
+                )
               ],
-            )),
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.exit_to_app,
+                  color: Color(0xff3DB2FF),
+                  size: 30,
+                ),
+                onPressed: () async {
+                  await _auth.signOut();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -131,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       future: _getUserSelectedLanguage(user1!.uid),
                       builder: (context, languageSnapshot) {
                         if (!languageSnapshot.hasData) {
-                          return CircularProgressIndicator();
+                          return SizedBox();
                         }
                         String? lanDestinaire = languageSnapshot.data;
 
@@ -141,7 +145,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 messageText, lansender, lanDestinaire),
                             builder: (context, translationSnapshot) {
                               if (!translationSnapshot.hasData) {
-                                return CircularProgressIndicator();
+                                return SizedBox();
                               }
                               String translatedMessage =
                                   translationSnapshot.data!;
@@ -153,7 +157,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 messageSender ?? "",
                                 translatedMessage,
                                 // ignore: dead_code
-                                test: true ? email == emailMsg : false,
+                                test: email == emailMsg,
                               );
                             },
                           );
@@ -195,7 +199,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         borderSide: BorderSide(color: Colors.grey),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[200],
+                      fillColor: Colors.transparent,
                     ),
                   ),
                 ),
@@ -266,27 +270,7 @@ class MessageWidget extends StatelessWidget {
                 color: test ? Colors.white : Colors.black, fontSize: 16),
             isSender: test,
           ),
-          // Text(
-          //   sender,
-          //   style: TextStyle(
-          //     fontWeight: FontWeight.bold,
-          //     color: Colors.grey[700],
-          //   ),
-          // ),
           SizedBox(height: 4.0),
-          // Container(
-          //   padding: EdgeInsets.all(8.0),
-          //   decoration: BoxDecoration(
-          //     color: Colors.grey[300],
-          //     borderRadius: BorderRadius.circular(10.0),
-          //   ),
-          //   child: Text(
-          //     message,
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
