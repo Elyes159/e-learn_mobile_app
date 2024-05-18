@@ -2,7 +2,6 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/addQuestiontoFirestore.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
 import 'package:pfe_1/admin/add_course.dart';
@@ -25,6 +24,7 @@ import 'package:pfe_1/starting/signin.dart';
 import 'package:pfe_1/starting/signup.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pfe_1/starting/welcome_signup.dart';
+import 'package:pfe_1/theme/apptheme.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -86,6 +86,7 @@ class _MyAppState extends State<MyApp> {
 
         // autres langues supportées
       ],
+      //theme: AppThemes.darkTheme,
       locale: _locale,
       home: _getStartScreen(),
       routes: {

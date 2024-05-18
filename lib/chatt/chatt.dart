@@ -1,3 +1,4 @@
+import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -67,21 +68,44 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Chat',
-          style: GoogleFonts.poppins(),
-        ),
-        backgroundColor: Color(0xFF3DB2FF), // Couleur de l'application
-        actions: [
-          // IconButton(
-          //   icon: Icon(Icons.exit_to_app),
-          //   // onPressed: () async {
-          //   //   await _auth.signOut();
-          //   //   Navigator.pop(context);
-          //   // },
-          // ),
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: Padding(
+            padding: EdgeInsets.only(top: 5),
+            child: AppBar(
+              backgroundColor: Colors.white,
+              leadingWidth: 30,
+              title: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.zero,
+                    child: Image.asset(
+                      'assets/Chat1.png',
+                      height: 45,
+                      width: 40,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  Text(
+                    "Chat Page",
+                    style: GoogleFonts.poppins(),
+                  )
+                ],
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    Icons.exit_to_app,
+                    color: Color(0xff3DB2FF),
+                    size: 30,
+                  ),
+                  onPressed: () async {
+                    await _auth.signOut();
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            )),
       ),
       body: Column(
         children: [
@@ -101,6 +125,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     var messageText = messages.elementAt(index)['text'];
                     var messageSender = messages.elementAt(index)['sender'];
                     var lansender = messages.elementAt(index)['language'];
+                    var emailMsg = messages.elementAt(index)['email'];
 
                     return FutureBuilder<String?>(
                       future: _getUserSelectedLanguage(user1!.uid),
@@ -120,10 +145,15 @@ class _ChatScreenState extends State<ChatScreen> {
                               }
                               String translatedMessage =
                                   translationSnapshot.data!;
+                              final User? user1 =
+                                  FirebaseAuth.instance.currentUser;
+                              final email = user1!.email;
 
                               return MessageWidget(
                                 messageSender ?? "",
                                 translatedMessage,
+                                // ignore: dead_code
+                                test: true ? email == emailMsg : false,
                               );
                             },
                           );
@@ -138,21 +168,34 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           Container(
-            color: Color(0xFF3DB2FF), // Couleur de l'application
+            // color: Color(0xFF3DB2FF), // Couleur de l'application
             padding: EdgeInsets.all(8.0),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
+                    cursorColor: Colors.blue,
                     controller: _messageController,
                     decoration: InputDecoration(
                       hintText: 'Entrez votre message...',
-                      fillColor: Colors.white,
-                      filled: true,
+                      prefixIcon:
+                          Icon(Icons.message_outlined, color: Colors.blue),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
                     ),
                   ),
                 ),
@@ -160,7 +203,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 CircleAvatar(
                   backgroundColor: Colors.white,
                   child: IconButton(
-                    icon: Icon(Icons.send),
+                    icon: Icon(
+                      Icons.send,
+                      color: Color(0xff3DB2FF),
+                    ),
                     onPressed: () async {
                       final User? user1 = FirebaseAuth.instance.currentUser;
                       String? username = await _getUserUsername(user1!.uid);
@@ -190,37 +236,57 @@ class _ChatScreenState extends State<ChatScreen> {
 class MessageWidget extends StatelessWidget {
   final String sender;
   final String message;
+  final bool test;
 
-  MessageWidget(this.sender, this.message);
+  MessageWidget(this.sender, this.message, {super.key, required this.test});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            test ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Text(
-            sender,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
-          ),
-          SizedBox(height: 4.0),
           Container(
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+              child: Padding(
+            padding: test
+                ? const EdgeInsets.only(right: 20.0)
+                : const EdgeInsets.only(left: 20.0),
             child: Text(
-              message,
-              style: TextStyle(
-                color: Colors.black,
-              ),
+              "$sender",
+              style: GoogleFonts.poppins(),
             ),
+          )),
+          BubbleSpecialThree(
+            text: message,
+            color: test ? const Color(0xFF3DB2FF) : Color(0xFFE8E8E8),
+            tail: true,
+            textStyle: GoogleFonts.poppins(
+                color: test ? Colors.white : Colors.black, fontSize: 16),
+            isSender: test,
           ),
+          // Text(
+          //   sender,
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.bold,
+          //     color: Colors.grey[700],
+          //   ),
+          // ),
+          SizedBox(height: 4.0),
+          // Container(
+          //   padding: EdgeInsets.all(8.0),
+          //   decoration: BoxDecoration(
+          //     color: Colors.grey[300],
+          //     borderRadius: BorderRadius.circular(10.0),
+          //   ),
+          //   child: Text(
+          //     message,
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

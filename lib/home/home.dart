@@ -502,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(right: 8.0, left: 8, bottom: 0),
               child: Container(
                 height: 300,
-                color: Colors.white,
+                color: Colors.transparent,
                 child: FutureBuilder<int>(
                   future: getNumberOfCourses(),
                   builder: (context, snapshot) {
@@ -673,16 +673,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/ia.png', // Replace with your image path
-                width: 25.0,
-                height: 25.0,
+                'assets/model1.png', // Replace with your image path
+                width: 35.0,
+                height: 35.0,
                 color: _currentIndex == 1 ? Color(0xFF3DB2FF) : null,
               ),
               label: 'Object-Translation',
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/boite.png', // Replace with your image path
+                'assets/Chat1.png', // Replace with your image path
                 width: 24.0,
                 height: 24.0,
                 color: _currentIndex == 2 ? Color(0xFF3DB2FF) : null,

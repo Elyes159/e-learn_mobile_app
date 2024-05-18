@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfe_1/profile/settings/settings.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -142,7 +143,6 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('courses')
           .get();
-
       return coursesSnapshot.size;
     } catch (e) {
       print('Error fetching number of courses: $e');
@@ -369,15 +369,141 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.grey)),
-                    child: Column(children: [])),
-              )
+              // Autres enfants de la colonne
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 0.0, top: 30, left: 30),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    child: Image.asset("assets/settings.png"),
+                                  ),
+                                  Text(
+                                    "     Settings",
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Spacer(), // Ajouter un espace flexible pour pousser les éléments à droite
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Settingss()),
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              10.0), // Ajouter un padding à droite pour l'image
+                                      child:
+                                          Image.asset("assets/CaretRight.png"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 0.0, top: 20, left: 30),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    child: Image.asset("assets/achievment.png"),
+                                  ),
+                                  Text(
+                                    "     Achievements",
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 0.0, top: 20, left: 30),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    child: Image.asset("assets/privacy.png"),
+                                  ),
+                                  Text(
+                                    "     privacy",
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 110,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 120.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 60.0),
+                                child: Text(
+                                  "My Account",
+                                  style: GoogleFonts.poppins(),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.logout_outlined),
+                                  ),
+                                  Text(
+                                    "Logout Account",
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
