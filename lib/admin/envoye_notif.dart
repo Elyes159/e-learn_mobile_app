@@ -11,22 +11,21 @@ class NotificationButtonPage extends StatefulWidget {
 
 class _NotificationButtonPageState extends State<NotificationButtonPage> {
   Future<void> sendNotificationIfInactive() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
+    QuerySnapshot usersSnapshot =
+        await FirebaseFirestore.instance.collection('users').get();
 
-      if (userDoc.exists) {
-        Timestamp? lastTimeSpent = userDoc['time_spent'];
-        if (lastTimeSpent != null) {
-          DateTime lastActive = lastTimeSpent.toDate();
-          DateTime twoDaysAgo = DateTime.now().subtract(Duration(seconds: 2));
+    DateTime twoDaysAgo = DateTime.now().subtract(Duration(days: 2));
 
-          if (lastActive.isBefore(twoDaysAgo)) {
-            await sendNotification(userDoc['fcmToken']);
-          }
+    for (var userDoc in usersSnapshot.docs) {
+      var userData = userDoc.data() as Map<String, dynamic>?;
+
+      if (userData != null && userData.containsKey('time_spent')) {
+        int lastTimeSpentMillis = userData['time_spent'];
+        DateTime lastActive =
+            DateTime.fromMillisecondsSinceEpoch(lastTimeSpentMillis);
+
+        if (lastActive.isBefore(twoDaysAgo)) {
+          await sendNotification(userData['fcmToken']);
         }
       }
     }
@@ -42,7 +41,8 @@ class _NotificationButtonPageState extends State<NotificationButtonPage> {
       'Accept': '*/*',
       'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
       'Content-Type': 'application/json',
-      'Authorization': 'key=YOUR_SERVER_KEY_HERE',
+      'Authorization':
+          'key=AAAAkrZ33uU:APA91bFmD8g0KJw7pwsSCXxq5tbLnh8WCYqsR4-LvwooC1ASL5hSLUkYtGSCJ2U4-IWHNl1YinHkOhZK991jHwQG9JV1VbNAII2LOX-TWa7t2fHA0TpCTnxHaEEHS5rd52ia5GFj8uuL',
     };
 
     var url = Uri.parse('https://fcm.googleapis.com/fcm/send');
@@ -66,6 +66,7 @@ class _NotificationButtonPageState extends State<NotificationButtonPage> {
 
     if (res.statusCode >= 200 && res.statusCode < 300) {
       print(resBody);
+      print("mriiiiiiiiiiiiiiiiiiiiiigl");
     } else {
       print(res.reasonPhrase);
     }
