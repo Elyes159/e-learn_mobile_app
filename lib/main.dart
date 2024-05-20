@@ -1,7 +1,10 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:pfe_1/addQuestiontoFirestore.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
 import 'package:pfe_1/admin/add_course.dart';
@@ -24,9 +27,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pfe_1/starting/welcome_signup.dart';
 import 'package:pfe_1/theme/apptheme.dart';
 import 'package:pfe_1/theme/themeNotifier.dart';
-import 'package:provider/provider.dart';
-// Importez le ThemeNotifier
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Handling a background message: ${message.messageId}");
+}
+
+ 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -35,6 +42,8 @@ void main() async {
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.debug,
   );
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(
     ChangeNotifierProvider(
@@ -56,7 +65,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ValueNotifier<ThemeMode> _themeMode = ValueNotifier(ThemeMode.light);
-
   Locale? _locale;
 
   setLocale(Locale locale) {
@@ -67,7 +75,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void didChangeDependencies() {
-    getLocale().then((Locale) => setLocale(Locale));
+    getLocale().then((locale) => setLocale(locale));
     super.didChangeDependencies();
   }
 
@@ -79,7 +87,12 @@ class _MyAppState extends State<MyApp> {
         valueListenable: _themeMode,
         builder: (context, currentMode, child) {
           return MaterialApp(
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
             supportedLocales: const [
               Locale('en'),
               Locale('ar'),
@@ -107,7 +120,7 @@ class _MyAppState extends State<MyApp> {
               "usersPage": (context) => UserListPage(),
               "AddLeconFromAdmin": (context) => AddLessonForm(),
               'AddCourseAdmin': (context) => NewCourseForm(),
-              "addQuestiontofirestore": (context) => SampleQuestionsWidget()
+              "addQuestiontofirestore": (context) => SampleQuestionsWidget(),
             },
           );
         },

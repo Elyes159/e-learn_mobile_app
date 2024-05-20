@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pfe_1/admin/add_questionsMain.dart';
+import 'package:pfe_1/admin/envoye_notif.dart';
 
 class Admin_main extends StatefulWidget {
   @override
@@ -40,6 +41,15 @@ class _Admin_mainState extends State<Admin_main> {
                         .pushReplacementNamed("AddCourseAdmin");
                   },
                   child: Text("Ajouter des cours   , cliquer ici")),
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationButtonPage()),
+                    );
+                  },
+                  child: Text("send notif")),
             ],
           ),
         ),

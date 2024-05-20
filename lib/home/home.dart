@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pfe_1/ML/image_picker.dart';
@@ -16,11 +17,24 @@ class _HomeScreenState extends State<HomeScreen> {
   User? currentUser;
   String? username;
   int _currentIndex = 0;
+  void saveFCMToken() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String? token = await FirebaseMessaging.instance.getToken();
+      if (token != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .set({'fcmToken': token}, SetOptions(merge: true));
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    saveFCMToken();
   }
 
   void navigateToLearn() {
@@ -37,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ChatScreen()),
-    ); 
+    );
   }
 
   void navigateToProfile() {
@@ -45,6 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
       MaterialPageRoute(builder: (context) => Profile()),
     );
+  }
+
+  getToken() async {
+    String? mytoken = await FirebaseMessaging.instance.getToken();
+    print("#####################################");
+    print(mytoken);
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getCourseDataByIndex(
