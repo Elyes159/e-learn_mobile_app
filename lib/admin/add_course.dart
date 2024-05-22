@@ -173,10 +173,10 @@ class _NewCourseFormState extends State<NewCourseForm> {
           .doc(leconId)
           .collection('questions');
 
-      await FirebaseFirestore.instance
-          .collection('cours$selectedLanguage')
-          .doc(chapterId)
-          .set({'numCh': counter});
+      // await FirebaseFirestore.instance
+      //     .collection('cours$selectedLanguage')
+      //     .doc(chapterId)
+      //     .set({'numCh': counter});
 
       // Ajouter chaque question traduite à la collection
       for (int i = 0; i < translatedQuestions.length; i++) {
@@ -284,21 +284,41 @@ class _NewCourseFormState extends State<NewCourseForm> {
             to: targetLanguage,
           );
 
-          ScrambledWordsQuestion translatedQuestion = ScrambledWordsQuestion(
-            correctSentence: question
-                .correctSentence, // Conservez la phrase correcte sans traduction
-            questionText: translatedQuestionText
-                .text, // Utilisez le texte traduit pour la question
-            selectedWordOrder: question
-                .selectedWordOrder, // Vous pouvez conserver la liste vide pour l'ordre des mots sélectionnés
-            additionalWords: question
-                .additionalWords, // Conservez les mots supplémentaires sans traduction
-            questionLanguage: '',
-            ImagePath: question
-                .ImagePath, // Vous pouvez conserver la langue vide ou définir une valeur par défaut
-          );
+          if (question.questionLanguage == 'fr') {
+            ScrambledWordsQuestion translatedQuestion = ScrambledWordsQuestion(
+              correctSentence: question.correctSentence,
+              questionText: translatedQuestionText.text,
+              selectedWordOrder: question.selectedWordOrder,
+              additionalWords: question.additionalWords,
+              questionLanguage: '',
+              ImagePath: question.ImagePath,
+            );
+            translatedQuestions.add(translatedQuestion);
+          } else {
+            Translation translatedCorrectSentence =
+                await GoogleTranslator().translate(
+              question.correctSentence,
+              to: targetLanguage,
+            );
+            List<String> translatedSelectedWordOrder = [];
+            for (var word in question.selectedWordOrder) {
+              Translation translatedWord = await GoogleTranslator().translate(
+                word,
+                to: targetLanguage,
+              );
+              translatedSelectedWordOrder.add(translatedWord.text);
+            }
 
-          translatedQuestions.add(translatedQuestion);
+            ScrambledWordsQuestion translatedQuestion = ScrambledWordsQuestion(
+              correctSentence: translatedCorrectSentence.text,
+              questionText: translatedQuestionText.text,
+              selectedWordOrder: translatedSelectedWordOrder,
+              additionalWords: question.additionalWords,
+              questionLanguage: '',
+              ImagePath: question.ImagePath,
+            );
+            translatedQuestions.add(translatedQuestion);
+          }
         } else if (question is TranslationQuestion) {
           Translation translatedQuestionText =
               await GoogleTranslator().translate(

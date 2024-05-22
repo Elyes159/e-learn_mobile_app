@@ -11,10 +11,12 @@ class Courses {
 }
 
 class CoursesManager {
-  List<Courses> _coursess = [
+  final List<Courses> _coursess = [
     Courses(name: 'Anglais', code: 'en', imageUrl: 'assets/english_flag.png'),
     Courses(name: 'Français', code: 'fr', imageUrl: 'assets/french_flag.png'),
-    Courses(name: 'Arabe', code: 'ar', imageUrl: 'assets/french_flag.png'),
+    Courses(name: 'Arabe', code: 'ar', imageUrl: 'assets/arabic_flag.png'),
+    Courses(name: 'espagnole', code: 'es', imageUrl: 'assets/esp_flag.png'),
+    Courses(name: 'indian', code: 'in', imageUrl: 'assets/ind_flag.png'),
   ];
 
   List<Courses> get coursess => _coursess;
