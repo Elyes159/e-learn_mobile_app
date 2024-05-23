@@ -7,6 +7,7 @@ import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/courses.dart';
 import 'package:pfe_1/profile/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -185,17 +186,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
                       child: InkWell(
-                        onTap: () {
-                          if (courseCode == "ar") {
-                            Navigator.of(context)
-                                .pushReplacementNamed("arabicCourse");
-                          } else if (courseCode == "fr") {
-                            Navigator.of(context)
-                                .pushReplacementNamed("frenchCourse");
-                          } else if (courseCode == "en") {
-                            Navigator.of(context)
-                                .pushReplacementNamed("englishCourse");
-                          }
+                        onTap: () async {
+                          // Store courseCode in SharedPreferences
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setString('courseCode', courseCode);
+
+
+                          Navigator.of(context).pushReplacementNamed("Course");
                         },
                         child: Image.asset("assets/Icon.png"),
                       ),
@@ -213,9 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
               scrollDirection: Axis.horizontal,
               children: [
                 _buildContainerWithoutCourses(),
-                SizedBox(
-                  width: 8,
-                ),
+                SizedBox(width: 8),
                 // Add the green containers to the row
                 ...greenContainers,
                 // Add the container without courses

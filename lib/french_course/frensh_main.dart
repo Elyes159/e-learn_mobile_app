@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FrenchCourse extends StatefulWidget {
   @override
@@ -9,7 +10,14 @@ class FrenchCourse extends StatefulWidget {
 }
 
 class _FrenchCourseState extends State<FrenchCourse> {
-  String selectedCourseCode = 'fr';
+  String? selectedCourseCode;
+
+  void _loadCourseCode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedCourseCode = prefs.getString('courseCode');
+    });
+  }
 
   Future<List<Map<String, dynamic>>> getCourseData() async {
     try {
@@ -41,10 +49,17 @@ class _FrenchCourseState extends State<FrenchCourse> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadCourseCode();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
+        toolbarHeight: 60,
         leading: IconButton(
           icon: Image.asset(
             "assets/Back_Button.png",
@@ -55,14 +70,24 @@ class _FrenchCourseState extends State<FrenchCourse> {
           onPressed: () {
             Navigator.of(context).pushReplacementNamed("home");
           },
-          iconSize: 100.0,
+          iconSize: 80.0,
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           Center(
             child: Image.asset(
-              "assets/eiffel.png",
+              selectedCourseCode == "fr"
+                  ? "assets/eiffel.png"
+                  : selectedCourseCode == "en"
+                      ? "assets/liberte.png"
+                      : selectedCourseCode == "ar"
+                          ? "assets/kaaba.png"
+                          : selectedCourseCode == "es"
+                              ? "assets/sagrada-familia.png"
+                              : selectedCourseCode == "hi"
+                                  ? "assets/taj-mahal.png"
+                                  : "images/logo.png",
               width: 150,
               height: 150,
             ),
@@ -72,11 +97,22 @@ class _FrenchCourseState extends State<FrenchCourse> {
           ),
           Center(
             child: Text(
-              "Learn Frensh",
+              selectedCourseCode == "fr"
+                  ? "Learn French"
+                  : selectedCourseCode == "en"
+                      ? "Learn English"
+                      : selectedCourseCode == "ar"
+                          ? "Learn Arabic"
+                          : selectedCourseCode == "es"
+                              ? "Learn Spanish"
+                              : selectedCourseCode == "hi"
+                                  ? "Learn Hindi"
+                                  : "",
               style: GoogleFonts.poppins(
-                  fontSize: 25,
-                  color: Color(0xFF43463F),
-                  fontWeight: FontWeight.w700),
+                fontSize: 25,
+                color: Color(0xFF43463F),
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           Column(

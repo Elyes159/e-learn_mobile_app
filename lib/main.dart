@@ -33,7 +33,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
- 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -108,8 +107,7 @@ class _MyAppState extends State<MyApp> {
               'lecons': (context) => ExLeconOne(),
               'frenshunities': (context) => FrenchUnities(),
               'home': (context) => HomeScreen(),
-              'arabicCourse': (context) => ArabicCourse(),
-              'frenchCourse': (context) => FrenchCourse(),
+              'Course': (context) => FrenchCourse(),
               "signup": (context) => const Signup(),
               "login": (context) => Login(),
               "chatt": (context) => ChatScreen(),
