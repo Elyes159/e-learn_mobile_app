@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pfe_1/constant/question.dart';
 import 'package:translator/translator.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class NewCourseForm extends StatefulWidget {
   @override
@@ -173,12 +175,11 @@ class _NewCourseFormState extends State<NewCourseForm> {
           .doc(leconId)
           .collection('questions');
 
-      // await FirebaseFirestore.instance
-      //     .collection('cours$selectedLanguage')
-      //     .doc(chapterId)
-      //     .set({'numCh': counter});
+      await FirebaseFirestore.instance
+          .collection('cours$selectedLanguage')
+          .doc("courseInfo")
+          .set({'nom_cours': newCourseName});
 
-      // Ajouter chaque question traduite à la collection
       for (int i = 0; i < translatedQuestions.length; i++) {
         final question = translatedQuestions[i];
         final questionI = i + 1;
@@ -242,11 +243,11 @@ class _NewCourseFormState extends State<NewCourseForm> {
       for (var question in questions) {
         currentQuestion = question;
         if (question is Question) {
-          Translation translatedQuestionText =
-              await GoogleTranslator().translate(
-            question.questionText,
-            to: targetLanguage,
-          );
+          // Translation translatedQuestionText =
+          //     await GoogleTranslator().translate(
+          //   question.questionText,
+          //   to: targetLanguage,
+          // );
           List<Option1> translatedOptions = [];
           for (var option in question.options) {
             Translation translatedOptionText =
@@ -258,7 +259,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
                 .add(Option1(translatedOptionText.text, option.imagePath));
           }
           Question translatedQuestion = Question(
-            translatedQuestionText.text,
+            question.questionText,
             translatedOptions,
             question.selectedOptions,
             question.correctOptions,
@@ -395,6 +396,22 @@ class _NewCourseFormState extends State<NewCourseForm> {
     }
   }
 
+  XFile? _image;
+  final ImagePicker _picker = ImagePicker();
+  File? file;
+
+  Future<void> _uploadImage() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _image = image;
+        file = File(image!.path);
+      });
+    } catch (e) {
+      print('Erreur lors du téléchargement de l\'image : $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -430,9 +447,13 @@ class _NewCourseFormState extends State<NewCourseForm> {
                 },
                 items: <String, String>{
                   'Anglais': 'en',
-                  'Allemand': 'de',
+                  'Francais': 'fr',
+                  'Arabe': 'ar',
                   'Espagnol': 'es',
-                  'Italien': 'it',
+                  'indian': 'hi',
+                  'italien': 'it',
+                  'portugaise': 'pt',
+                  'russe': 'rs'
                 }.entries.map<DropdownMenuItem<String>>((entry) {
                   return DropdownMenuItem<String>(
                     value: entry.value,
@@ -444,6 +465,10 @@ class _NewCourseFormState extends State<NewCourseForm> {
                 ),
               ),
               SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: _uploadImage,
+                child: Text('Choisir une image'),
+              ),
               ElevatedButton(
                 onPressed: _submitForm,
                 child: Text('Créer'),

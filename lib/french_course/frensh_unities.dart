@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FrenchUnities extends StatefulWidget {
   @override
@@ -12,17 +13,34 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
   late List<DocumentSnapshot> courses = [];
   PageController _pageController = PageController(initialPage: 0);
 
-  @override
-  void initState() {
-    super.initState();
-    fetchCourses();
+  String? selectedCourseCode = "";
+
+  void _loadCourseCode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedCourseCode = prefs.getString('courseCode');
+      if (selectedCourseCode != null) {
+        fetchCourses(selectedCourseCode);
+        print("##$selectedCourseCode##");
+      }
+    });
   }
 
-  Future<void> fetchCourses() async {
-    final snapshot = await FirebaseFirestore.instance.collection('cours').get();
-    setState(() {
-      courses = snapshot.docs;
-    });
+  Future<void> fetchCourses(String? code) async {
+    if (code == "fr") {
+      final snapshot =
+          await FirebaseFirestore.instance.collection('cours').get();
+      setState(() {
+        courses = snapshot.docs;
+      });
+    } else {
+      final snapshot =
+          await FirebaseFirestore.instance.collection('coursit').get();
+      setState(() {
+        courses = snapshot.docs;
+      });
+    }
+    print("vide ? ${courses}");
   }
 
   Future<bool> checkLeconExistence(int leconNumber, String chapter) async {
@@ -31,7 +49,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
           .collection('user_levels')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('courses')
-          .where('code', isEqualTo: 'fr')
+          .where('code', isEqualTo: selectedCourseCode)
           .get();
 
       if (courseSnapshot.docs.isNotEmpty) {
@@ -48,6 +66,12 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
           'Erreur lors de la vérification de l\'existence du champ lecon1Bonjour: $error');
       return false;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCourseCode();
   }
 
   @override
@@ -68,7 +92,10 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
           return GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                return LessonListPage(course: course);
+                return LessonListPage(
+                  course: course,
+                  selectedCourseCode: selectedCourseCode,
+                );
               }));
             },
             child: Padding(
@@ -113,8 +140,11 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
 
 class LessonListPage extends StatelessWidget {
   final DocumentSnapshot course;
+  final String? selectedCourseCode;
 
-  const LessonListPage({Key? key, required this.course}) : super(key: key);
+  const LessonListPage(
+      {Key? key, required this.course, this.selectedCourseCode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +155,13 @@ class LessonListPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
+            print("EEEEEEEEEEEEEEEEEEEE $selectedCourseCode");
             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
               // Remplacez le widget suivant par celui que vous souhaitez afficher pour les leçons
-              return LessonListWidget(course: course);
+              return LessonListWidget(
+                course: course,
+                selectedCodeCourse: selectedCourseCode,
+              );
             }));
           },
           child: Text('Voir les leçons'),
@@ -144,7 +178,7 @@ class LessonListWidget extends StatelessWidget {
           .collection('user_levels')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('courses')
-          .where('code', isEqualTo: 'fr')
+          .where('code', isEqualTo: selectedCodeCourse)
           .get();
 
       if (courseSnapshot.docs.isNotEmpty) {
@@ -164,17 +198,20 @@ class LessonListWidget extends StatelessWidget {
   }
 
   final DocumentSnapshot course;
+  final String? selectedCodeCourse;
 
-  const LessonListWidget({Key? key, required this.course}) : super(key: key);
+  const LessonListWidget(
+      {Key? key, required this.course, required this.selectedCodeCourse})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(course.id.replaceAll('_', ' ')),
+        title: Text(course.id.replaceAll('_', ' ') + " $selectedCodeCourse"),
       ),
       body: FutureBuilder<List<int>>(
-        future: getLessonIDs(course.id),
+        future: getLessonIDs(course.id, selectedCodeCourse ?? 'ar'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -227,13 +264,27 @@ class LessonListWidget extends StatelessWidget {
     );
   }
 
-  Future<List<int>> getLessonIDs(String courseId) async {
+  Future<List<int>> getLessonIDs(
+      String courseId, String selectedCodeCourse) async {
+    final collectionPath =
+        selectedCodeCourse == "fr" ? 'cours' : 'cours$selectedCodeCourse';
+
     final snapshot = await FirebaseFirestore.instance
-        .collection('cours')
+        .collection(collectionPath)
         .doc(courseId)
         .collection('lecons')
         .get();
-    final lessonCount = snapshot.docs.length;
-    return List<int>.generate(lessonCount, (index) => index + 1);
+
+    // Filtrer les documents pour exclure le document avec l'ID "coursInfo"
+    final lessonIds = snapshot.docs
+        .where((doc) => doc.id != 'coursInfo')
+        .map<int>((doc) => int.tryParse(doc.id.replaceFirst('lecon', '')) ?? -1)
+        .toList();
+
+    // Supprimer les identifiants nuls (-1) et trier la liste
+    lessonIds.removeWhere((id) => id == -1);
+    lessonIds.sort();
+
+    return lessonIds;
   }
 }

@@ -131,7 +131,7 @@ class _FrenchCourseState extends State<FrenchCourse> {
                     // Recherchez les données pour le code 'fr'
                     Map<String, dynamic>? courseFrData;
                     for (var courseData in courseDataList) {
-                      if (courseData['code'] == 'fr') {
+                      if (courseData['code'] == selectedCourseCode) {
                         courseFrData = courseData;
                         break;
                       }
@@ -246,7 +246,7 @@ class _FrenchCourseState extends State<FrenchCourse> {
                     // Recherchez les données pour le code 'fr'
                     Map<String, dynamic>? courseFrData;
                     for (var courseData in courseDataList) {
-                      if (courseData['code'] == 'fr') {
+                      if (courseData['code'] == selectedCourseCode) {
                         courseFrData = courseData;
                         break;
                       }
@@ -357,7 +357,7 @@ class _FrenchCourseState extends State<FrenchCourse> {
                     // Recherchez les données pour le code 'fr'
                     Map<String, dynamic>? courseFrData;
                     for (var courseData in courseDataList) {
-                      if (courseData['code'] == 'fr') {
+                      if (courseData['code'] == selectedCourseCode) {
                         courseFrData = courseData;
                         break;
                       }

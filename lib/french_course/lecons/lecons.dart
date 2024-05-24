@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constant/question.dart';
 
 class ExLeconOne extends StatefulWidget {
@@ -26,65 +27,89 @@ class _ExLeconOneState extends State<ExLeconOne> {
     final int leconId = args['leconId'] ?? 1; // Valeur par défaut 1
     final String chapter =
         args['chapter'] ?? 'bonjour'; // Valeur par défaut 'bonjour'
-
+    print("$chapter   $leconId");
     importQuestionsFromFirestore(chapter, leconId);
   }
 
   PageController _pageController = PageController();
   int _currentPage = 0;
   double _progress = 0.0;
+  String? courseCode = '';
+
+  String? selectedCourseCode;
+
+  void _loadCourseCode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedCourseCode = prefs.getString('courseCode');
+    });
+  }
 
   List<dynamic> questions = [];
   Future<void> importQuestionsFromFirestore(String chapter, int leconId) async {
     try {
-      // Obtenez une référence à la collection "questions" dans Firestore
-      CollectionReference questionsCollection = FirebaseFirestore.instance
-          .collection('cours')
-          .doc(chapter)
-          .collection('lecons')
-          .doc('lecon$leconId') // Utilisation de l'argument leconId
-          .collection('questions');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? selectedCodeCourse = prefs.getString('courseCode');
+      print("3saaa $selectedCodeCourse");
 
-      // Récupérez tous les documents de la collection "questions" dans l'ordre croissant par leur nom
+      CollectionReference questionsCollection;
+      if (selectedCodeCourse == "fr") {
+        print("houni   : $selectedCodeCourse");
+        questionsCollection = FirebaseFirestore.instance
+            .collection('cours')
+            .doc(chapter)
+            .collection('lecons')
+            .doc('lecon$leconId')
+            .collection('questions');
+      } else {
+        print("houni   : $selectedCodeCourse");
+
+        questionsCollection = FirebaseFirestore.instance
+            .collection('cours$selectedCodeCourse')
+            .doc(chapter)
+            .collection('lecons')
+            .doc('lecon$leconId')
+            .collection('questions');
+      }
+      print("ya rabiiii $questionsCollection");
+
       QuerySnapshot querySnapshot =
           await questionsCollection.orderBy(FieldPath.documentId).get();
 
-      // Trier les documents en fonction du nombre dans leur nom
       List<QueryDocumentSnapshot> sortedDocs = querySnapshot.docs.toList()
         ..sort((a, b) {
-          // Extraire les nombres des noms de documents
           int numA = int.parse(a.id.replaceFirst('question', ''));
           int numB = int.parse(b.id.replaceFirst('question', ''));
-          // Trier les documents en fonction des nombres extraits
           return numA.compareTo(numB);
         });
 
       List<dynamic> importedQuestions = [];
 
-      // Parcourez les documents triés
       sortedDocs.forEach((doc) {
-        // Récupérez les données du document Firestore
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-        // Vérifiez le type de question et ajoutez-la à la liste "questions" en conséquence
         switch (data['type']) {
           case 'Question':
             importedQuestions.add(Question(
-              data['questionText'],
-              List<Option1>.from(data['options'].map(
-                  (option) => Option1(option['text'], option['imagePath']))),
+              data['questionText'] ?? '',
+              List<Option1>.from((data['options'] ?? []).map((option) =>
+                  Option1(option['text'] ?? '', option['imagePath'] ?? ''))),
               List<bool>.from(data['selectedOptions'] ?? []),
               List<bool>.from(data['correctOptions'] ?? []),
             ));
+            print("ya rab mouhamad $data");
             break;
+
           case 'SoundQuestion':
             importedQuestions.add(SoundQuestion(
-              questionText: data['questionText'],
-              options: List<Option1>.from(data['options'].map(
-                  (option) => Option1(option['text'], option['imagePath']))),
+              questionText: data['questionText'] ?? '',
+              options: List<Option1>.from((data['options'] ?? []).map(
+                  (option) => Option1(
+                      option['text'] ?? '', option['imagePath'] ?? ''))),
               spokenWord: data['spokenWord'] ?? '',
               selectedWord: data['selectedWord'] ?? '',
             ));
+            print("ya rab mouhamad 1 $data");
             break;
           case 'ScrambledWordsQuestion':
             importedQuestions.add(ScrambledWordsQuestion(
@@ -96,8 +121,9 @@ class _ExLeconOneState extends State<ExLeconOne> {
                   List<String>.from(data['selectedWordOrder'] ?? []),
               ImagePath: data['ImagePath'] == "your_image_path_here"
                   ? ""
-                  : data['ImagePath'],
+                  : data['ImagePath'] ?? '',
             ));
+            print("ya rab mouhamad 2 $data");
             break;
           case 'TranslationQuestion':
             importedQuestions.add(TranslationQuestion(
@@ -105,15 +131,17 @@ class _ExLeconOneState extends State<ExLeconOne> {
               correctTranslation: data['correctTranslation'] ?? '',
               userTranslationn: data['userTranslationn'] ?? '',
             ));
+            print("ya rab mouhamad 3 $data");
             break;
           case 'TextQuestion':
             importedQuestions.add(TextQuestion(
-              data['questionText'],
-              List<Option1>.from(data['options'].map(
-                  (option) => Option1(option['text'], option['imagePath']))),
+              data['questionText'] ?? '',
+              List<Option1>.from((data['options'] ?? []).map((option) =>
+                  Option1(option['text'] ?? '', option['imagePath'] ?? ''))),
               List<bool>.from(data['selectedOptions'] ?? []),
               List<bool>.from(data['correctOptions'] ?? []),
             ));
+            print("ya rab mouhamad 4 $data");
             break;
           default:
             print('Type de question non pris en charge : ${data['type']}');
@@ -121,9 +149,9 @@ class _ExLeconOneState extends State<ExLeconOne> {
         }
       });
 
-      // Mettez à jour l'état des questions avec les questions importées
       setState(() {
         questions = importedQuestions;
+        print("sayabna 3ad $questions");
       });
 
       print('Questions importées avec succès depuis Firestore');
@@ -515,7 +543,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
               .collection('user_levels')
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .collection('courses')
-              .where('code', isEqualTo: 'fr')
+              .where('code', isEqualTo: selectedCourseCode)
               .get();
           Navigator.of(context).pushReplacementNamed("frenshunities");
 
@@ -797,7 +825,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
             .collection('user_levels')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('courses')
-            .where('code', isEqualTo: 'fr')
+            .where('code', isEqualTo: selectedCourseCode)
             .get();
         Navigator.of(context).pushReplacementNamed("frenshunities");
 
@@ -860,7 +888,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
             .collection('user_levels')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('courses')
-            .where('code', isEqualTo: 'fr')
+            .where('code', isEqualTo: selectedCourseCode)
             .get();
         Navigator.of(context).pushReplacementNamed("frenshunities");
 
@@ -893,6 +921,13 @@ class _ExLeconOneState extends State<ExLeconOne> {
     }
 
     return isCorrect;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadCourseCode();
   }
 
   @override
