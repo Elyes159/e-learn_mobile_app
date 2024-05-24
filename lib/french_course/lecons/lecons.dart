@@ -1114,11 +1114,22 @@ class ExercisePage extends StatefulWidget {
 
 class _ExercisePageState extends State<ExercisePage> {
   FlutterTts flutterTts = FlutterTts();
+  late SharedPreferences
+      prefs; // Utilisation de 'late' car il sera initialisé plus tard.
+  late String selectedCodeCourse;
 
   @override
   void initState() {
     super.initState();
-    flutterTts.setLanguage("fr-FR");
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    selectedCodeCourse = prefs.getString('courseCode') ?? '';
+
+    // Utilisez la valeur de selectedCodeCourse pour définir la langue de FlutterTts
+    flutterTts.setLanguage(selectedCodeCourse);
   }
 
   Future<void> speak(String text) async {
@@ -1287,12 +1298,22 @@ class TextQuestionPage extends StatefulWidget {
 
 class _TextQuestionPageState extends State<TextQuestionPage> {
   FlutterTts flutterTts = FlutterTts();
+  late SharedPreferences
+      prefs; // Utilisation de 'late' car il sera initialisé plus tard.
+  late String selectedCodeCourse;
 
   @override
   void initState() {
-    //
     super.initState();
-    flutterTts.setLanguage("fr-FR");
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    selectedCodeCourse = prefs.getString('courseCode') ?? '';
+
+    // Utilisez la valeur de selectedCodeCourse pour définir la langue de FlutterTts
+    flutterTts.setLanguage(selectedCodeCourse);
   }
 
   Future<void> speak(String text) async {
@@ -1462,11 +1483,22 @@ class TranslationExercisePage extends StatefulWidget {
 
 class _TranslationExercisePageState extends State<TranslationExercisePage> {
   FlutterTts flutterTts = FlutterTts();
+  late SharedPreferences
+      prefs; // Utilisation de 'late' car il sera initialisé plus tard.
+  late String selectedCodeCourse;
 
   @override
   void initState() {
     super.initState();
-    flutterTts.setLanguage("fr-FR");
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    selectedCodeCourse = prefs.getString('courseCode') ?? '';
+
+    // Utilisez la valeur de selectedCodeCourse pour définir la langue de FlutterTts
+    flutterTts.setLanguage(selectedCodeCourse);
   }
 
   Future<void> speak(String text) async {
@@ -1597,13 +1629,6 @@ class _ScrambledWordsQuestionWidgetState
     extends State<ScrambledWordsQuestionWidget> {
   late List<String> shuffledWords;
 
-  @override
-  void initState() {
-    super.initState();
-    initializeShuffledWords();
-    flutterTts.setLanguage("fr-FR");
-  }
-
   void initializeShuffledWords() {
     // Inclure les mots supplémentaires dans la liste shuffledWords
     shuffledWords = List.from(widget.question.selectedWordOrder)
@@ -1612,13 +1637,24 @@ class _ScrambledWordsQuestionWidgetState
   }
 
   FlutterTts flutterTts = FlutterTts();
+  late SharedPreferences
+      prefs; // Utilisation de 'late' car il sera initialisé plus tard.
+  late String selectedCodeCourse;
 
-  Future<void> speak(String text) async {
-    await flutterTts.setVolume(1.0);
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setPitch(1.0);
-    await flutterTts.awaitSpeakCompletion(true);
-    await flutterTts.speak(text);
+  @override
+  void initState() {
+    super.initState();
+    initializeShuffledWords();
+
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    selectedCodeCourse = prefs.getString('courseCode') ?? '';
+
+    // Utilisez la valeur de selectedCodeCourse pour définir la langue de FlutterTts
+    flutterTts.setLanguage(selectedCodeCourse);
   }
 
   @override
@@ -1831,10 +1867,22 @@ class _QuestionSoundState extends State<QuestionSound> {
   FlutterTts flutterTts = FlutterTts();
   String selectedOption = '';
 
+  late SharedPreferences
+      prefs; // Utilisation de 'late' car il sera initialisé plus tard.
+  late String selectedCodeCourse;
+
   @override
   void initState() {
     super.initState();
-    flutterTts.setLanguage("fr-FR");
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    selectedCodeCourse = prefs.getString('courseCode') ?? '';
+
+    // Utilisez la valeur de selectedCodeCourse pour définir la langue de FlutterTts
+    flutterTts.setLanguage(selectedCodeCourse);
   }
 
   Future<void> speak(String text) async {

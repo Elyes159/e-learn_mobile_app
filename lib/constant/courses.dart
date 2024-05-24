@@ -18,7 +18,6 @@ class CoursesManager {
     Courses(name: 'espagnole', code: 'es', imageUrl: 'assets/esp_flag.png'),
     Courses(name: 'indian', code: 'hi', imageUrl: 'assets/ind_flag.png'),
     Courses(name: 'italien', code: 'it', imageUrl: 'assets/it_flag.png'),
-    Courses(name: 'italien', code: 'it', imageUrl: 'assets/it_flag.png'),
   ];
 
   List<Courses> get coursess => _coursess;

@@ -192,7 +192,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               await SharedPreferences.getInstance();
                           await prefs.setString('courseCode', courseCode);
 
-
                           Navigator.of(context).pushReplacementNamed("Course");
                         },
                         child: Image.asset("assets/Icon.png"),

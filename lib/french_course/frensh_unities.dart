@@ -274,17 +274,7 @@ class LessonListWidget extends StatelessWidget {
         .doc(courseId)
         .collection('lecons')
         .get();
-
-    // Filtrer les documents pour exclure le document avec l'ID "coursInfo"
-    final lessonIds = snapshot.docs
-        .where((doc) => doc.id != 'coursInfo')
-        .map<int>((doc) => int.tryParse(doc.id.replaceFirst('lecon', '')) ?? -1)
-        .toList();
-
-    // Supprimer les identifiants nuls (-1) et trier la liste
-    lessonIds.removeWhere((id) => id == -1);
-    lessonIds.sort();
-
-    return lessonIds;
+    final lessonCount = snapshot.docs.length;
+    return List<int>.generate(lessonCount, (index) => index + 1);
   }
 }

@@ -1,9 +1,15 @@
+// ignore_for_file: unused_field, non_constant_identifier_names
+
+import 'dart:typed_data';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pfe_1/constant/question.dart';
 import 'package:translator/translator.dart';
-import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+
+import 'package:path_provider/path_provider.dart';
 
 class NewCourseForm extends StatefulWidget {
   @override
@@ -175,11 +181,6 @@ class _NewCourseFormState extends State<NewCourseForm> {
           .doc(leconId)
           .collection('questions');
 
-      await FirebaseFirestore.instance
-          .collection('cours$selectedLanguage')
-          .doc("courseInfo")
-          .set({'nom_cours': newCourseName});
-
       for (int i = 0; i < translatedQuestions.length; i++) {
         final question = translatedQuestions[i];
         final questionI = i + 1;
@@ -266,15 +267,25 @@ class _NewCourseFormState extends State<NewCourseForm> {
           );
           translatedQuestions.add(translatedQuestion);
         } else if (question is SoundQuestion) {
-          Translation translatedQuestionText =
-              await GoogleTranslator().translate(
-            question.questionText,
+          Translation translatedSpokenWord = await GoogleTranslator().translate(
+            question.spokenWord,
             to: targetLanguage,
           );
+          List<Option1> translatedOptions = [];
+
+          for (var option in question.options) {
+            Translation translatedOptionText =
+                await GoogleTranslator().translate(
+              option.text,
+              to: targetLanguage,
+            );
+            translatedOptions
+                .add(Option1(translatedOptionText.text, option.imagePath));
+          }
           SoundQuestion translatedQuestion = SoundQuestion(
-            questionText: translatedQuestionText.text,
-            options: question.options,
-            spokenWord: question.spokenWord,
+            questionText: question.questionText,
+            options: translatedOptions,
+            spokenWord: translatedSpokenWord.text,
             selectedWord: question.selectedWord,
           );
           translatedQuestions.add(translatedQuestion);
@@ -396,20 +407,21 @@ class _NewCourseFormState extends State<NewCourseForm> {
     }
   }
 
-  XFile? _image;
+  String? _ImagePath;
   final ImagePicker _picker = ImagePicker();
   File? file;
 
-  Future<void> _uploadImage() async {
-    try {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      setState(() {
-        _image = image;
-        file = File(image!.path);
-      });
-    } catch (e) {
-      print('Erreur lors du téléchargement de l\'image : $e');
-    }
+  Future<String> _moveImageToAssets(XFile imageFile) async {
+    Uint8List imageData = await imageFile.readAsBytes();
+    String imageName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+    String documentsDir = (await getApplicationDocumentsDirectory())
+        .path; // Récupérer le répertoire de documents de l'application
+    String imagePath =
+        '$documentsDir/$imageName'; // Chemin d'accès pour l'image dans le répertoire de documents
+    await File(imagePath).writeAsBytes(
+        imageData); // Écrire l'image dans le répertoire de documents
+
+    return imagePath;
   }
 
   @override
@@ -465,10 +477,26 @@ class _NewCourseFormState extends State<NewCourseForm> {
                 ),
               ),
               SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: _uploadImage,
-                child: Text('Choisir une image'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     final ImagePicker _picker = ImagePicker();
+              //     final XFile? image =
+              //         await _picker.pickImage(source: ImageSource.gallery);
+
+              //     if (image != null) {
+              //       // L'image a été sélectionnée, maintenant vous pouvez la déplacer vers le dossier assets
+              //       // et obtenir son chemin d'accès
+              //       String imagePath = await _moveImageToAssets(image);
+              //       if (imagePath.isNotEmpty) {
+              //         // L'image a été déplacée avec succès, vous pouvez l'ajouter à la liste d'options
+              //         setState(() {
+              //           _ImagePath = imagePath;
+              //         });
+              //       }
+              //     }
+              //   },
+              //   child: Text('Sélectionner une image'),
+              // ),
               ElevatedButton(
                 onPressed: _submitForm,
                 child: Text('Créer'),
