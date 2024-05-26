@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,29 +23,119 @@ class _FrenchCourseState extends State<FrenchCourse> {
 
   Future<List<Map<String, dynamic>>> getCourseData() async {
     try {
+      // Initialize variables to store document counts
+      int totalBonjourDocs = 0;
+      int totalJeParleDocs = 0;
+      int totalJeConnaisDocs = 0;
+
+      int totalBonjourFields = 0;
+      int totalJeParleFields = 0;
+      int totalJeConnaisFields = 0;
+
+      if (selectedCourseCode == "fr") {
+        QuerySnapshot<Map<String, dynamic>> bonjourSnapshot =
+            await FirebaseFirestore.instance
+                .collection('cours')
+                .doc(selectedCourseCode)
+                .collection('bonjour')
+                .get();
+        totalBonjourDocs = bonjourSnapshot.size;
+
+        // Count documents in the 'cours<selectedCourseCode>' collection under 'je_parle' doc
+        QuerySnapshot<Map<String, dynamic>> jeParleSnapshot =
+            await FirebaseFirestore.instance
+                .collection('cours')
+                .doc("je_parle")
+                .collection('lecons')
+                .get();
+        totalJeParleDocs = jeParleSnapshot.size;
+
+        // Count documents in the 'cours<selectedCourseCode>' collection under 'je_connais' doc
+        QuerySnapshot<Map<String, dynamic>> jeConnaisSnapshot =
+            await FirebaseFirestore.instance
+                .collection('cours')
+                .doc("je_connais")
+                .collection('lecons')
+                .get();
+        totalJeConnaisDocs = jeConnaisSnapshot.size;
+      } else {
+        QuerySnapshot<Map<String, dynamic>> bonjourSnapshot =
+            await FirebaseFirestore.instance
+                .collection('cours$selectedCourseCode')
+                .doc('bonjour')
+                .collection('lecons')
+                .get();
+        totalBonjourDocs = bonjourSnapshot.size;
+        print("eseebiii $totalBonjourDocs");
+
+        // Count documents in the 'cours<selectedCourseCode>' collection under 'je_parle' doc
+        QuerySnapshot<Map<String, dynamic>> jeParleSnapshot =
+            await FirebaseFirestore.instance
+                .collection('cours$selectedCourseCode')
+                .doc("je_parle")
+                .collection('lecons')
+                .get();
+        totalJeParleDocs = jeParleSnapshot.size;
+
+        // Count documents in the 'cours<selectedCourseCode>' collection under 'je_connais' doc
+        QuerySnapshot<Map<String, dynamic>> jeConnaisSnapshot =
+            await FirebaseFirestore.instance
+                .collection('cours$selectedCourseCode')
+                .doc("je_connais")
+                .collection('lecons')
+                .get();
+        totalJeConnaisDocs = jeConnaisSnapshot.size;
+      }
+
       // Fetch course data from Firestore
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
               .collection('user_levels')
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .collection('courses')
+              .where('code', isEqualTo: selectedCourseCode)
               .get();
 
-      // Process the query snapshot and convert it to a list of maps
+      querySnapshot.docs
+          .forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+        doc.data().forEach((key, value) {
+          if (key.contains('bonjour')) {
+            totalBonjourFields++;
+          }
+          if (key.contains('je_parle')) {
+            totalJeParleFields++;
+          }
+          if (key.contains('je_connais')) {
+            totalJeConnaisFields++;
+          }
+        });
+      });
+
+      // Calculate percentages
+      double progressIntro = (totalBonjourDocs > 0)
+          ? (totalBonjourFields / totalBonjourDocs) * 100
+          : 0;
+      double progressVocabulary = (totalJeParleDocs > 0)
+          ? (totalJeParleFields / totalJeParleDocs) * 100
+          : 0;
+      double progressGrammar = (totalJeConnaisDocs > 0)
+          ? (totalJeConnaisFields / totalJeConnaisDocs) * 100
+          : 0;
+
       List<Map<String, dynamic>> courseDataList = querySnapshot.docs
           .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
         return {
           'code': doc['code'],
-          'progressIntro': doc['progressIntro'],
-          'progressVocabulary': doc['progressVocabulary'],
-          'progressGrammar': doc['progressGrammar'],
+          'progressIntro': progressIntro,
+          'progressVocabulary': progressVocabulary,
+          'progressGrammar': progressGrammar,
         };
       }).toList();
 
       return courseDataList;
     } catch (error) {
       print('Error fetching course data: $error');
-      // You might want to handle errors more gracefully based on your use case
+      // Handle errors based on your use case
       throw error;
     }
   }
@@ -138,8 +230,9 @@ class _FrenchCourseState extends State<FrenchCourse> {
                     }
 
                     if (courseFrData != null) {
-                      int progressIntro = courseFrData['progressIntro'] ?? 0;
-
+                      double progressIntro = courseFrData['progressIntro'] ?? 0;
+                      String formattedProgressIntro =
+                          progressIntro.toStringAsFixed(1);
                       return InkWell(
                         onTap: () {
                           print("behi");
@@ -217,8 +310,8 @@ class _FrenchCourseState extends State<FrenchCourse> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8, top: 25),
-                                  child:
-                                      Container(child: Text("$progressIntro%")),
+                                  child: Container(
+                                      child: Text("$formattedProgressIntro%")),
                                 )
                               ],
                             ),
@@ -253,8 +346,10 @@ class _FrenchCourseState extends State<FrenchCourse> {
                     }
 
                     if (courseFrData != null) {
-                      int progressGrammar =
+                      double progressGrammar =
                           courseFrData['progressGrammar'] ?? 0;
+                      String formattedProgressIntro =
+                          progressGrammar.toStringAsFixed(1);
 
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -329,8 +424,8 @@ class _FrenchCourseState extends State<FrenchCourse> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 8.0, right: 8, top: 25),
-                                child:
-                                    Container(child: Text("$progressGrammar%")),
+                                child: Container(
+                                    child: Text("$formattedProgressIntro%")),
                               )
                             ],
                           ),
@@ -364,8 +459,10 @@ class _FrenchCourseState extends State<FrenchCourse> {
                     }
 
                     if (courseFrData != null) {
-                      int progressVocabulary =
+                      double progressVocabulary =
                           courseFrData['progressVocabulary'] ?? 0;
+                      String formattedProgressIntro =
+                          progressVocabulary.toStringAsFixed(1);
 
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -440,7 +537,7 @@ class _FrenchCourseState extends State<FrenchCourse> {
                                 padding: const EdgeInsets.only(
                                     left: 8.0, right: 8, top: 25),
                                 child: Container(
-                                    child: Text("$progressVocabulary%")),
+                                    child: Text("$formattedProgressIntro%")),
                               )
                             ],
                           ),

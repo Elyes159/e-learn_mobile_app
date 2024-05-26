@@ -678,7 +678,7 @@ class _ExLeconOneState extends State<ExLeconOne> {
             .collection('user_levels')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('courses')
-            .where('code', isEqualTo: 'fr')
+            .where('code', isEqualTo: selectedCourseCode)
             .get();
         Navigator.of(context).pushReplacementNamed("frenshunities");
 
@@ -1660,8 +1660,7 @@ class _ScrambledWordsQuestionWidgetState
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return ListView(
       children: [
         SizedBox(
           height: 0,

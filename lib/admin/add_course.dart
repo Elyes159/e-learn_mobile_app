@@ -181,6 +181,20 @@ class _NewCourseFormState extends State<NewCourseForm> {
           .doc(leconId)
           .collection('questions');
 
+      // Ajouter le champ "test" avec la valeur "test" sous chaque doc leconId
+      await FirebaseFirestore.instance
+          .collection('cours$selectedLanguage')
+          .doc(chapterId)
+          .collection('lecons')
+          .doc(leconId)
+          .set({'test': 'test'});
+
+      // Ajouter le champ "test" avec la valeur "test" sous chaque doc chapterId
+      await FirebaseFirestore.instance
+          .collection('cours$selectedLanguage')
+          .doc(chapterId)
+          .set({'test': 'test'});
+
       for (int i = 0; i < translatedQuestions.length; i++) {
         final question = translatedQuestions[i];
         final questionI = i + 1;
