@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pfe_1/home/home.dart';
 import 'package:pfe_1/profile/privacy/privacy.dart';
 import 'package:pfe_1/profile/settings/settings.dart';
 import 'package:pfe_1/starting/signin.dart';
