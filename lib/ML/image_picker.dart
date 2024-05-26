@@ -19,7 +19,7 @@ class LanguageSelectionDialog extends StatefulWidget {
   @override
   _LanguageSelectionDialogState createState() =>
       _LanguageSelectionDialogState();
-}
+} 
 
 class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
   String selectedLanguage = 'fr'; // Default language
@@ -40,11 +40,19 @@ class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
                 selectedLanguage = newValue!;
               });
             },
-            items: <String>['en', 'fr', 'es', 'de', 'it', 'pt', 'ru']
-                .map<DropdownMenuItem<String>>((String value) {
+            items: <String, String>{
+              'Anglais': 'en',
+              'Francais': 'fr',
+              'Arabe': 'ar',
+              'Espagnol': 'es',
+              'indian': 'hi',
+              'italien': 'it',
+              'portugaise': 'pt',
+              'russe': 'rs'
+            }.entries.map<DropdownMenuItem<String>>((entry) {
               return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
+                value: entry.value,
+                child: Text(entry.key),
               );
             }).toList(),
           ),
@@ -277,7 +285,6 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
               ),
             ],
           ),
-
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.all(5.0),
