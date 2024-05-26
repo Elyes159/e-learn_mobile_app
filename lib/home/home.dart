@@ -38,10 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
     saveFCMToken();
   }
 
-  void navigateToLearn() {
-    Navigator.of(context).pushReplacementNamed("arabicCourse");
-  }
-
   void navigateToObjectTranslation() {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => ImagePickerDemo()),
@@ -645,7 +641,6 @@ class _HomeScreenState extends State<HomeScreen> {
             });
             switch (index) {
               case 0:
-                navigateToLearn();
                 break;
               case 1:
                 navigateToObjectTranslation();
