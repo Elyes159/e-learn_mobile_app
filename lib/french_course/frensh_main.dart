@@ -122,6 +122,19 @@ class _FrenchCourseState extends State<FrenchCourse> {
           ? (totalJeConnaisFields / totalJeConnaisDocs) * 100
           : 0;
 
+      if (querySnapshot.docs.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection('user_levels')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('courses')
+            .doc(querySnapshot.docs.first.id)
+            .update({
+          'progressIntro': progressIntro,
+          'progressVocabulary': progressVocabulary,
+          'progressGrammar': progressGrammar,
+        });
+      }
+
       List<Map<String, dynamic>> courseDataList = querySnapshot.docs
           .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
         return {

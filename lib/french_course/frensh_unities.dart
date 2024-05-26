@@ -35,7 +35,7 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
       });
     } else {
       final snapshot =
-          await FirebaseFirestore.instance.collection('coursit').get();
+          await FirebaseFirestore.instance.collection('cours$code').get();
       setState(() {
         courses = snapshot.docs;
       });

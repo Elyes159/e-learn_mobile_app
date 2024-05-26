@@ -5,14 +5,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:pfe_1/addQuestiontoFirestore.dart';
 import 'package:pfe_1/admin/Login_admin.dart';
 import 'package:pfe_1/admin/add_course.dart';
 import 'package:pfe_1/admin/add_lecon.dart';
 import 'package:pfe_1/admin/Add_Questions/add_questions.dart';
 import 'package:pfe_1/admin/admin_page_main.dart';
 import 'package:pfe_1/admin/users.dart';
-import 'package:pfe_1/arabic_course/arabic_main.dart';
 import 'package:pfe_1/chatt/chatt.dart';
 import 'package:pfe_1/constant/LanguageProvider.dart';
 import 'package:pfe_1/constant/language_const.dart';
@@ -118,7 +116,6 @@ class _MyAppState extends State<MyApp> {
               "usersPage": (context) => UserListPage(),
               "AddLeconFromAdmin": (context) => AddLessonForm(),
               'AddCourseAdmin': (context) => NewCourseForm(),
-              "addQuestiontofirestore": (context) => SampleQuestionsWidget(),
             },
           );
         },

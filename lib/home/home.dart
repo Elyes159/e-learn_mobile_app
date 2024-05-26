@@ -411,7 +411,6 @@ class _HomeScreenState extends State<HomeScreen> {
       // Extraire le champ "username" du snapshot
       if (userSnapshot.exists) {
         username = userSnapshot['username'];
-        print("ahawwa");
       } else {
         print("not exsit");
       }
@@ -420,21 +419,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       currentUser = user;
     });
-  }
-
-  void navigateToHome() {
-    // Mettez ici la logique de navigation pour l'onglet Accueil
-    print("Naviguer vers Accueil");
-  }
-
-  void navigateToSearch() {
-    // Mettez ici la logique de navigation pour l'onglet Recherche
-    print("Naviguer vers Recherche");
-  }
-
-  void navigateToSettings() {
-    // Mettez ici la logique de navigation pour l'onglet Paramètres
-    print("Naviguer vers Paramètres");
   }
 
   @override
