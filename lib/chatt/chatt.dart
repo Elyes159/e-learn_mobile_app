@@ -13,7 +13,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _messageController = TextEditingController();
   final translator = GoogleTranslator();
@@ -44,11 +43,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
         if (replacements != null && replacements.isNotEmpty) {
           final replacement = replacements[0]['value'];
-          correctedText = correctedText.replaceRange(
-            offset,
-            offset + length,
-            replacement,
-          );
+          correctedText =
+              correctedText.replaceRange(offset, offset + length, replacement);
         }
       }
 
@@ -95,19 +91,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 )
               ],
             ),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.exit_to_app,
-                  color: Color(0xff3DB2FF),
-                  size: 30,
-                ),
-                onPressed: () async {
-                  await _auth.signOut();
-                  Navigator.pop(context);
-                },
-              ),
-            ],
           ),
         ),
       ),
@@ -115,21 +98,25 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: StreamBuilder(
-              stream: _firestore.collection('messages').snapshots(),
+              stream: _firestore
+                  .collection('messages')
+                  .orderBy('timestamp', descending: true)
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return SizedBox();
+                  return Center(child: CircularProgressIndicator());
                 }
-                var messages = snapshot.data?.docs.reversed;
+                var messages = snapshot.data?.docs;
+
                 return ListView.builder(
                   reverse: true,
                   itemCount: messages!.length,
                   itemBuilder: (context, index) {
                     final User? user1 = FirebaseAuth.instance.currentUser;
-                    var messageText = messages.elementAt(index)['text'];
-                    var messageSender = messages.elementAt(index)['sender'];
-                    var lansender = messages.elementAt(index)['language'];
-                    var emailMsg = messages.elementAt(index)['email'];
+                    var messageText = messages[index]['text'];
+                    var messageSender = messages[index]['sender'];
+                    var lansender = messages[index]['language'];
+                    var emailMsg = messages[index]['email'];
 
                     return FutureBuilder<String?>(
                       future: _getUserSelectedLanguage(user1!.uid),
@@ -156,7 +143,6 @@ class _ChatScreenState extends State<ChatScreen> {
                               return MessageWidget(
                                 messageSender ?? "",
                                 translatedMessage,
-                                // ignore: dead_code
                                 test: email == emailMsg,
                               );
                             },
@@ -172,7 +158,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           Container(
-            // color: Color(0xFF3DB2FF), // Couleur de l'application
             padding: EdgeInsets.all(8.0),
             child: Row(
               children: [
@@ -214,17 +199,14 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () async {
                       final User? user1 = FirebaseAuth.instance.currentUser;
                       String? username = await _getUserUsername(user1!.uid);
-                      // ignore: unnecessary_null_comparison
-                      if (user1 != null) {
-                        await _firestore.collection('messages').add({
-                          'text': _messageController.text,
-                          'sender': username,
-                          'timestamp': FieldValue.serverTimestamp(),
-                          'language': await _getUserSelectedLanguage(user1.uid),
-                          'email': user1.email,
-                        });
-                        _messageController.clear();
-                      }
+                      await _firestore.collection('messages').add({
+                        'text': _messageController.text,
+                        'sender': username,
+                        'timestamp': FieldValue.serverTimestamp(),
+                        'language': await _getUserSelectedLanguage(user1.uid),
+                        'email': user1.email,
+                      });
+                      _messageController.clear();
                     },
                   ),
                 ),
@@ -253,15 +235,16 @@ class MessageWidget extends StatelessWidget {
             test ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Container(
-              child: Padding(
-            padding: test
-                ? const EdgeInsets.only(right: 20.0)
-                : const EdgeInsets.only(left: 20.0),
-            child: Text(
-              "$sender",
-              style: GoogleFonts.poppins(),
+            child: Padding(
+              padding: test
+                  ? const EdgeInsets.only(right: 20.0)
+                  : const EdgeInsets.only(left: 20.0),
+              child: Text(
+                "$sender",
+                style: GoogleFonts.poppins(),
+              ),
             ),
-          )),
+          ),
           BubbleSpecialThree(
             text: message,
             color: test ? const Color(0xFF3DB2FF) : Color(0xFFE8E8E8),

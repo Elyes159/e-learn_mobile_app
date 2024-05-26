@@ -541,8 +541,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         courseSnapshot.data!.data()!;
                                     String courseName =
                                         courseData['name'] ?? '';
-                                    int progressValue =
-                                        courseData['progressValue'] ?? 0;
+                                    double progressValue = (courseData[
+                                                    'progressIntro'] +
+                                                courseData['progressGrammar'] +
+                                                courseData[
+                                                    'progressVocabulary']) /
+                                            3 ??
+                                        0;
+                                    String formattedProgressValue =
+                                        progressValue.toStringAsFixed(1);
                                     String image = courseData['imageUrl'];
 
                                     return Row(
@@ -607,7 +614,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "$progressValue%",
+                                                    "$formattedProgressValue%",
                                                     style:
                                                         GoogleFonts.poppins(),
                                                   )
