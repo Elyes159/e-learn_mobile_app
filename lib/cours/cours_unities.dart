@@ -78,10 +78,6 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Cours",
-          style: GoogleFonts.poppins(),
-        ),
         centerTitle: true,
       ),
       body: PageView.builder(
@@ -100,15 +96,16 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
             },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: AnimatedContainer(
+              child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(
+                      100), // Conteneur légèrement arrondi
                   color: const Color(0xFF3DB2FF),
                 ),
-                duration: const Duration(milliseconds: 0),
-                child: Row(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(width: 10),
                     Image.asset(
                       course.id == 'bonjour'
                           ? "assets/salutation.png"
@@ -117,14 +114,14 @@ class _FrenchUnitiesState extends State<FrenchUnities> {
                               : course.id == 'je_connais'
                                   ? "assets/connaissance.png"
                                   : "assets/bonjour.png",
-                      width: 50,
+                      width: 150, // Taille de l'image plus grande
                     ),
-                    SizedBox(width: 20),
+                    SizedBox(height: 10),
                     Text(
                       course.id.replaceAll('_', ' '),
                       style: GoogleFonts.poppins(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 24, // Taille de police augmentée
                       ),
                     ),
                   ],
@@ -150,8 +147,9 @@ class LessonListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(course.id.replaceAll('_', ' ')),
+        backgroundColor: Color(0xFF3DB2FF), // Couleur spécifiée
       ),
+      backgroundColor: Color(0xFF3DB2FF), // Couleur spécifiée
       body: Center(
         child: ElevatedButton(
           onPressed: () {
@@ -164,7 +162,20 @@ class LessonListPage extends StatelessWidget {
               );
             }));
           },
-          child: Text('Voir les leçons'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white, // Couleur du bouton en blanc
+            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+          child: Text(
+            'Voir les leçons',
+            style: TextStyle(
+              fontSize: 18.0,
+              color: Color(0xFF3DB2FF), // Couleur spécifiée
+            ),
+          ),
         ),
       ),
     );
@@ -208,15 +219,22 @@ class LessonListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(course.id.replaceAll('_', ' ') + " $selectedCodeCourse"),
+        // title: Text(
+        //   '${course.id.replaceAll('_', ' ')} $selectedCodeCourse',
+        //   style: TextStyle(color: Colors.white),
+        // ),
+        backgroundColor: Color(0xFF3DB2FF), // Couleur spécifiée pour l'appBar
       ),
+      backgroundColor: Color(0xFF3DB2FF), // Couleur spécifiée pour la page
       body: FutureBuilder<List<int>>(
         future: getLessonIDs(course.id, selectedCodeCourse ?? 'ar'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Erreur : ${snapshot.error}'));
+            return Center(
+                child: Text('Erreur : ${snapshot.error}',
+                    style: TextStyle(color: Colors.white)));
           } else {
             List<int> lessonIDs = snapshot.data ?? [];
             return ListView.builder(
@@ -234,16 +252,20 @@ class LessonListWidget extends StatelessWidget {
                         },
                       );
                     },
-                    child: Text('Leçon $lessonNumber'),
+                    child: Text(
+                      'Leçon $lessonNumber',
+                      style: GoogleFonts.poppins(
+                          fontSize: 18.0, color: Colors.white),
+                    ),
                   ),
-                  // Ajoutez le code pour vérifier si la leçon existe ici
                   trailing: FutureBuilder<bool>(
                     future: checkLeconExistence(lessonNumber, course.id),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return SizedBox();
                       } else if (snapshot.hasError) {
-                        return Text('Erreur : ${snapshot.error}');
+                        return Text('Erreur : ${snapshot.error}',
+                            style: TextStyle(color: Colors.white));
                       } else {
                         bool leconExists = snapshot.data ?? false;
                         return leconExists
