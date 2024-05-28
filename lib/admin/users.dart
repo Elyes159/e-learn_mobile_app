@@ -25,7 +25,7 @@ class UserListPage extends StatelessWidget {
               itemCount: users.length,
               itemBuilder: (context, index) {
                 String userId = users[index].id;
-                String userName = users[index]['email'];
+                String userName = users[index]['email'] ?? 'inconnu';
                 return ListTile(
                   title: Text(userName),
                   trailing: IconButton(
