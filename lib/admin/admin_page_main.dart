@@ -28,13 +28,13 @@ class _Admin_mainState extends State<Admin_main> {
             DateTime.fromMillisecondsSinceEpoch(lastTimeSpentMillis);
 
         if (lastActive.isBefore(twoDaysAgo)) {
-          await sendNotification(userData['fcmToken']);
+          await sendNotification(userData['fcmToken'], userData['username']);
         }
       }
     }
   }
 
-  Future<void> sendNotification(String? token) async {
+  Future<void> sendNotification(String? token, String? username) async {
     if (token == null) {
       print("FCM token is null");
       return;
@@ -53,8 +53,8 @@ class _Admin_mainState extends State<Admin_main> {
     var body = {
       "to": token,
       "notification": {
-        "title": "Rappel",
-        "body": "Tu m'a oublié",
+        "title": "Hi $username",
+        "body": "Restart your language journey!\nYou know what to do!",
         "mutable_content": true,
         "sound": "Tri-tone"
       }
