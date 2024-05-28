@@ -157,9 +157,10 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
       await FirebaseAuth.instance.signOut();
       // Après la déconnexion réussie, vous pouvez naviguer vers une autre page ou effectuer d'autres actions si nécessaire
       // Par exemple, naviguer vers la page d'accueil :
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => Login()),
+        (Route<dynamic> route) => false,
       );
     } catch (e) {
       print("Erreur lors de la déconnexion: $e");
@@ -514,27 +515,30 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                 ),
                               ),
                               SizedBox(height: 20),
-                              Row(
-                                children: [
-                                  // IconButton(
-                                  //   onPressed: () {},
-                                  //   icon: Icon(Icons.logout_outlined),
-                                  // ),
-                                  InkWell(
-                                    onTap: () {
-                                      _signOut(context);
-                                    },
-                                    child: Text(
-                                      "     Logout Account",
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Row(
+                                  children: [
+                                    // IconButton(
+                                    //   onPressed: () {},
+                                    //   icon: Icon(Icons.logout_outlined),
+                                    // ),
+                                    InkWell(
+                                      onTap: () {
+                                        _signOut(context);
+                                      },
+                                      child: Text(
+                                        "     Logout Account",
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                        textAlign: TextAlign.left,
                                       ),
-                                      textAlign: TextAlign.left,
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),

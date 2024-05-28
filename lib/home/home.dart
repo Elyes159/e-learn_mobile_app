@@ -45,8 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void navigateToAchievement() {
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => ChatScreen()),
     );
   }

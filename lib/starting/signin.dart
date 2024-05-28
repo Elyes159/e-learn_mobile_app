@@ -273,6 +273,50 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
+
+                Padding(
+                  padding: const EdgeInsets.all(60.0),
+                  child: Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Color(0xFF3DB2FF),
+                        backgroundColor:
+                            Colors.white, // Text color for enabled state
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 16.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        side: BorderSide(
+                            color: Color(0xFF3DB2FF)), // Border color
+                      ),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed("loginadmin");
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Continuer en tant que",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " Admin",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF3DB2FF),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             )
           ],

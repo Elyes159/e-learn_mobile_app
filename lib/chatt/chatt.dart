@@ -67,14 +67,14 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: Padding(
-          padding: EdgeInsets.only(top: 5),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            leadingWidth: 30,
-            title: Row(
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 40, left: 20, right: 16, bottom: 16),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+            ),
+            child: Row(
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.zero,
@@ -84,18 +84,14 @@ class _ChatScreenState extends State<ChatScreen> {
                     width: 40,
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(left: 20)),
+                SizedBox(width: 30),
                 Text(
                   "Chat Page",
-                  style: GoogleFonts.poppins(),
-                )
+                  style: GoogleFonts.poppins(fontSize: 24),
+                ),
               ],
             ),
           ),
-        ),
-      ),
-      body: Column(
-        children: [
           Expanded(
             child: StreamBuilder(
               stream: _firestore
