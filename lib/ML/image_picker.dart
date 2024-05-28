@@ -19,7 +19,7 @@ class LanguageSelectionDialog extends StatefulWidget {
   @override
   _LanguageSelectionDialogState createState() =>
       _LanguageSelectionDialogState();
-} 
+}
 
 class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
   String selectedLanguage = 'fr'; // Default language
@@ -29,10 +29,21 @@ class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
     final languageProvider = Provider.of<LanguageProvider>(context);
 
     return AlertDialog(
-      title: Text('Choose Language'),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      title: Text(
+        'Choose Language',
+        style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Select the language for label translation:'),
+          Text(
+            'Select the language for label translation:',
+            style: GoogleFonts.poppins(fontSize: 16),
+          ),
+          SizedBox(height: 20),
           DropdownButton<String>(
             value: selectedLanguage,
             onChanged: (String? newValue) {
@@ -45,10 +56,17 @@ class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
               'Francais': 'fr',
               'Arabe': 'ar',
               'Espagnol': 'es',
-              'indian': 'hi',
-              'italien': 'it',
-              'portugaise': 'pt',
-              'russe': 'rs'
+              'Indian': 'hi',
+              'Italien': 'it',
+              'Portugaise': 'pt',
+              'Chinesse': 'zh-CN',
+              'Hindi': 'hi',
+              'bengoli': 'bn',
+              'Malay': 'ms',
+              'indonesien': 'id',
+              'german': 'de',
+              'swahili': 'sw',
+              'korean': 'ko',
             }.entries.map<DropdownMenuItem<String>>((entry) {
               return DropdownMenuItem<String>(
                 value: entry.value,
@@ -63,7 +81,11 @@ class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: Text(
+            'Cancel',
+            style: GoogleFonts.poppins(
+                color: Colors.red, fontWeight: FontWeight.bold),
+          ),
         ),
         TextButton(
           onPressed: () async {
@@ -71,7 +93,11 @@ class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
             await updateSelectedLanguageInFirebase(selectedLanguage);
             Navigator.of(context).pop();
           },
-          child: Text('OK'),
+          child: Text(
+            'OK',
+            style: GoogleFonts.poppins(
+                color: Colors.blue, fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );
