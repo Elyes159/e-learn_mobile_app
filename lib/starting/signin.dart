@@ -298,7 +298,7 @@ class _LoginState extends State<Login> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "Continuer en tant que",
+                              text: "Continuer en tant que ",
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey,
@@ -313,6 +313,7 @@ class _LoginState extends State<Login> {
                             ),
                           ],
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
