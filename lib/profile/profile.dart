@@ -218,7 +218,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
           ),
         ),
       ),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           Image.asset(
@@ -274,7 +274,6 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                             onPressed: _takePhoto,
                             child: const Icon(
                               Icons.camera_alt,
-                              color: Colors.black,
                               size: 24,
                             ),
                           ),
@@ -317,7 +316,6 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                 return Text(
                                   '$hoursSpent+ hours',
                                   style: GoogleFonts.poppins(
-                                    color: Colors.black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
