@@ -1,4 +1,10 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "cmake.sourceDirectory": "/home/kali/Desktop/pfe_1/windows"
+    "cmake.sourceDirectory": "/home/kali/Desktop/pfe_1/windows",
+    "cSpell.words": [
+        "imagee",
+        "loginn",
+        "nominconnu",
+        "whatlanguage"
+    ]
 }

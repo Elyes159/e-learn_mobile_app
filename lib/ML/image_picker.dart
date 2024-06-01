@@ -56,16 +56,13 @@ class _LanguageSelectionDialogState extends State<LanguageSelectionDialog> {
               'Francais': 'fr',
               'Arabe': 'ar',
               'Espagnol': 'es',
-              'Indian': 'hi',
               'Italien': 'it',
               'Portugaise': 'pt',
-              'Chinesse': 'zh-CN',
+              'Chinese': 'zh-CN',
               'Hindi': 'hi',
-              'bengoli': 'bn',
-              'Malay': 'ms',
+              'bengali': 'bn',
               'indonesien': 'id',
-              'german': 'de',
-              'swahili': 'sw',
+              'deutch': 'de',
               'korean': 'ko',
             }.entries.map<DropdownMenuItem<String>>((entry) {
               return DropdownMenuItem<String>(
@@ -355,7 +352,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
                       ),
                     ),
                     child: Text(
-                      'Pick Image from Gallery',
+                      'Take a Picture',
                       style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight:

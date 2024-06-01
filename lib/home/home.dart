@@ -687,7 +687,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 24.0,
                 color: _currentIndex == 2 ? Color(0xFF3DB2FF) : null,
               ),
-              label: 'chat',
+              label: 'Chat',
             ),
             BottomNavigationBarItem(
               icon: Image.asset(

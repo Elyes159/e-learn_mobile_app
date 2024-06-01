@@ -476,7 +476,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
                   'Francais': 'fr',
                   'Arabe': 'ar',
                   'Espagnol': 'es',
-                  'indian': 'hi',
+                  'hindi': 'hi',
                   'italien': 'it',
                   'portugaise': 'pt',
                   'russe': 'rs'

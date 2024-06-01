@@ -18,7 +18,7 @@ class _TranslationQuestionFormState extends State<TranslationQuestionForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ajouter une question de traduction'),
+        title: Text('question de traduction'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

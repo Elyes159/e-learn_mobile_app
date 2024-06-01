@@ -50,7 +50,7 @@ class MainPage extends StatelessWidget {
                             builder: (context) => AddQuestionForm()),
                       );
                     },
-                    child: Text('Ajouter une question'),
+                    child: Text('question d\'image'),
                   ),
                   SizedBox(height: 20.0),
                   ElevatedButton(

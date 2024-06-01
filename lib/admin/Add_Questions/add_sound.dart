@@ -21,7 +21,7 @@ class _SoundQuestionFormState extends State<SoundQuestionForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ajouter une question sonore'),
+        title: Text('question sonore'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

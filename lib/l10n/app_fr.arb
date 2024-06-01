@@ -1,5 +1,175 @@
 {
     "@@locale": "fr",
-    "loginn" : "connexion",
-    "imagee" :"Image"
+    "createyourProfile":"Créez Votre Profil",
+    "now":"Maintenant ! ",
+    "createaProfiletosaveyourlearning":"Créez un profil pour sauvegarder votre apprentissage",
+    "progressandKeeplearningforfree":"Progressez et continuez à apprendre gratuitement!",
+    "back":"Retour",
+    "next": "Suivant",
+    "howOldAreYou": "Quel âge as-tu ?",
+    "whatIsYourName": "Quel est ton nom ?",
+    "whatIsYourEmail": "Quelle est votre adresse e-mail ?",
+    "setUpYourPassword": "Configurez votre mot de passe",
+    "signup": "Inscription",
+    "inputYourEmail": "Entrez votre adresse e-mail",
+    "inputYourPassword": "Entrez votre mot de passe",
+    "emailNotFound": "Adresse e-mail non trouvée",
+    "insertExistingEmail": "Veuillez saisir une adresse e-mail existante",
+    "close": "Fermer",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "resetPasswordNotification": "Si votre adresse e-mail existe, nous avons envoyé un lien de réinitialisation du mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "emailNotVerified": "Email non vérifié",
+    "verifyEmailToLogin": "Veuillez vérifier votre adresse e-mail pour vous connecter",
+    "loginWithGoogle": "Connexion avec Google",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "register": "S'inscrire",
+    "continueAs": "Continuer en tant que",
+    "admin": "Administrateur",
+    "whatLanguagedoyouspeak":"Quelle langue parles-tu?",
+    "login" : "connexion",
+    "imagee" :"Image",
+    "hi":"Salut",
+    "nominconnu":"Nom inconnu",
+    "whatlanguage" :"Quelle Langue",
+    "wouldyouliketolearn": "aimeriez-vous apprendre?",
+    "languagebeinglearned" :"Langue Apprise",
+    "addacourse":"Ajouter un cours",
+    "selectacourse":"Sélectionnez un Cours",
+    "oK":"D'ACCORD",
+    "anglais":"Anglais",
+    "francais":"Français",
+    "arabe":"Arabe",
+    "espagnole":"Espagnole",
+    "italien":"Italien",
+    "deutch":"Allemand",
+    "level":"Niveau",
+    "learn":"Apprendre",
+    "objecttranslation":"Objet-Traduction",
+    "chat":"Bavarder",
+    "profile":"Profil",
+    "noimageselected":"Aucune image sélectionnée",
+    "takePicture":"Prendre une photo",
+    "thisObjectmaybeits":"Cet objet est peut-être :",
+    "cancel":"Annuler",
+    "selecttheLanguageforlabeltranslation:":"Sélectionnez la langue pour la traduction des étiquettes :",
+    "portugaise":"Portugaise",
+    "chinese":"Chine",
+    "hindi":"Indienne",
+    "bengali":"Bengali",
+    "indonesien":"Indonesien",
+    "korean":"coréen",
+    "russian": "Russe",
+    "chatPage":"Page de discussion",
+    "enterYourmessage...":"Entrez votre message...",
+    "myProfile":"Mon Profil",
+    "hours":"ساعات العمل",
+    "timeSpentinapp":"Temps passé dans l'application: 0 heures",
+    "totalLearn":"Total apprendre",
+    "languages":"Langues",
+    "settings":"Paramètres",
+    "aboutUs":"A Propos de Nous",
+    "privacy":"Vie Privée",
+    "privacyPolicyDescription":"
+    Politique de confidentialité
+
+Votre vie privée nous tient à cœur. Il est de la politique de [Votre entreprise] de respecter votre vie privée concernant les informations que nous pourrions collecter auprès de vous via notre application, [Nom de l'application].
+
+Informations que nous collectons
+Nous ne collectons des informations vous concernant que si nous avons une raison de le faire. Par exemple, pour fournir nos services, communiquer avec vous, ou améliorer nos services.
+
+Données de journal
+Lorsque vous utilisez notre application, nous pouvons collecter des données et des informations (par le biais de produits tiers) sur votre téléphone appelées données de journal. Ces données de journal peuvent inclure des informations telles que votre adresse IP (protocole Internet), le nom de votre appareil, la version du système d'exploitation, la configuration de l'application lors de l'utilisation de notre service, l'heure et la date de votre utilisation du service, et d'autres statistiques.
+
+Informations personnelles
+Nous pouvons vous demander des informations personnelles, telles que votre :
+- Nom
+- Adresse e-mail
+- Numéro de téléphone/portable
+- Adresse
+
+Utilisation des informations
+Nous pouvons utiliser les informations que nous collectons de diverses manières, notamment pour :
+- Fournir, exploiter et maintenir notre application
+- Améliorer, personnaliser et étendre notre application
+- Comprendre et analyser comment vous utilisez notre application
+- Développer de nouveaux produits, services, fonctionnalités et fonctionnalités
+- Communiquer avec vous, soit directement soit par l'intermédiaire de l'un de nos partenaires, notamment pour le service client, pour vous fournir des mises à jour et d'autres informations concernant l'application, et à des fins de marketing et de promotion
+
+Sécurité
+La sécurité de vos informations personnelles nous tient à cœur, mais n'oubliez pas qu'aucune méthode de transmission sur Internet, ou méthode de stockage électronique, n'est 100 % sécurisée. Bien que nous nous efforcions d'utiliser des moyens commercialement acceptables pour protéger vos informations personnelles, nous ne pouvons garantir leur sécurité absolue.
+
+Modifications de cette politique de confidentialité
+Nous pouvons mettre à jour notre politique de confidentialité de temps à autre. Ainsi, il est conseillé de consulter cette page périodiquement pour toute modification. Nous vous informerons de toute modification en publiant la nouvelle politique de confidentialité sur cette page.
+
+Contactez-nous
+Si vous avez des questions ou des suggestions concernant notre politique de confidentialité, n'hésitez pas à nous contacter à [Vos coordonnées de contact]."
+    "myAccount":"Mon Compte",
+    "logoutAccount":"Déconnexion du Compte",
+    "language":"Langue",
+    "darkMode":"Mode Sombre",
+    "termsandConditions":"Termes et Conditions",
+    "privacyPolicy":"Politique de Confidentialité",
+    "notification":"Notification",
+    "users":"Utilisateurs",
+    "user":"Utilisateur",
+    "deleted":"supprimé",
+    "error":"Erreur:",
+    "unknown":"inconnu",
+    "adminPage": "Page administrateur",
+    "addQuestions": "Ajouter des questions",
+    "manageUsers": "Gérer les utilisateurs",
+    "addLessons": "Ajouter des leçons",
+    "addCourses": "Ajouter des cours",
+    "sendNotification": "Envoyer une notification",
+    "logout": "Déconnexion",
+    "selectQuestionType": "Sélectionner un type de question",
+    "imageQuestion": "Question d'image",
+    "mixedWordsQuestion": "Question de mots mélangés",
+    "soundQuestion": "Question sonore",
+    "textQuestion": "Question de texte",
+    "translationQuestion": "Question de traduction",
+    "addALesson": "Ajouter une leçon",
+    "lessonChapter": "Chapitre de la leçon",
+    "lessonNumber": "Numéro de la leçon",
+    "addTheLesson": "Ajouter la leçon",
+    "createANewCourse": "Créer un nouveau cours",
+    "courseName": "Nom du cours",
+    "pleaseEnterTheCourseName": "Veuillez entrer le nom du cours",
+    "language": "Langue",
+    "create": "Créer",
+    "chapter": "Chapitre",
+    "lesson": "Leçon",
+    "questionText": "Texte de la question",
+    "option1": "Option 1",
+    "option2": "Option 2",
+    "option3": "Option 3",
+    "option4": "Option 4",
+    "selectAnImage": "Sélectionner une image",
+    "addTheQuestion": "Ajouter la question",
+    "correctSentence": "Phrase correcte",
+    "additionalWords": "Mots supplémentaires (séparés par des ',')",
+    "selectedWordsOrder": "Ordre des mots sélectionnés (séparés par des espaces)",
+    "spokenWord": "Mot prononcé",
+    "originalText": "Texte original",
+    "correctTranslation": "Traduction correcte",
+    "translationQuestionAddedSuccessfully": "Question de traduction ajoutée avec succès",
+    "textQuestionAddedSuccessfully": "Question textuelle ajoutée avec succès",
+    "soundQuestionAddedSuccessfully": "Question sonore ajoutée avec succès",
+    "mixedWordsQuestionAddedSuccessfully": "Question de mots mélangés ajoutée avec succès",
+    "imageQuestionAddedSuccessfully": "Question d'image ajoutée avec succès",
+    "errorAddingQuestion": "Erreur lors de l'ajout de la question:",
+     "ourProject": "Notre Projet",
+    "projectDescription": "Une application mobile d’apprentissage linguistique multilingue nommée KifKif, où elle offre une variété de fonctionnalités qui s'adaptent à différents styles d'apprentissage tels que Exercices, Niveaux, Chat Multilingue et Reconnaissance d'Objets.",
+    "missionsAndValues": "Missions et Valeurs",
+    "missionAndValuesDescription": "Notre mission est de créer des solutions innovantes et de qualité qui répondent aux besoins de nos clients. Nous valorisons l'intégrité, l'innovation et l'excellence.",
+    "ourTeam": "Notre équipe",
+    "walidHssairi": "Walid Hssairi",
+    "teamLeader": "Chef d'équipe",
+    "elyesMlik": "Elyes Mlik",
+    "yousraGuirat": "Yousra Guirat",
+    "contactUs": "Contactez-nous",
+    "developer": "Développeur"
 }
+
+

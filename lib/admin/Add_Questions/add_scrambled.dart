@@ -21,7 +21,7 @@ class _ScrambledWordsQuestionFormState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ajouter une question de mots mélangés'),
+        title: Text('question de mots mélangés'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -55,7 +55,7 @@ class _ScrambledWordsQuestionFormState
                 controller: _additionalWordsController,
                 decoration: InputDecoration(
                     labelText:
-                        'Mots supplémentaires (séparés par des virgules)'),
+                        'Mots supplémentaires (séparés par des ",")'),
               ),
               SizedBox(height: 10),
               TextFormField(

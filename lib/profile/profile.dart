@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pfe_1/profile/About%20Us/aboutus.dart';
 import 'package:pfe_1/profile/privacy/privacy.dart';
 import 'package:pfe_1/profile/settings/settings.dart';
 import 'package:pfe_1/starting/signin.dart';
@@ -218,14 +219,14 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
           ),
         ),
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Image.asset(
             'assets/Vector.png',
             fit: BoxFit.cover,
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 600,
+            height: MediaQuery.of(context).size.height - 630,
           ),
           SizedBox(height: 50),
           Column(
@@ -314,7 +315,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                               int? hoursSpent = snapshot.data;
                               if (hoursSpent != null) {
                                 return Text(
-                                  '$hoursSpent+ hours',
+                                  '$hoursSpent hours',
                                   style: GoogleFonts.poppins(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
@@ -377,7 +378,7 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                           },
                         ),
                         Text(
-                          "Language",
+                          "Languages",
                           style: GoogleFonts.poppins(),
                         )
                       ],
@@ -441,13 +442,33 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                               child: Row(
                                 children: [
                                   Container(
-                                    child: Image.asset("assets/achievment.png"),
+                                    height: 35,
+                                    width: 35,
+                                    child: Image.asset("assets/infobutton.png"),
                                   ),
                                   Text(
-                                    "     Achievements",
+                                    "     About Us",
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600),
-                                  )
+                                  ),
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => AboutUsPage()),
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              10.0), // Ajouter un padding à droite pour l'image
+                                      child:
+                                          Image.asset("assets/CaretRight.png"),
+                                    ),
+                                  ),
+
                                 ],
                               ),
                             ),

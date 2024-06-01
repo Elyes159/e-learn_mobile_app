@@ -59,7 +59,7 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ajouter une question'),
+        title: Text('question d\'image'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -174,7 +174,7 @@ class _AddQuestionFormState extends State<AddQuestionForm> {
                       _selectedOptionIndex = -1;
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Question ajoutée avec succès'),
+                        content: Text('Question d\'image ajoutée avec succès'),
                       ));
                     } catch (error) {
                       print('Erreur lors de l\'ajout de la question : $error');
