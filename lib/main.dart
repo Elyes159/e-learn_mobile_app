@@ -100,6 +100,7 @@ class _MyAppState extends State<MyApp> {
             darkTheme: AppThemes.darkTheme,
             themeMode: currentMode,
             locale: _locale,
+            debugShowCheckedModeBanner: false,
             home: _getStartScreen(),
             routes: {
               'lecons': (context) => ExLeconOne(),
