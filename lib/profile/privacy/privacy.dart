@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pfe_1/ML/image_picker.dart';
 import 'package:pfe_1/chatt/chatt.dart';
+import 'package:pfe_1/constant/textformfield.dart';
 import 'package:pfe_1/profile/profile.dart';
 
 class Privacy extends StatefulWidget {
@@ -17,10 +19,18 @@ class Privacy extends StatefulWidget {
 
 class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
   final ImagePicker _picker = ImagePicker();
-
+  TextEditingController age = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController email = TextEditingController();
   XFile? _image;
   File? imageFile;
   DateTime? _startTime;
+
+  Future<void> FetchUserData() async {
+    email.text = (await getUserEmail())!;
+    username.text = (await getUserName())!;
+    age.text = (await getUserAge())!;
+  }
 
   @override
   void initState() {
@@ -28,10 +38,50 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     print('Privacy screen initialized');
     _startTime = DateTime.now();
+    FetchUserData();
+    username.addListener(updateUsernameInFirestore);
+    email.addListener(updateEmailInFirestore);
+    age.addListener(updateAgeInFirestore);
+  }
+
+  void updateUsernameInFirestore() {
+    String newUsername = username.text;
+    updateFieldInFirestore('username', newUsername);
+  }
+
+  // Méthode pour mettre à jour l'email dans Firestore
+  void updateEmailInFirestore() {
+    String newEmail = email.text;
+    updateFieldInFirestore('email', newEmail);
+  }
+
+  // Méthode pour mettre à jour l'âge dans Firestore
+  void updateAgeInFirestore() {
+    String newAge = age.text;
+    updateFieldInFirestore('age', newAge);
+  }
+
+  // Méthode générique pour mettre à jour un champ dans Firestore
+  void updateFieldInFirestore(String fieldName, String newValue) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({fieldName: newValue});
+        print('$fieldName updated successfully');
+      } catch (e) {
+        print('Error updating $fieldName: $e');
+      }
+    }
   }
 
   @override
   void dispose() {
+    username.removeListener(updateUsernameInFirestore);
+    email.removeListener(updateEmailInFirestore);
+    age.removeListener(updateAgeInFirestore);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -176,6 +226,21 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
           .get();
       if (snapshot.exists) {
         return snapshot.data()?['username'];
+      }
+    }
+    return null;
+  }
+
+  Future<String?> getUserAge() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      if (snapshot.exists) {
+        return snapshot.data()?['age'];
       }
     }
     return null;
@@ -480,50 +545,29 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
+                        border: Border.all(
+                            color: const Color.fromARGB(255, 255, 254, 254)),
                         borderRadius: BorderRadius.circular(20)),
                     child: Center(
                       child: Column(
                         children: [
-                          FutureBuilder<String?>(
-                            future: getUserName(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return SizedBox();
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                String? username = snapshot.data;
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 20.0),
-                                  child: Text(
-                                    'Username: $username',
-                                    style: GoogleFonts.poppins(),
-                                  ),
-                                );
-                              }
-                            },
+                          CustomTextForm(
+                            hinttext: "username",
+                            mycontroller: username,
                           ),
                           SizedBox(
                             height: 50,
                           ),
-                          FutureBuilder<String?>(
-                            future: getUserEmail(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return SizedBox();
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                String? email = snapshot.data;
-                                return Text(
-                                  'Email: $email',
-                                  style: GoogleFonts.poppins(),
-                                );
-                              }
-                            },
+                          CustomTextForm(
+                            hinttext: "email",
+                            mycontroller: email,
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          CustomTextForm(
+                            hinttext: "age",
+                            mycontroller: age,
                           ),
                           SizedBox(
                             height: 50,
@@ -608,7 +652,7 @@ class _PrivacyState extends State<Privacy> with WidgetsBindingObserver {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/Chat1.png', 
+                'assets/Chat1.png',
                 width: 24.0,
                 height: 24.0,
                 color: _currentIndex == 2 ? Color(0xFF3DB2FF) : null,

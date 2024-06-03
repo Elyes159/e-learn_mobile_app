@@ -457,7 +457,8 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => AboutUsPage()),
+                                            builder: (context) =>
+                                                AboutUsPage()),
                                       );
                                     },
                                     child: Container(
@@ -468,7 +469,6 @@ class _ProfileState extends State<Profile> with WidgetsBindingObserver {
                                           Image.asset("assets/CaretRight.png"),
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),

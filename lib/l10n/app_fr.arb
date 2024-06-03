@@ -70,43 +70,8 @@
     "settings":"Paramètres",
     "aboutUs":"A Propos de Nous",
     "privacy":"Vie Privée",
-    "privacyPolicyDescription":"
-    Politique de confidentialité
-
-Votre vie privée nous tient à cœur. Il est de la politique de [Votre entreprise] de respecter votre vie privée concernant les informations que nous pourrions collecter auprès de vous via notre application, [Nom de l'application].
-
-Informations que nous collectons
-Nous ne collectons des informations vous concernant que si nous avons une raison de le faire. Par exemple, pour fournir nos services, communiquer avec vous, ou améliorer nos services.
-
-Données de journal
-Lorsque vous utilisez notre application, nous pouvons collecter des données et des informations (par le biais de produits tiers) sur votre téléphone appelées données de journal. Ces données de journal peuvent inclure des informations telles que votre adresse IP (protocole Internet), le nom de votre appareil, la version du système d'exploitation, la configuration de l'application lors de l'utilisation de notre service, l'heure et la date de votre utilisation du service, et d'autres statistiques.
-
-Informations personnelles
-Nous pouvons vous demander des informations personnelles, telles que votre :
-- Nom
-- Adresse e-mail
-- Numéro de téléphone/portable
-- Adresse
-
-Utilisation des informations
-Nous pouvons utiliser les informations que nous collectons de diverses manières, notamment pour :
-- Fournir, exploiter et maintenir notre application
-- Améliorer, personnaliser et étendre notre application
-- Comprendre et analyser comment vous utilisez notre application
-- Développer de nouveaux produits, services, fonctionnalités et fonctionnalités
-- Communiquer avec vous, soit directement soit par l'intermédiaire de l'un de nos partenaires, notamment pour le service client, pour vous fournir des mises à jour et d'autres informations concernant l'application, et à des fins de marketing et de promotion
-
-Sécurité
-La sécurité de vos informations personnelles nous tient à cœur, mais n'oubliez pas qu'aucune méthode de transmission sur Internet, ou méthode de stockage électronique, n'est 100 % sécurisée. Bien que nous nous efforcions d'utiliser des moyens commercialement acceptables pour protéger vos informations personnelles, nous ne pouvons garantir leur sécurité absolue.
-
-Modifications de cette politique de confidentialité
-Nous pouvons mettre à jour notre politique de confidentialité de temps à autre. Ainsi, il est conseillé de consulter cette page périodiquement pour toute modification. Nous vous informerons de toute modification en publiant la nouvelle politique de confidentialité sur cette page.
-
-Contactez-nous
-Si vous avez des questions ou des suggestions concernant notre politique de confidentialité, n'hésitez pas à nous contacter à [Vos coordonnées de contact]."
-    "myAccount":"Mon Compte",
+   
     "logoutAccount":"Déconnexion du Compte",
-    "language":"Langue",
     "darkMode":"Mode Sombre",
     "termsandConditions":"Termes et Conditions",
     "privacyPolicy":"Politique de Confidentialité",
